@@ -117,8 +117,24 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Clima Don Antonio</title>
+
+<!-- PWA: Manifest + iconos + meta tags para iOS/Android -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1B5E20">
+<meta name="description" content="Pronóstico climático y precios mayoristas del MCBA - Don Antonio SRL">
+
+<!-- iOS / Apple -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Don Antonio">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -1023,6 +1039,15 @@ function renderPrecios() {
 }
 
 init();
+
+// Registrar Service Worker para que la app funcione offline
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js")
+      .then(() => console.log("✓ SW registrado"))
+      .catch(err => console.warn("SW error:", err));
+  });
+}
 </script>
 </body>
 </html>

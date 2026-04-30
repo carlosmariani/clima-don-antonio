@@ -1,0 +1,41 @@
+{
+  "name": "Clima Don Antonio SRL",
+  "short_name": "Don Antonio",
+  "description": "Pronóstico climático y precios mayoristas del MCBA para el sector hortícola del NOA",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#1B5E20",
+  "theme_color": "#1B5E20",
+  "lang": "es-AR",
+  "dir": "ltr",
+  "categories": ["productivity", "weather", "business"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ver Precios MCBA",
+      "short_name": "Precios",
+      "description": "Ver precios del Mercado Central",
+      "url": "./precios_hoy.pdf"
+    }
+  ]
+}
