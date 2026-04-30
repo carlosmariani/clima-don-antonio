@@ -89,6 +89,26 @@
     "viento_fuerte_kmh": 50.0,
     "sequia_dias_sin_lluvia": 15
   },
+  "precios_mercado_central": {
+    "url_base": "https://mercadocentral.gob.ar/sites/default/files/precios_mayoristas/",
+    "procedencias_prioritarias": ["SALTA", "JUJUY"],
+    "procedencias_fallback": ["BS. AS."],
+    "productos_hortalizas": [
+      {"especie": "TOMATE", "variedades": ["REDONDO", "PERITA", "CHERRY"]},
+      {"especie": "PIMIENTO", "variedades": ["MORRON"]},
+      {"especie": "PEPINO", "variedades": []},
+      {"especie": "BERENJENA", "variedades": []},
+      {"especie": "ZAPALLITO", "variedades": ["LARGO", "REDONDO"]},
+      {"especie": "ZAPALLO", "variedades": ["ANQUITO", "ANC.COKENA", "TETSUKAB."]},
+      {"especie": "CHOCLO", "variedades": []},
+      {"especie": "CHAUCHA", "variedades": []}
+    ],
+    "productos_frutas": [
+      {"especie": "MELON", "variedades": []}
+    ],
+    "email_destinatario": "carlos.mariani@semdonantonio.com.ar",
+    "horario_envio_art": "17:00"
+  },
   "fuentes_datos": {
     "open_meteo_forecast": "https://api.open-meteo.com/v1/forecast",
     "open_meteo_seasonal": "https://seasonal-api.open-meteo.com/v1/seasonal",
