@@ -1,0 +1,207 @@
+{
+  "fecha_str": "30 de abril de 2026",
+  "n_cotizaciones": 20,
+  "texto_resumen": "Hoy se relevaron <b>20 cotizaciones</b> en el MCBA para tus productos. 7 cotizaciones bajaron, 1 subieron y 5 se mantuvieron estables respecto al día hábil anterior.",
+  "productos_top": [
+    {
+      "especie": "TOMATE",
+      "variedad": "CHERRY",
+      "procedencia": "BS. AS. *",
+      "envase": "cajón",
+      "kg_bulto": 5.0,
+      "precio": 5750.0,
+      "variacion": -26.47058823529412
+    },
+    {
+      "especie": "TOMATE",
+      "variedad": "PERITA",
+      "procedencia": "JUJUY",
+      "envase": "cajón tomate",
+      "kg_bulto": 18.0,
+      "precio": 14500.0,
+      "variacion": -23.52941176470588
+    },
+    {
+      "especie": "TOMATE",
+      "variedad": "REDONDO",
+      "procedencia": "BS. AS. *",
+      "envase": "cajón tomate",
+      "kg_bulto": 18.0,
+      "precio": 13500.0,
+      "variacion": -50.0
+    },
+    {
+      "especie": "PIMIENTO",
+      "variedad": "MORRON",
+      "procedencia": "SALTA",
+      "envase": "pelado",
+      "kg_bulto": 10.0,
+      "precio": 15333.333333333334,
+      "variacion": -50.0
+    },
+    {
+      "especie": "PEPINO",
+      "variedad": "",
+      "procedencia": "SALTA",
+      "envase": "cajón tomate",
+      "kg_bulto": 18.0,
+      "precio": 25000.0,
+      "variacion": -7.4074074074074066
+    },
+    {
+      "especie": "BERENJENA",
+      "variedad": "VTA.MED.LA",
+      "procedencia": "SALTA",
+      "envase": "pelado",
+      "kg_bulto": 10.0,
+      "precio": 21000.0,
+      "variacion": -8.695652173913043
+    },
+    {
+      "especie": "ZAPALLITO",
+      "variedad": "LARGO",
+      "procedencia": "JUJUY",
+      "envase": "pelado",
+      "kg_bulto": 15.0,
+      "precio": 18000.0,
+      "variacion": -14.285714285714285
+    },
+    {
+      "especie": "ZAPALLITO",
+      "variedad": "REDONDO",
+      "procedencia": "JUJUY",
+      "envase": "pelado",
+      "kg_bulto": 15.0,
+      "precio": 28000.0,
+      "variacion": -4.545454545454546
+    },
+    {
+      "especie": "ZAPALLO",
+      "variedad": "ANQUITO",
+      "procedencia": "BS. AS. *",
+      "envase": "jaula",
+      "kg_bulto": 20.0,
+      "precio": 5500.0,
+      "variacion": 0.0
+    },
+    {
+      "especie": "CHOCLO",
+      "variedad": "AMARILLO",
+      "procedencia": "SALTA",
+      "envase": "pelado",
+      "kg_bulto": 15.0,
+      "precio": 19000.0,
+      "variacion": 5.555555555555555
+    },
+    {
+      "especie": "CHAUCHA",
+      "variedad": "ESPA¥OLA",
+      "procedencia": "BS. AS. *",
+      "envase": "cajón tomate",
+      "kg_bulto": 10.0,
+      "precio": 11000.0,
+      "variacion": 0.0
+    },
+    {
+      "especie": "CHAUCHA",
+      "variedad": "ROLLIZA",
+      "procedencia": "BS. AS. *",
+      "envase": "cajón tomate",
+      "kg_bulto": 10.0,
+      "precio": 14000.0,
+      "variacion": 0.0
+    }
+  ],
+  "clima_manana": [
+    {
+      "zona": "Orán",
+      "provincia": "Salta",
+      "tmax": 26.7,
+      "tmin": 15.9,
+      "lluvia_mm": 0.0,
+      "prob_lluvia": 8,
+      "alerta": null
+    },
+    {
+      "zona": "Pichanal",
+      "provincia": "Salta",
+      "tmax": 28.0,
+      "tmin": 16.6,
+      "lluvia_mm": 0.0,
+      "prob_lluvia": 8,
+      "alerta": null
+    },
+    {
+      "zona": "Colonia Santa Rosa",
+      "provincia": "Salta",
+      "tmax": 25.0,
+      "tmin": 14.4,
+      "lluvia_mm": 0.0,
+      "prob_lluvia": 2,
+      "alerta": null
+    },
+    {
+      "zona": "General Pizarro",
+      "provincia": "Salta",
+      "tmax": 24.7,
+      "tmin": 13.4,
+      "lluvia_mm": 0.0,
+      "prob_lluvia": 10,
+      "alerta": null
+    },
+    {
+      "zona": "Apolinario Saravia",
+      "provincia": "Salta",
+      "tmax": 28.1,
+      "tmin": 16.9,
+      "lluvia_mm": 0.0,
+      "prob_lluvia": 14,
+      "alerta": null
+    },
+    {
+      "zona": "Yuto",
+      "provincia": "Jujuy",
+      "tmax": 26.4,
+      "tmin": 14.1,
+      "lluvia_mm": 0.0,
+      "prob_lluvia": 0,
+      "alerta": null
+    },
+    {
+      "zona": "Fraile Pintado",
+      "provincia": "Jujuy",
+      "tmax": 23.6,
+      "tmin": 13.6,
+      "lluvia_mm": 0.0,
+      "prob_lluvia": 0,
+      "alerta": null
+    },
+    {
+      "zona": "Chalicán",
+      "provincia": "Jujuy",
+      "tmax": 25.6,
+      "tmin": 13.7,
+      "lluvia_mm": 0.0,
+      "prob_lluvia": 0,
+      "alerta": null
+    },
+    {
+      "zona": "Aguas Calientes",
+      "provincia": "Jujuy",
+      "tmax": 21.9,
+      "tmin": 9.2,
+      "lluvia_mm": 0.0,
+      "prob_lluvia": 22,
+      "alerta": null
+    },
+    {
+      "zona": "Santa Clara",
+      "provincia": "Jujuy",
+      "tmax": 22.1,
+      "tmin": 11.4,
+      "lluvia_mm": 0.0,
+      "prob_lluvia": 0,
+      "alerta": null
+    }
+  ]
+}
