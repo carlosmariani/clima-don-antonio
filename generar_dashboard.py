@@ -97,6 +97,19 @@ def recolectar_datos():
         orden_cfg.get(r["info"]["nombre"], 999)
     ))
     salida["localidades"] = resultados
+
+    # Precios del MCBA: leer el JSON resumen que genera el workflow de precios
+    # (si existe). Si no, dejar vacío y la sección no se muestra en el HTML.
+    precios_path = os.path.join(os.path.dirname(__file__),
+                                  "informes", "precios_hoy_resumen.json")
+    if os.path.exists(precios_path):
+        try:
+            with open(precios_path, "r", encoding="utf-8") as f:
+                salida["precios"] = json.load(f)
+        except Exception:
+            salida["precios"] = None
+    else:
+        salida["precios"] = None
     return salida
 
 
@@ -371,6 +384,18 @@ body {
 .accion-porque { font-size: 11px; color: #666; line-height: 1.4; }
 
 /* === TRIMESTRAL === */
+.precios-section {
+  background: #fff; padding: 18px 22px; border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06); margin-top: 22px;
+}
+.precios-section h2 { color: var(--primario); font-size: 17px; }
+.precios-section table tbody tr { border-bottom: 1px solid #eee; }
+.precios-section table tbody tr:nth-child(even) { background: #fafbfc; }
+.precios-section table td { padding: 7px 10px; }
+.precios-section .var-up { color: var(--rojo); font-weight: 600; }
+.precios-section .var-down { color: var(--primario); font-weight: 600; }
+.precios-section .var-flat { color: #888; }
+
 .trimestral-section {
   background: #fff; padding: 18px 22px; border-radius: 12px;
   box-shadow: 0 1px 4px rgba(0,0,0,.06); margin-top: 22px;
@@ -487,6 +512,37 @@ footer {
   <h2 class="section-title" id="titulo-cards">🌤️ Detalle por zona</h2>
   <div id="cards" class="cards-grid"></div>
 
+  <!-- Precios MCBA (solo si hay datos) -->
+  <div id="precios-section" class="precios-section" style="display:none">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px">
+      <div>
+        <h2 style="margin:0">📊 Precios mayoristas — Mercado Central</h2>
+        <div style="font-size:12px; color:#555; margin-top:2px" id="precios-fecha">—</div>
+      </div>
+      <a href="precios_hoy.pdf" target="_blank" style="background:var(--primario);color:#fff;padding:9px 18px;text-decoration:none;border-radius:6px;font-weight:600;font-size:13px">
+        📄 Ver PDF completo
+      </a>
+    </div>
+    <div id="precios-resumen" style="font-size:13px; color:#333; line-height:1.55; margin:12px 0 14px 0; padding:10px 14px; background:#f7f9fb; border-radius:8px; border-left:3px solid var(--azul)"></div>
+    <div style="overflow-x:auto">
+      <table id="tabla-precios" style="width:100%; border-collapse:collapse; font-size:12.5px; min-width:560px">
+        <thead style="background:var(--primario); color:#fff">
+          <tr>
+            <th style="padding:8px 10px; text-align:left">Producto</th>
+            <th style="padding:8px 10px; text-align:left">Procedencia · Envase</th>
+            <th style="padding:8px 10px; text-align:right">$ Medio (bulto)</th>
+            <th style="padding:8px 10px; text-align:center">VS Ayer</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div style="font-size:10.5px; color:#888; margin-top:8px; font-style:italic">
+      * Procedencia Buenos Aires — referencia cuando no hubo cotización de Salta o Jujuy ese día.
+      Datos del MCBA. Se actualizan automáticamente de lunes a viernes.
+    </div>
+  </div>
+
   <!-- Trimestral -->
   <div class="trimestral-section">
     <h2>📅 Tendencia para los próximos meses</h2>
@@ -527,6 +583,7 @@ function init() {
   renderFiltros();
   renderCards(DATOS.localidades);
   renderTrimestral();
+  renderPrecios();
 
   document.getElementById("filtro-texto").addEventListener("input", aplicarFiltros);
   document.getElementById("filtro-prov").addEventListener("change", aplicarFiltros);
@@ -927,6 +984,41 @@ function renderTrimestral() {
       <div class="desc"><span class="icono">${t.emoji}</span>${t.descripcion}</div>
       <div class="rec">💡 ${t.recomendacion}</div>
     </div>`;
+  }).join("");
+}
+
+function renderPrecios() {
+  const precios = DATOS.precios;
+  const sec = document.getElementById("precios-section");
+  if (!precios || !precios.productos_top || precios.productos_top.length === 0) {
+    sec.style.display = "none";
+    return;
+  }
+  sec.style.display = "block";
+  document.getElementById("precios-fecha").textContent = "Datos del " + (precios.fecha_str || "—");
+  // Resumen
+  document.getElementById("precios-resumen").innerHTML = precios.texto_resumen || "";
+  // Tabla
+  const tbody = document.querySelector("#tabla-precios tbody");
+  const formatPrecio = (n) =>
+    "$" + Math.round(n).toLocaleString("es-AR").replace(/,/g, ".");
+  tbody.innerHTML = precios.productos_top.map(p => {
+    let varHtml = '<span class="var-flat">—</span>';
+    if (p.variacion !== null && p.variacion !== undefined) {
+      const v = p.variacion;
+      if (v > 5)       varHtml = `<span class="var-up">↑ ${v.toFixed(0)}%</span>`;
+      else if (v < -5) varHtml = `<span class="var-down">↓ ${v.toFixed(0)}%</span>`;
+      else             varHtml = `<span class="var-flat">≈ ${v.toFixed(0)}%</span>`;
+    }
+    const procEnvase = `${p.procedencia} · ${p.envase} ${p.kg_bulto ? Math.round(p.kg_bulto) + 'kg' : ''}`;
+    return `
+      <tr>
+        <td><b>${p.especie}</b> <span style="color:#888">${p.variedad || ''}</span></td>
+        <td style="font-size:11.5px;color:#666">${procEnvase}</td>
+        <td style="text-align:right"><b>${formatPrecio(p.precio)}</b></td>
+        <td style="text-align:center">${varHtml}</td>
+      </tr>
+    `;
   }).join("");
 }
 
