@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1B5E20;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#388E3C;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Círculo verde con planta -->
+  <circle cx="60" cy="60" r="48" fill="url(#g1)" stroke="#0D3F12" stroke-width="2"/>
+
+  <!-- Sol arriba -->
+  <circle cx="60" cy="38" r="10" fill="#F9A825"/>
+  <g stroke="#F9A825" stroke-width="2" stroke-linecap="round">
+    <line x1="60" y1="20" x2="60" y2="26"/>
+    <line x1="46" y1="38" x2="52" y2="38"/>
+    <line x1="74" y1="38" x2="68" y2="38"/>
+    <line x1="48" y1="26" x2="52" y2="30"/>
+    <line x1="72" y1="26" x2="68" y2="30"/>
+  </g>
+
+  <!-- Hoja/planta -->
+  <path d="M 60 90 Q 50 70 42 60 Q 50 62 60 70 Q 70 62 78 60 Q 70 70 60 90 Z"
+        fill="#7CB342" stroke="#33691E" stroke-width="1"/>
+  <line x1="60" y1="90" x2="60" y2="70" stroke="#33691E" stroke-width="2"/>
+
+  <!-- Texto -->
+  <text x="125" y="55" font-family="Georgia, serif" font-size="32" font-weight="bold" fill="#1B5E20">
+    Don Antonio
+  </text>
+  <text x="125" y="80" font-family="Georgia, serif" font-size="16" fill="#666" letter-spacing="3">
+    S · R · L
+  </text>
+  <text x="125" y="100" font-family="Arial, sans-serif" font-size="11" fill="#888" font-style="italic">
+    Insumos Agrícolas — NOA
+  </text>
+</svg>

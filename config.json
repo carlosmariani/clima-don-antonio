@@ -1,0 +1,107 @@
+{
+  "empresa": {
+    "nombre": "Don Antonio SRL",
+    "rubro": "Insumos Agrícolas para el sector hortícola",
+    "email": "carlos.mariani@semdonantonio.com.ar",
+    "telefono": "",
+    "direccion": "",
+    "web": "semdonantonio.com.ar",
+    "color_primario": "#1B5E20",
+    "color_secundario": "#F9A825",
+    "color_acento": "#0D47A1"
+  },
+  "localidades": [
+    {
+      "nombre": "Orán",
+      "provincia": "Salta",
+      "lat": -23.1369,
+      "lon": -64.3275,
+      "altitud": 357
+    },
+    {
+      "nombre": "Pichanal",
+      "provincia": "Salta",
+      "lat": -23.3167,
+      "lon": -64.2333,
+      "altitud": 320
+    },
+    {
+      "nombre": "Colonia Santa Rosa",
+      "provincia": "Salta",
+      "lat": -23.4333,
+      "lon": -64.5333,
+      "altitud": 358
+    },
+    {
+      "nombre": "General Pizarro",
+      "provincia": "Salta",
+      "lat": -24.2167,
+      "lon": -64.2333,
+      "altitud": 380
+    },
+    {
+      "nombre": "Apolinario Saravia",
+      "provincia": "Salta",
+      "lat": -24.4333,
+      "lon": -64.0167,
+      "altitud": 320
+    },
+    {
+      "nombre": "Yuto",
+      "provincia": "Jujuy",
+      "lat": -23.6333,
+      "lon": -64.4833,
+      "altitud": 380
+    },
+    {
+      "nombre": "Fraile Pintado",
+      "provincia": "Jujuy",
+      "lat": -23.9333,
+      "lon": -64.7833,
+      "altitud": 480
+    },
+    {
+      "nombre": "Chalicán",
+      "provincia": "Jujuy",
+      "lat": -24.0167,
+      "lon": -64.8000,
+      "altitud": 510
+    },
+    {
+      "nombre": "Aguas Calientes",
+      "provincia": "Jujuy",
+      "lat": -24.2500,
+      "lon": -65.0833,
+      "altitud": 1090
+    },
+    {
+      "nombre": "Santa Clara",
+      "provincia": "Jujuy",
+      "lat": -24.3000,
+      "lon": -64.5500,
+      "altitud": 580
+    }
+  ],
+  "umbrales_alertas": {
+    "helada_temp_min": 3.0,
+    "calor_extremo_temp_max": 38.0,
+    "lluvia_intensa_mm_dia": 30.0,
+    "viento_fuerte_kmh": 50.0,
+    "sequia_dias_sin_lluvia": 15
+  },
+  "fuentes_datos": {
+    "open_meteo_forecast": "https://api.open-meteo.com/v1/forecast",
+    "open_meteo_seasonal": "https://seasonal-api.open-meteo.com/v1/seasonal",
+    "open_meteo_historical": "https://archive-api.open-meteo.com/v1/archive",
+    "modelos_pronostico": [
+      "ECMWF (Centro Europeo de Pronóstico a Mediano Plazo)",
+      "GFS - NOAA (Estados Unidos)",
+      "ICON - DWD (Alemania)",
+      "JMA (Japón)"
+    ],
+    "fuentes_complementarias": [
+      "Servicio Meteorológico Nacional (SMN) Argentina",
+      "INTA - Sistema de Información y Gestión Agrometeorológica"
+    ]
+  }
+}
