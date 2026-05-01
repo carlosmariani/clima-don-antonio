@@ -116,91 +116,91 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 26.7,
-      "tmin": 15.9,
-      "lluvia_mm": 0.0,
-      "prob_lluvia": 8,
+      "tmax": 25.7,
+      "tmin": 15.4,
+      "lluvia_mm": 1.0,
+      "prob_lluvia": 11,
       "alerta": null
     },
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 28.0,
-      "tmin": 16.6,
+      "tmax": 25.4,
+      "tmin": 17.2,
       "lluvia_mm": 0.0,
-      "prob_lluvia": 8,
+      "prob_lluvia": 11,
       "alerta": null
     },
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 25.0,
-      "tmin": 14.4,
+      "tmax": 24.9,
+      "tmin": 13.8,
       "lluvia_mm": 0.0,
-      "prob_lluvia": 2,
+      "prob_lluvia": 40,
       "alerta": null
     },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 24.7,
-      "tmin": 13.4,
-      "lluvia_mm": 0.0,
-      "prob_lluvia": 10,
-      "alerta": null
+      "tmax": 19.5,
+      "tmin": 14.1,
+      "lluvia_mm": 0.3,
+      "prob_lluvia": 53,
+      "alerta": "💨 Viento fuerte (62 km/h)"
     },
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 28.1,
-      "tmin": 16.9,
-      "lluvia_mm": 0.0,
-      "prob_lluvia": 14,
-      "alerta": null
+      "tmax": 23.0,
+      "tmin": 18.3,
+      "lluvia_mm": 0.9,
+      "prob_lluvia": 45,
+      "alerta": "💨 Viento fuerte (55 km/h)"
     },
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 26.4,
-      "tmin": 14.1,
-      "lluvia_mm": 0.0,
-      "prob_lluvia": 0,
+      "tmax": 25.5,
+      "tmin": 18.0,
+      "lluvia_mm": 0.1,
+      "prob_lluvia": 57,
       "alerta": null
     },
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 23.6,
-      "tmin": 13.6,
+      "tmax": 24.4,
+      "tmin": 14.5,
       "lluvia_mm": 0.0,
-      "prob_lluvia": 0,
+      "prob_lluvia": 4,
       "alerta": null
     },
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 25.6,
-      "tmin": 13.7,
+      "tmax": 24.9,
+      "tmin": 15.1,
       "lluvia_mm": 0.0,
-      "prob_lluvia": 0,
+      "prob_lluvia": 4,
       "alerta": null
     },
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 21.9,
-      "tmin": 9.2,
-      "lluvia_mm": 0.0,
-      "prob_lluvia": 22,
+      "tmax": 17.1,
+      "tmin": 10.9,
+      "lluvia_mm": 1.4,
+      "prob_lluvia": 66,
       "alerta": null
     },
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 22.1,
-      "tmin": 11.4,
+      "tmax": 21.1,
+      "tmin": 14.8,
       "lluvia_mm": 0.0,
-      "prob_lluvia": 0,
+      "prob_lluvia": 10,
       "alerta": null
     }
   ]
