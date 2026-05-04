@@ -19,9 +19,15 @@ Email tiene:
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 import requests
+
+TZ_AR = timezone(timedelta(hours=-3))
+
+
+def _ahora_ar() -> datetime:
+    return datetime.now(TZ_AR).replace(tzinfo=None)
 
 
 def cargar_config(path: str = "config.json") -> dict:
@@ -41,8 +47,10 @@ def construir_html(empresa: dict, resumen: dict, url_pdf: str) -> str:
     fecha_str = resumen.get("fecha_str", "")
     n_total = resumen.get("n_cotizaciones", 0)
     productos_top = resumen.get("productos_top", [])
-    clima = resumen.get("clima_manana", [])
+    # Compatibilidad: aceptar tanto clima_48h (nuevo) como clima_manana (viejo)
+    clima = resumen.get("clima_48h") or resumen.get("clima_manana", [])
     alertas_clima = [c for c in clima if c.get("alerta")]
+    alertas_7d = resumen.get("alertas_7d") or resumen.get("alertas_15d", [])
 
     # Estilos inline (algunos clientes de email no soportan <style>)
     bg = "#1B5E20"
@@ -84,20 +92,118 @@ def construir_html(empresa: dict, resumen: dict, url_pdf: str) -> str:
         </div>
         """
 
+    # Banner amarillo si los datos están atrasados (MCBA no publicó hoy)
+    aviso_atraso = ""
+    dias_atraso = resumen.get("dias_atraso", 0)
+    if dias_atraso >= 1:
+        if dias_atraso == 1:
+            txt = (f"<b>Datos del día anterior ({fecha_str}).</b> "
+                   "El Mercado Central aún no publicó los datos de hoy.")
+        else:
+            txt = (f"<b>Datos atrasados — última publicación: {fecha_str}</b> "
+                   f"(hace {dias_atraso} días). El MCBA puede tardar al cambiar de "
+                   "mes o por feriados. Se actualiza automáticamente.")
+        aviso_atraso = f"""
+        <div style="background:#FFF8E1;border-left:4px solid {accent};padding:14px 18px;margin:16px 0;border-radius:4px;color:#5D4037">
+          ⚠️ {txt}
+        </div>
+        """
+
     clima_filas = ""
     for c in clima:
         bg_row = "#FFF3E0" if c.get("alerta") else "#fff"
-        alerta_celda = c.get("alerta") or '<span style="color:#888">—</span>'
+        # Si no hay datos de pasado mañana, usar mañana como fallback
+        tmax_p = c.get("tmax_pasado", c.get("tmax", 0))
+        tmin_p = c.get("tmin_pasado", c.get("tmin", 0))
+        lluvia_p = c.get("lluvia_pasado", c.get("lluvia_mm", 0))
         clima_filas += f"""
         <tr style="background:{bg_row}">
           <td style="padding:5px 8px;border-bottom:1px solid #eee">
             <b>{c['zona']}</b><br><span style="font-size:10px;color:#888">{c['provincia']}</span>
           </td>
-          <td style="padding:5px 8px;border-bottom:1px solid #eee;text-align:center">{c.get('tmax', 0):.0f}°</td>
-          <td style="padding:5px 8px;border-bottom:1px solid #eee;text-align:center">{c.get('tmin', 0):.0f}°</td>
-          <td style="padding:5px 8px;border-bottom:1px solid #eee;text-align:center">{c.get('lluvia_mm', 0):.0f} mm</td>
-          <td style="padding:5px 8px;border-bottom:1px solid #eee;font-size:11px">{alerta_celda}</td>
+          <td style="padding:5px 6px;border-bottom:1px solid #eee;text-align:center">{c.get('tmax', 0):.0f}°</td>
+          <td style="padding:5px 6px;border-bottom:1px solid #eee;text-align:center">{c.get('tmin', 0):.0f}°</td>
+          <td style="padding:5px 6px;border-bottom:1px solid #eee;text-align:center">{c.get('lluvia_mm', 0):.0f} mm</td>
+          <td style="padding:5px 6px;border-bottom:1px solid #eee;text-align:center;border-left:2px solid #0D47A1">{tmax_p:.0f}°</td>
+          <td style="padding:5px 6px;border-bottom:1px solid #eee;text-align:center">{tmin_p:.0f}°</td>
+          <td style="padding:5px 6px;border-bottom:1px solid #eee;text-align:center">{lluvia_p:.0f} mm</td>
         </tr>
+        """
+
+    # === Sección de alertas próximos 7 días ===
+    alertas_7d_html = ""
+    n_total_alertas_7d = sum(len(z.get("alertas", [])) for z in alertas_7d)
+    if n_total_alertas_7d > 0:
+        # Aplanar y ordenar por fecha
+        meses_es = {1: "ene", 2: "feb", 3: "mar", 4: "abr", 5: "may",
+                    6: "jun", 7: "jul", 8: "ago", 9: "sep",
+                    10: "oct", 11: "nov", 12: "dic"}
+        filas_plano = []
+        for z in alertas_7d:
+            for a in z.get("alertas", []):
+                filas_plano.append({
+                    "fecha": a.get("fecha", ""),
+                    "zona": z.get("zona", ""),
+                    "provincia": z.get("provincia", ""),
+                    "tipo": a.get("tipo", ""),
+                    "icono": a.get("icono", ""),
+                    "detalle": a.get("detalle", ""),
+                    "severidad": a.get("severidad", "MEDIA"),
+                })
+        sev_orden = {"ALTA": 0, "MEDIA": 1, "BAJA": 2}
+        filas_plano.sort(key=lambda r: (r["fecha"],
+                                          sev_orden.get(r["severidad"], 9)))
+
+        filas_html = ""
+        for r in filas_plano:
+            try:
+                f_dt = datetime.strptime(r["fecha"], "%Y-%m-%d")
+                f_str = f"{f_dt.day:02d}/{meses_es[f_dt.month]}"
+            except Exception:
+                f_str = r["fecha"]
+            if r["severidad"] == "ALTA":
+                bg_row = "#FFEBEE"
+                sev_html = f'<span style="color:{rojo};font-weight:700">ALTA</span>'
+            elif r["severidad"] == "MEDIA":
+                bg_row = "#FFF3E0"
+                sev_html = f'<span style="color:{naranja};font-weight:700">MEDIA</span>'
+            else:
+                bg_row = "#fff"
+                sev_html = '<span style="color:#888">BAJA</span>'
+
+            filas_html += f"""
+            <tr style="background:{bg_row}">
+              <td style="padding:5px 8px;border-bottom:1px solid #eee;text-align:center;white-space:nowrap"><b>{f_str}</b></td>
+              <td style="padding:5px 8px;border-bottom:1px solid #eee">
+                <b>{r['zona']}</b><br><span style="font-size:10px;color:#888">{r['provincia']}</span>
+              </td>
+              <td style="padding:5px 8px;border-bottom:1px solid #eee">{r['icono']} {r['tipo']}</td>
+              <td style="padding:5px 8px;border-bottom:1px solid #eee;font-size:11px">{r['detalle']}</td>
+              <td style="padding:5px 8px;border-bottom:1px solid #eee;text-align:center;font-size:11px">{sev_html}</td>
+            </tr>
+            """
+
+        alertas_7d_html = f"""
+          <h3 style="color:{bg};font-size:15px;margin:24px 0 8px 0;padding-left:10px;border-left:4px solid {accent}">
+            ⚠️ Alertas en los próximos 7 días
+          </h3>
+          <p style="font-size:12px;color:#555;margin:0 0 8px 0">
+            <b>{n_total_alertas_7d} alerta{'s' if n_total_alertas_7d != 1 else ''}</b>
+            detectada{'s' if n_total_alertas_7d != 1 else ''} en
+            {len(alertas_7d)} zona{'s' if len(alertas_7d) != 1 else ''}.
+          </p>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead>
+              <tr style="background:#0D47A1;color:#fff">
+                <th style="padding:6px 8px;text-align:center">Fecha</th>
+                <th style="padding:6px 8px;text-align:left">Zona</th>
+                <th style="padding:6px 8px;text-align:left">Tipo</th>
+                <th style="padding:6px 8px;text-align:left">Detalle</th>
+                <th style="padding:6px 8px;text-align:center">Sev.</th>
+              </tr>
+            </thead>
+            <tbody>{filas_html}</tbody>
+          </table>
         """
 
     html = f"""
@@ -114,6 +220,7 @@ def construir_html(empresa: dict, resumen: dict, url_pdf: str) -> str:
 
         <!-- Cuerpo -->
         <div style="padding:24px 28px">
+          {aviso_atraso}
           {alerta_box}
 
           <p style="line-height:1.6;color:#333;font-size:14px">
@@ -134,22 +241,30 @@ def construir_html(empresa: dict, resumen: dict, url_pdf: str) -> str:
             <tbody>{productos_html}</tbody>
           </table>
 
-          <!-- Clima mañana -->
+          <!-- Clima 48hs -->
           <h3 style="color:{bg};font-size:15px;margin:24px 0 8px 0;padding-left:10px;border-left:4px solid {accent}">
-            🌤️ Clima previsto para mañana
+            🌤️ Clima — próximas 48 hs
           </h3>
           <table style="width:100%;border-collapse:collapse;font-size:12px">
             <thead>
               <tr style="background:#0D47A1;color:#fff">
-                <th style="padding:6px 8px;text-align:left">Zona</th>
-                <th style="padding:6px 8px;text-align:center">Tmáx</th>
-                <th style="padding:6px 8px;text-align:center">Tmín</th>
-                <th style="padding:6px 8px;text-align:center">Lluvia</th>
-                <th style="padding:6px 8px;text-align:left">Alerta</th>
+                <th style="padding:6px 8px;text-align:left" rowspan="2">Zona</th>
+                <th style="padding:4px 8px;text-align:center;border-bottom:1px solid #fff" colspan="3">Mañana</th>
+                <th style="padding:4px 8px;text-align:center;border-left:2px solid #fff;border-bottom:1px solid #fff" colspan="3">Pasado</th>
+              </tr>
+              <tr style="background:#0D47A1;color:#fff;font-size:11px">
+                <th style="padding:4px 6px;text-align:center">Máx</th>
+                <th style="padding:4px 6px;text-align:center">Mín</th>
+                <th style="padding:4px 6px;text-align:center">Lluvia</th>
+                <th style="padding:4px 6px;text-align:center;border-left:2px solid #fff">Máx</th>
+                <th style="padding:4px 6px;text-align:center">Mín</th>
+                <th style="padding:4px 6px;text-align:center">Lluvia</th>
               </tr>
             </thead>
             <tbody>{clima_filas}</tbody>
           </table>
+
+          {alertas_7d_html}
 
           <!-- Botón PDF -->
           <div style="text-align:center;margin:30px 0 10px 0">
@@ -199,10 +314,19 @@ def main():
     url_pdf = ("https://carlosmariani.github.io/clima-don-antonio/"
                "precios_hoy.pdf")
 
-    fecha_str = resumen.get("fecha_str", datetime.now().strftime("%d/%m/%Y"))
+    fecha_str = resumen.get("fecha_str", _ahora_ar().strftime("%d/%m/%Y"))
     asunto = f"📊 Precios MCBA — {fecha_str}"
-    if any(c.get("alerta") for c in resumen.get("clima_manana", [])):
-        asunto = f"⚠️ {asunto} (alerta climática)"
+    clima_e = (resumen.get("clima_48h")
+               or resumen.get("clima_manana", []))
+    hay_alerta_48h = any(c.get("alerta") for c in clima_e)
+    n_alertas_7d = sum(len(z.get("alertas", []))
+                        for z in (resumen.get("alertas_7d")
+                                   or resumen.get("alertas_15d", [])))
+    if hay_alerta_48h:
+        asunto = f"⚠️ {asunto} (alerta climática 48hs)"
+    elif n_alertas_7d > 0:
+        asunto = f"⚠️ {asunto} ({n_alertas_7d} alerta"\
+                 f"{'s' if n_alertas_7d != 1 else ''} próximos 7 días)"
 
     html = construir_html(empresa, resumen, url_pdf)
 

@@ -12,7 +12,7 @@ import argparse
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 from precios_mercado import PreciosMCBA
 from generador_pdf_precios import GeneradorPDFPrecios
@@ -20,45 +20,142 @@ from clima_api import ClimaAPI
 from analisis import AnalizadorClima
 from concurrent.futures import ThreadPoolExecutor
 
+# Zona horaria Argentina (UTC-3) — para que en GitHub Actions se use la hora correcta
+TZ_AR = timezone(timedelta(hours=-3))
 
-def obtener_clima_manana(cfg) -> list:
-    """Obtiene pronóstico para el día siguiente en las 10 zonas configuradas."""
+
+def _ahora_ar() -> datetime:
+    """Devuelve la fecha/hora actual en Argentina, como datetime naive."""
+    return datetime.now(TZ_AR).replace(tzinfo=None)
+
+
+def _detectar_alertas_dia(d, idx, ums):
+    """Devuelve lista de alertas detectadas para un día específico."""
+    alertas = []
+    tmin = d["temperature_2m_min"][idx] if idx < len(d["temperature_2m_min"]) else None
+    tmax = d["temperature_2m_max"][idx] if idx < len(d["temperature_2m_max"]) else None
+    lluvia = d["precipitation_sum"][idx] if idx < len(d["precipitation_sum"]) else None
+    v_arr = d.get("windgusts_10m_max") or d["windspeed_10m_max"]
+    viento = v_arr[idx] if v_arr and idx < len(v_arr) else None
+
+    if tmin is not None and tmin <= ums["helada_temp_min"]:
+        if tmin <= 0:
+            alertas.append({
+                "tipo": "Helada",
+                "icono": "🔴",
+                "severidad": "ALTA",
+                "valor": f"{tmin:.0f}°C",
+                "detalle": f"Mínima {tmin:.0f}°C"
+            })
+        else:
+            alertas.append({
+                "tipo": "Riesgo de helada",
+                "icono": "❄️",
+                "severidad": "MEDIA",
+                "valor": f"{tmin:.0f}°C",
+                "detalle": f"Mínima {tmin:.0f}°C"
+            })
+    if tmax is not None and tmax >= ums["calor_extremo_temp_max"]:
+        alertas.append({
+            "tipo": "Calor extremo",
+            "icono": "🌡️",
+            "severidad": "ALTA" if tmax >= 40 else "MEDIA",
+            "valor": f"{tmax:.0f}°C",
+            "detalle": f"Máxima {tmax:.0f}°C"
+        })
+    if lluvia is not None and lluvia >= ums["lluvia_intensa_mm_dia"]:
+        alertas.append({
+            "tipo": "Lluvia intensa",
+            "icono": "🌧️",
+            "severidad": "ALTA" if lluvia >= 60 else "MEDIA",
+            "valor": f"{lluvia:.0f} mm",
+            "detalle": f"{lluvia:.0f} mm en el día"
+        })
+    if viento is not None and viento >= ums["viento_fuerte_kmh"]:
+        alertas.append({
+            "tipo": "Viento fuerte",
+            "icono": "💨",
+            "severidad": "ALTA" if viento >= 70 else "MEDIA",
+            "valor": f"{viento:.0f} km/h",
+            "detalle": f"Ráfagas hasta {viento:.0f} km/h"
+        })
+    return alertas
+
+
+def obtener_clima_y_alertas(cfg) -> tuple:
+    """
+    Obtiene:
+    - Pronóstico para las próximas 48 hs (mañana + pasado) en cada zona (clima_48h)
+    - Alertas detectadas en los próximos 7 días por zona (alertas_7d)
+    """
     api = ClimaAPI()
-    analizador = AnalizadorClima(cfg["umbrales_alertas"])
+    ums = cfg["umbrales_alertas"]
+    HORIZONTE_ALERTAS = 7  # días
 
     def _zona(loc):
         try:
             pron = api.pronostico_15_dias(loc["lat"], loc["lon"])
             d = pron["daily"]
-            # Día 1 = hoy (índice 0), día 2 = mañana (índice 1)
-            idx = 1 if len(d["time"]) > 1 else 0
-            tmax = d["temperature_2m_max"][idx]
-            tmin = d["temperature_2m_min"][idx]
-            lluvia = d["precipitation_sum"][idx]
-            prob = (d.get("precipitation_probability_max", [0])[idx] or 0)
+            n_dias = len(d["time"])
 
-            # Detectar alertas para mañana
-            alerta = None
-            ums = cfg["umbrales_alertas"]
-            if tmin is not None and tmin <= ums["helada_temp_min"]:
-                sev = "🔴 HELADA" if tmin <= 0 else "❄️ Riesgo de helada"
-                alerta = f"{sev} ({tmin:.0f}°C)"
-            elif tmax is not None and tmax >= ums["calor_extremo_temp_max"]:
-                alerta = f"🌡️ Calor extremo ({tmax:.0f}°C)"
-            elif lluvia is not None and lluvia >= ums["lluvia_intensa_mm_dia"]:
-                alerta = f"🌧️ Lluvia intensa ({lluvia:.0f} mm)"
-            v_arr = d.get("windgusts_10m_max") or d["windspeed_10m_max"]
-            if alerta is None and v_arr and v_arr[idx] is not None and v_arr[idx] >= ums["viento_fuerte_kmh"]:
-                alerta = f"💨 Viento fuerte ({v_arr[idx]:.0f} km/h)"
+            def _safe(arr, i):
+                if arr is None: return None
+                return arr[i] if i < len(arr) else None
 
-            return {
+            # === Mañana (idx 1) y Pasado (idx 2) ===
+            idx_man = 1 if n_dias > 1 else 0
+            idx_pas = 2 if n_dias > 2 else idx_man
+
+            # Alertas combinadas mañana+pasado para mostrar resumen
+            alertas_48h = (_detectar_alertas_dia(d, idx_man, ums)
+                           + _detectar_alertas_dia(d, idx_pas, ums))
+            alerta_str = None
+            if alertas_48h:
+                # Quedarnos con alertas únicas por tipo
+                vistos = set()
+                pieces = []
+                for a in alertas_48h:
+                    if a["tipo"] in vistos: continue
+                    vistos.add(a["tipo"])
+                    pieces.append(f"{a['icono']} {a['tipo']} ({a['valor']})")
+                alerta_str = " · ".join(pieces)
+
+            clima_48h = {
                 "zona": loc["nombre"],
                 "provincia": loc["provincia"],
-                "tmax": tmax if tmax is not None else 0,
-                "tmin": tmin if tmin is not None else 0,
-                "lluvia_mm": lluvia if lluvia is not None else 0,
-                "prob_lluvia": prob,
-                "alerta": alerta,
+                # Mañana
+                "tmax": _safe(d["temperature_2m_max"], idx_man) or 0,
+                "tmin": _safe(d["temperature_2m_min"], idx_man) or 0,
+                "lluvia_mm": _safe(d["precipitation_sum"], idx_man) or 0,
+                "prob_lluvia": (_safe(d.get("precipitation_probability_max"),
+                                       idx_man) or 0),
+                # Pasado mañana
+                "tmax_pasado": _safe(d["temperature_2m_max"], idx_pas) or 0,
+                "tmin_pasado": _safe(d["temperature_2m_min"], idx_pas) or 0,
+                "lluvia_pasado": _safe(d["precipitation_sum"], idx_pas) or 0,
+                "prob_lluvia_pasado": (_safe(
+                    d.get("precipitation_probability_max"), idx_pas) or 0),
+                "alerta": alerta_str,
+            }
+
+            # === Alertas en los próximos 7 días (saltar día 0 = hoy) ===
+            alertas_proximos = []
+            limite = min(HORIZONTE_ALERTAS + 1, n_dias)  # idx 1..7
+            for i in range(1, limite):
+                fecha = d["time"][i]
+                aa = _detectar_alertas_dia(d, i, ums)
+                for a in aa:
+                    a_copy = dict(a)
+                    a_copy["fecha"] = fecha
+                    alertas_proximos.append(a_copy)
+
+            return {
+                "clima_48h": clima_48h,
+                "alertas_7d": {
+                    "zona": loc["nombre"],
+                    "provincia": loc["provincia"],
+                    "alertas": alertas_proximos,
+                }
             }
         except Exception:
             return None
@@ -66,11 +163,20 @@ def obtener_clima_manana(cfg) -> list:
     with ThreadPoolExecutor(max_workers=6) as ex:
         resultados = list(ex.map(_zona, cfg["localidades"]))
 
-    # Mantener orden del config y filtrar None
     resultados = [r for r in resultados if r]
     orden = {l["nombre"]: i for i, l in enumerate(cfg["localidades"])}
-    resultados.sort(key=lambda r: orden.get(r["zona"], 999))
-    return resultados
+    resultados.sort(key=lambda r: orden.get(r["clima_48h"]["zona"], 999))
+
+    clima_48h = [r["clima_48h"] for r in resultados]
+    alertas_7d = [r["alertas_7d"] for r in resultados if r["alertas_7d"]["alertas"]]
+    return clima_48h, alertas_7d
+
+
+# Compatibilidad hacia atrás
+def obtener_clima_manana(cfg):
+    """Compat: solo devuelve el clima de las próximas 48hs."""
+    clima, _ = obtener_clima_y_alertas(cfg)
+    return clima
 
 
 def cargar_config(path: str = "config.json") -> dict:
@@ -112,7 +218,7 @@ def main():
             print(f"❌ Fecha inválida: {args.fecha}. Usar formato YYYY-MM-DD")
             sys.exit(1)
     else:
-        fecha = datetime.now()
+        fecha = _ahora_ar()
 
     cli = PreciosMCBA()
 
@@ -164,19 +270,25 @@ def main():
         suf = f"_{args.cliente.replace(' ', '_')}" if args.cliente else ""
         salida = os.path.join("informes", f"precios_mcba_{fecha_str}{suf}.pdf")
 
-    # Obtener clima de mañana para anexar
-    clima_manana = None
+    # Obtener clima 48hs + alertas próximos 7 días
+    clima_48h = None
+    alertas_7d = None
     if not args.sin_clima:
-        print("\n→ Obteniendo pronóstico para mañana en las 10 zonas...")
-        clima_manana = obtener_clima_manana(cfg)
-        n_alertas = sum(1 for c in clima_manana if c.get("alerta"))
-        print(f"  ✓ {len(clima_manana)} zonas, {n_alertas} con alerta crítica")
+        print("\n→ Obteniendo pronóstico 48hs + alertas próximos 7 días...")
+        clima_48h, alertas_7d = obtener_clima_y_alertas(cfg)
+        n_alertas_48h = sum(1 for c in clima_48h if c.get("alerta"))
+        n_zonas_7d = len(alertas_7d) if alertas_7d else 0
+        n_alertas_7d = sum(len(z["alertas"]) for z in (alertas_7d or []))
+        print(f"  ✓ {len(clima_48h)} zonas — {n_alertas_48h} con alerta 48hs")
+        print(f"  ✓ {n_alertas_7d} alertas previstas en próximos 7 días "
+              f"({n_zonas_7d} zonas)")
 
     print(f"\n📄 Generando PDF: {salida}")
     gen = GeneradorPDFPrecios(empresa, logo_path=args.logo)
     gen.generar(datos_hoy, datos_ayer, variaciones,
                 output_path=salida, cliente=args.cliente,
-                clima_manana=clima_manana)
+                clima_48h=clima_48h,
+                alertas_7d=alertas_7d)
 
     # Guardar también una copia con nombre fijo "precios_hoy.pdf" para la URL pública
     import shutil
@@ -230,12 +342,18 @@ def main():
         texto = (f"Hoy se relevaron <b>{n_total} cotizaciones</b> en el MCBA para tus productos. "
                  "Sin variaciones significativas respecto al día hábil anterior.")
 
+    # Calcular días de atraso (si MCBA no publicó hoy)
+    dias_atraso = (_ahora_ar().date() - fecha_dt.date()).days
+
     resumen_dict = {
         "fecha_str": fecha_str,
+        "fecha_iso": fecha_dt.strftime("%Y-%m-%d"),
+        "dias_atraso": dias_atraso,
         "n_cotizaciones": n_total,
         "texto_resumen": texto,
         "productos_top": productos_top,
-        "clima_manana": clima_manana or [],
+        "clima_48h": clima_48h or [],
+        "alertas_7d": alertas_7d or [],
     }
 
     with open("informes/precios_hoy_resumen.json", "w", encoding="utf-8") as f:

@@ -10,8 +10,17 @@ Estructura:
 """
 
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Any, Optional
+
+# Zona horaria Argentina (UTC-3) — no usar zoneinfo para evitar problemas
+# en runners GitHub Actions sin tzdata instalado
+TZ_AR = timezone(timedelta(hours=-3))
+
+
+def _ahora_ar() -> datetime:
+    """Devuelve la hora actual en Argentina (UTC-3)."""
+    return datetime.now(TZ_AR)
 
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
@@ -66,16 +75,16 @@ class GeneradorPDFPrecios:
             textColor=COLOR_GRIS, alignment=TA_JUSTIFY, leading=9
         ))
         s.add(ParagraphStyle(
-            name="Cell", fontName="Helvetica", fontSize=8,
-            textColor=colors.black, alignment=TA_LEFT, leading=10
+            name="Cell", fontName="Helvetica", fontSize=7.5,
+            textColor=colors.black, alignment=TA_LEFT, leading=9
         ))
         s.add(ParagraphStyle(
-            name="CellRight", fontName="Helvetica", fontSize=8,
-            textColor=colors.black, alignment=TA_RIGHT, leading=10
+            name="CellRight", fontName="Helvetica", fontSize=7.5,
+            textColor=colors.black, alignment=TA_RIGHT, leading=9
         ))
         s.add(ParagraphStyle(
-            name="CellCenter", fontName="Helvetica", fontSize=8,
-            textColor=colors.black, alignment=TA_CENTER, leading=10
+            name="CellCenter", fontName="Helvetica", fontSize=7.5,
+            textColor=colors.black, alignment=TA_CENTER, leading=9
         ))
         s.add(ParagraphStyle(
             name="ThWhite", fontName="Helvetica-Bold", fontSize=7,
@@ -117,7 +126,7 @@ class GeneradorPDFPrecios:
                         f"{self.empresa.get('web', '')}    {self.empresa.get('email', '')}".strip())
         canv.drawRightString(A4[0] - 1.5 * cm, 1.3 * cm, f"Página {doc.page}")
         canv.drawRightString(A4[0] - 1.5 * cm, 1.0 * cm,
-                             f"Generado: {datetime.now().strftime('%d/%m/%Y %H:%M')}")
+                             f"Generado: {_ahora_ar().strftime('%d/%m/%Y %H:%M')} hs")
         canv.restoreState()
 
     # ------------------------------------------------------------------ #
@@ -188,10 +197,10 @@ class GeneradorPDFPrecios:
             ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
             ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, COLOR_FONDO]),
             ("GRID", (0, 0), (-1, -1), 0.25, COLOR_GRIS_CLARO),
-            ("LEFTPADDING", (0, 0), (-1, -1), 3),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 3),
-            ("TOPPADDING", (0, 0), (-1, -1), 2),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+            ("LEFTPADDING", (0, 0), (-1, -1), 2),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 2),
+            ("TOPPADDING", (0, 0), (-1, -1), 1),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
         ]))
         return t
 
@@ -243,78 +252,160 @@ class GeneradorPDFPrecios:
         return texto
 
     # ------------------------------------------------------------------ #
-    # Tabla compacta de clima del día siguiente para todas las zonas
+    # Tabla compacta de clima 48hs (mañana + pasado) para todas las zonas
     # ------------------------------------------------------------------ #
-    def _tabla_clima_manana(self, clima_manana: List[Dict]) -> Table:
+    def _tabla_clima_48h(self, clima_48h: List[Dict]) -> Table:
         """
-        clima_manana: lista de dicts:
-        {
-            "zona": "Apolinario Saravia",
-            "provincia": "Salta",
-            "tmax": 28, "tmin": 14,
-            "lluvia_mm": 0, "prob_lluvia": 5,
-            "alerta": None | "❄️ Helada" | "🌧️ Lluvia fuerte" | etc.
-        }
+        Tabla horizontal con columnas: Zona | Mañana (Máx/Mín/mm) | Pasado (Máx/Mín/mm)
+        Pensada para caber en una sola página y ser fácil de leer en email/PDF.
         """
-        rows = [[
-            Paragraph("<b>ZONA</b>", self.styles["ThWhite"]),
-            Paragraph("<b>T.MÁX</b>", self.styles["ThWhite"]),
-            Paragraph("<b>T.MÍN</b>", self.styles["ThWhite"]),
-            Paragraph("<b>LLUVIA</b>", self.styles["ThWhite"]),
-            Paragraph("<b>PROB.</b>", self.styles["ThWhite"]),
-            Paragraph("<b>ALERTA</b>", self.styles["ThWhite"]),
-        ]]
+        # Encabezado de 2 niveles
+        rows = [
+            [
+                Paragraph("<b>ZONA</b>", self.styles["ThWhite"]),
+                Paragraph("<b>MAÑANA</b>", self.styles["ThWhite"]),
+                "", "",
+                Paragraph("<b>PASADO</b>", self.styles["ThWhite"]),
+                "", "",
+            ],
+            [
+                "",
+                Paragraph("<b>Máx</b>", self.styles["ThWhite"]),
+                Paragraph("<b>Mín</b>", self.styles["ThWhite"]),
+                Paragraph("<b>Lluvia</b>", self.styles["ThWhite"]),
+                Paragraph("<b>Máx</b>", self.styles["ThWhite"]),
+                Paragraph("<b>Mín</b>", self.styles["ThWhite"]),
+                Paragraph("<b>Lluvia</b>", self.styles["ThWhite"]),
+            ]
+        ]
         styles_extra = []
-        for i, c in enumerate(clima_manana, start=1):
-            alerta = c.get("alerta", "")
-            if alerta:
+        for i, c in enumerate(clima_48h, start=2):  # +2 por dos filas de header
+            if c.get("alerta"):
                 styles_extra.append(("BACKGROUND", (0, i), (-1, i),
                                      colors.HexColor("#FFF3E0")))
             rows.append([
                 Paragraph(f"<b>{c['zona']}</b><br/>"
                           f"<font size='7' color='#888'>{c['provincia']}</font>",
                           self.styles["Cell"]),
-                Paragraph(f"{c.get('tmax', '—'):.0f}°"
-                          if isinstance(c.get('tmax'), (int, float)) else "—",
-                          self.styles["CellCenter"]),
-                Paragraph(f"{c.get('tmin', '—'):.0f}°"
-                          if isinstance(c.get('tmin'), (int, float)) else "—",
-                          self.styles["CellCenter"]),
+                Paragraph(f"{c.get('tmax', 0):.0f}°", self.styles["CellCenter"]),
+                Paragraph(f"{c.get('tmin', 0):.0f}°", self.styles["CellCenter"]),
                 Paragraph(f"{c.get('lluvia_mm', 0):.0f} mm",
                           self.styles["CellCenter"]),
-                Paragraph(f"{c.get('prob_lluvia', 0):.0f}%",
+                Paragraph(f"{c.get('tmax_pasado', 0):.0f}°",
                           self.styles["CellCenter"]),
-                Paragraph(alerta if alerta else
-                          '<font color="#888">sin alertas</font>',
-                          self.styles["Cell"]),
+                Paragraph(f"{c.get('tmin_pasado', 0):.0f}°",
+                          self.styles["CellCenter"]),
+                Paragraph(f"{c.get('lluvia_pasado', 0):.0f} mm",
+                          self.styles["CellCenter"]),
             ])
+
         t = Table(rows, colWidths=[
-            3.5 * cm, 1.3 * cm, 1.3 * cm, 1.6 * cm, 1.4 * cm, 6.0 * cm
+            4.0 * cm,    # zona
+            1.4 * cm, 1.4 * cm, 1.7 * cm,  # mañana
+            1.4 * cm, 1.4 * cm, 1.7 * cm,  # pasado
+        ], repeatRows=2)
+        base_styles = [
+            ("BACKGROUND", (0, 0), (-1, 1), COLOR_ACENTO),
+            ("TEXTCOLOR", (0, 0), (-1, 1), colors.white),
+            ("SPAN", (0, 0), (0, 1)),         # ZONA span filas 0-1
+            ("SPAN", (1, 0), (3, 0)),         # MAÑANA span 3 cols
+            ("SPAN", (4, 0), (6, 0)),         # PASADO span 3 cols
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("ROWBACKGROUNDS", (0, 2), (-1, -1), [colors.white, COLOR_FONDO]),
+            ("GRID", (0, 0), (-1, -1), 0.25, COLOR_GRIS_CLARO),
+            ("LINEAFTER", (3, 0), (3, -1), 0.6, COLOR_ACENTO),  # separador
+            ("LEFTPADDING", (0, 0), (-1, -1), 3),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 3),
+            ("TOPPADDING", (0, 0), (-1, -1), 3),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+        ]
+        t.setStyle(TableStyle(base_styles + styles_extra))
+        return t
+
+    # ------------------------------------------------------------------ #
+    # Tabla de alertas previstas en los próximos 15 días
+    # ------------------------------------------------------------------ #
+    def _tabla_alertas_15d(self, alertas_15d: List[Dict]) -> Table:
+        """
+        Construye una tabla con todas las alertas previstas en los próximos
+        15 días, ordenadas por fecha. Cada fila: Fecha · Zona · Tipo · Detalle · Sev.
+        """
+        # Aplanar: una fila por (zona, alerta)
+        filas_plano = []
+        for z in alertas_15d:
+            for a in z["alertas"]:
+                filas_plano.append({
+                    "fecha": a["fecha"],
+                    "zona": z["zona"],
+                    "provincia": z["provincia"],
+                    "tipo": a["tipo"],
+                    "icono": a["icono"],
+                    "valor": a["valor"],
+                    "detalle": a.get("detalle", ""),
+                    "severidad": a["severidad"],
+                })
+        # Ordenar por fecha y luego por severidad (ALTA primero)
+        sev_orden = {"ALTA": 0, "MEDIA": 1, "BAJA": 2}
+        filas_plano.sort(key=lambda r: (r["fecha"],
+                                          sev_orden.get(r["severidad"], 9)))
+
+        rows = [[
+            Paragraph("<b>FECHA</b>", self.styles["ThWhite"]),
+            Paragraph("<b>ZONA</b>", self.styles["ThWhite"]),
+            Paragraph("<b>TIPO</b>", self.styles["ThWhite"]),
+            Paragraph("<b>DETALLE</b>", self.styles["ThWhite"]),
+            Paragraph("<b>SEV.</b>", self.styles["ThWhite"]),
+        ]]
+        styles_extra = []
+        meses_es = {1: "ene", 2: "feb", 3: "mar", 4: "abr", 5: "may",
+                    6: "jun", 7: "jul", 8: "ago", 9: "sep",
+                    10: "oct", 11: "nov", 12: "dic"}
+        for i, r in enumerate(filas_plano, start=1):
+            try:
+                f_dt = datetime.strptime(r["fecha"], "%Y-%m-%d")
+                f_str = f"{f_dt.day:02d}/{meses_es[f_dt.month]}"
+            except Exception:
+                f_str = r["fecha"]
+
+            if r["severidad"] == "ALTA":
+                styles_extra.append(("BACKGROUND", (0, i), (-1, i),
+                                     colors.HexColor("#FFEBEE")))
+                sev_str = '<font color="#C62828"><b>ALTA</b></font>'
+            elif r["severidad"] == "MEDIA":
+                styles_extra.append(("BACKGROUND", (0, i), (-1, i),
+                                     colors.HexColor("#FFF3E0")))
+                sev_str = '<font color="#EF6C00"><b>MEDIA</b></font>'
+            else:
+                sev_str = '<font color="#888">BAJA</font>'
+
+            rows.append([
+                Paragraph(f"<b>{f_str}</b>", self.styles["CellCenter"]),
+                Paragraph(f"<b>{r['zona']}</b><br/>"
+                          f"<font size='7' color='#888'>{r['provincia']}</font>",
+                          self.styles["Cell"]),
+                Paragraph(f"{r['icono']} {r['tipo']}", self.styles["Cell"]),
+                Paragraph(f"{r['detalle']}", self.styles["Cell"]),
+                Paragraph(sev_str, self.styles["CellCenter"]),
+            ])
+
+        t = Table(rows, colWidths=[
+            1.7 * cm,  # fecha
+            3.4 * cm,  # zona
+            3.6 * cm,  # tipo
+            5.3 * cm,  # detalle
+            1.2 * cm,  # severidad
         ], repeatRows=1)
         base_styles = [
             ("BACKGROUND", (0, 0), (-1, 0), COLOR_ACENTO),
             ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
             ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-            ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, COLOR_FONDO]),
             ("GRID", (0, 0), (-1, -1), 0.25, COLOR_GRIS_CLARO),
-            ("LEFTPADDING", (0, 0), (-1, -1), 5),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 5),
-            ("TOPPADDING", (0, 0), (-1, -1), 5),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+            ("LEFTPADDING", (0, 0), (-1, -1), 4),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+            ("TOPPADDING", (0, 0), (-1, -1), 3),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
         ]
-        # Padding compacto
-        base_styles_compact = [
-            ("BACKGROUND", (0, 0), (-1, 0), COLOR_ACENTO),
-            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-            ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, COLOR_FONDO]),
-            ("GRID", (0, 0), (-1, -1), 0.25, COLOR_GRIS_CLARO),
-            ("LEFTPADDING", (0, 0), (-1, -1), 3),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 3),
-            ("TOPPADDING", (0, 0), (-1, -1), 2),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
-        ]
-        t.setStyle(TableStyle(base_styles_compact + styles_extra))
+        t.setStyle(TableStyle(base_styles + styles_extra))
         return t
 
     # ------------------------------------------------------------------ #
@@ -323,11 +414,12 @@ class GeneradorPDFPrecios:
     def generar(self, datos_hoy: Dict, datos_ayer: Dict,
                 variaciones: Dict, output_path: str,
                 cliente: str = "",
-                clima_manana: List[Dict] = None) -> str:
+                clima_48h: List[Dict] = None,
+                alertas_7d: List[Dict] = None) -> str:
         doc = SimpleDocTemplate(
             output_path, pagesize=A4,
-            leftMargin=1.2 * cm, rightMargin=1.2 * cm,
-            topMargin=2.6 * cm, bottomMargin=1.7 * cm,
+            leftMargin=1.1 * cm, rightMargin=1.1 * cm,
+            topMargin=2.4 * cm, bottomMargin=1.5 * cm,
             title="Informe de Precios — Don Antonio SRL",
             author=self.empresa["nombre"],
             subject="Precios mayoristas del Mercado Central de Buenos Aires",
@@ -342,7 +434,7 @@ class GeneradorPDFPrecios:
         meses_es = {1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo",
                     6: "junio", 7: "julio", 8: "agosto", 9: "septiembre",
                     10: "octubre", 11: "noviembre", 12: "diciembre"}
-        fecha = datos_hoy.get("fecha_datos") or datetime.now()
+        fecha = datos_hoy.get("fecha_datos") or _ahora_ar()
         fecha_str = f"{fecha.day} de {meses_es[fecha.month]} de {fecha.year}"
         sub = f"Mercado Central de Buenos Aires &nbsp;·&nbsp; Datos del {fecha_str}"
         if cliente:
@@ -352,9 +444,38 @@ class GeneradorPDFPrecios:
         story.append(Spacer(1, 0.4 * cm))
 
         # Resumen narrativo
+        # Banner amarillo destacado si los datos están atrasados
+        fecha_datos_dt = datos_hoy.get("fecha_datos")
+        hoy_dt = _ahora_ar().replace(tzinfo=None)  # naive para comparar fechas
+        if fecha_datos_dt:
+            dias_atraso = (hoy_dt.date() - fecha_datos_dt.date()).days
+        else:
+            dias_atraso = 0
+        if dias_atraso >= 1:
+            meses_es = {1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo",
+                        6: "junio", 7: "julio", 8: "agosto", 9: "septiembre",
+                        10: "octubre", 11: "noviembre", 12: "diciembre"}
+            fecha_str_aviso = f"{fecha_datos_dt.day} de {meses_es[fecha_datos_dt.month]}"
+            if dias_atraso == 1:
+                msg_atraso = (f"⚠️ <b>Datos del día anterior ({fecha_str_aviso}).</b> "
+                              "El Mercado Central aún no publicó los datos de hoy.")
+            else:
+                msg_atraso = (f"⚠️ <b>Datos atrasados — última publicación: {fecha_str_aviso}</b> "
+                              f"(hace {dias_atraso} días). El MCBA puede tardar al cambiar de mes "
+                              "o por feriados. Se actualizará automáticamente cuando publiquen.")
+            story.append(Paragraph(msg_atraso,
+                ParagraphStyle("aviso", fontName="Helvetica", fontSize=10,
+                               textColor=colors.HexColor("#5D4037"),
+                               leading=13, leftIndent=10, rightIndent=10,
+                               borderColor=colors.HexColor("#F9A825"),
+                               borderWidth=1, borderPadding=10,
+                               backColor=colors.HexColor("#FFF8E1"),
+                               spaceAfter=10)))
+            story.append(Spacer(1, 0.1 * cm))
+
         story.append(Paragraph(self._texto_resumen(datos_hoy, variaciones),
                                self.styles["ParrafoNarrativo"]))
-        story.append(Spacer(1, 0.3 * cm))
+        story.append(Spacer(1, 0.15 * cm))
 
         # =========== TABLAS POR PRODUCTO ===========
         productos = datos_hoy.get("productos", {})
@@ -368,11 +489,11 @@ class GeneradorPDFPrecios:
                 continue
             n = len(items)
             bloque = [
-                Paragraph(f"🥬 {esp.capitalize()} <font size='9' color='#888'>"
-                          f"({n} cotizacion{'es' if n != 1 else ''})</font>",
+                Paragraph(f"🥬 {esp.capitalize()} <font size='8' color='#888'>"
+                          f"({n})</font>",
                           self.styles["EspecieTitulo"]),
                 self._tabla_producto(items, variaciones),
-                Spacer(1, 0.15 * cm),
+                Spacer(1, 0.08 * cm),
             ]
             story.append(KeepTogether(bloque))
 
@@ -385,71 +506,33 @@ class GeneradorPDFPrecios:
                 self.styles["Disclaimer"]
             ))
 
-        # =========== CLIMA DE MAÑANA ===========
-        if clima_manana:
-            story.append(Spacer(1, 0.4 * cm))
-            story.append(HRFlowable(width="100%", thickness=1, color=COLOR_ACENTO))
+        # =========== CLIMA PRÓXIMAS 48 HS ===========
+        if clima_48h:
             story.append(Spacer(1, 0.2 * cm))
-            story.append(Paragraph("🌤️ Clima previsto para mañana",
+            story.append(Paragraph("🌤️ Clima — próximas 48 hs",
                                    self.styles["EspecieTitulo"]))
+            story.append(self._tabla_clima_48h(clima_48h))
 
-            # Calcular fecha de mañana
-            manana = datetime.now() + timedelta(days=1)
-            meses_es_dict = {1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo",
-                             6: "junio", 7: "julio", 8: "agosto", 9: "septiembre",
-                             10: "octubre", 11: "noviembre", 12: "diciembre"}
-            fecha_manana = f"{manana.day} de {meses_es_dict[manana.month]} de {manana.year}"
-            story.append(Paragraph(
-                f"Pronóstico para el {fecha_manana} en las 10 zonas monitoreadas",
-                self.styles["SubtituloPortada"]
-            ))
-            story.append(HRFlowable(width="100%", thickness=1.5, color=COLOR_PRIMARIO))
-            story.append(Spacer(1, 0.3 * cm))
-
-            # Si hay alertas críticas, destacarlas arriba
-            zonas_con_alerta = [c for c in clima_manana if c.get("alerta")]
-            if zonas_con_alerta:
-                texto_alertas = "<b>⚠️ Atención: alertas críticas para mañana</b><br/>"
-                for c in zonas_con_alerta:
-                    texto_alertas += f"• <b>{c['zona']}</b> ({c['provincia']}): {c['alerta']}<br/>"
-                story.append(Paragraph(texto_alertas,
-                    ParagraphStyle("alerta", fontName="Helvetica", fontSize=11,
-                                   textColor=COLOR_ROJO, leading=15,
-                                   leftIndent=10, rightIndent=10,
-                                   borderColor=COLOR_ROJO, borderWidth=1,
-                                   borderPadding=10, backColor=colors.HexColor("#FFEBEE"),
-                                   spaceAfter=10)))
+        # =========== ALERTAS PRÓXIMOS 7 DÍAS ===========
+        if alertas_7d:
+            n_total_alertas = sum(len(z["alertas"]) for z in alertas_7d)
+            if n_total_alertas > 0:
                 story.append(Spacer(1, 0.2 * cm))
-            else:
                 story.append(Paragraph(
-                    "Sin eventos extremos previstos para mañana en ninguna de las 10 zonas. "
-                    "Condiciones generales dentro de lo normal.",
-                    self.styles["ParrafoNarrativo"]
-                ))
-                story.append(Spacer(1, 0.2 * cm))
+                    f"⚠️ Alertas en los próximos 7 días "
+                    f"<font size='8' color='#888'>"
+                    f"({n_total_alertas} en {len(alertas_7d)} zona"
+                    f"{'s' if len(alertas_7d) != 1 else ''})</font>",
+                    self.styles["EspecieTitulo"]))
+                story.append(self._tabla_alertas_15d(alertas_7d))
 
-            # Tabla compacta con todas las zonas
-            story.append(self._tabla_clima_manana(clima_manana))
-
-        # =========== DISCLAIMER ===========
-        story.append(Spacer(1, 0.3 * cm))
-        story.append(HRFlowable(width="100%", thickness=0.5, color=COLOR_GRIS))
-        story.append(Spacer(1, 0.15 * cm))
+        # =========== DISCLAIMER (compacto) ===========
+        story.append(Spacer(1, 0.2 * cm))
         story.append(Paragraph(
-            "<b>Aclaración:</b> los precios publicados corresponden al relevamiento "
-            "diario del Departamento de Estadísticas y Precios del Mercado Central de "
-            "Buenos Aires. Son <b>precios mayoristas en pesos argentinos por bulto</b>, "
-            "para los envases indicados. Las variaciones se calculan respecto al último "
-            "día hábil con datos disponibles. Los precios pueden variar significativamente "
-            "según el día, la calidad y la oferta. Este informe se brinda como herramienta "
-            f"orientativa de mercado. <b>{self.empresa['nombre']}</b> no asume "
-            "responsabilidad por decisiones comerciales tomadas en base a esta información.",
-            self.styles["Disclaimer"]
-        ))
-        story.append(Spacer(1, 0.15 * cm))
-        story.append(Paragraph(
-            "<b>Fuente:</b> Mercado Central de Buenos Aires — mercadocentral.gob.ar. "
-            "Sección Precios Mayoristas, planilla diaria de hortalizas y frutas.",
+            f"<b>Fuente:</b> MCBA (mercadocentral.gob.ar) · "
+            f"Pronóstico: Open-Meteo · "
+            f"Precios mayoristas en pesos por bulto. Variaciones vs último "
+            f"día hábil con datos. Información orientativa.",
             self.styles["Disclaimer"]
         ))
 
