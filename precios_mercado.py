@@ -75,23 +75,34 @@ class PreciosMCBA:
         a4 = fecha.year
         a2 = fecha.year % 100
         candidatos = [
+            # === Variantes con GUION entre prefijo y mes (mayo 2026 en adelante) ===
+            f"{prefix}-{mes}-{a4}.zip",         # FRUTAS-MAYO-2026.zip
+            f"{prefix}-{mes}-{a4}_0.zip",       # FRUTAS-MAYO-2026_0.zip ← MAYO 2026
+            f"{prefix}-{mes}-{a2}.zip",
+            f"{prefix}-{mes}-{a2}_0.zip",
+            f"{prefix}-{mes}{a4}.zip",
+            f"{prefix}-{mes}{a4}_0.zip",
+            f"{prefix}-{mes}_{a4}.zip",
+            f"{prefix}-{mes}_{a4}_0.zip",
+            # === Variantes con UNDERSCORE entre prefijo y mes (formato antiguo) ===
             f"{prefix}_{mes}{a4}.zip",
-            f"{prefix}_{mes}{a4}_0.zip",   # ← variante con sufijo _0
+            f"{prefix}_{mes}{a4}_0.zip",
             f"{prefix}_{mes}-{a4}.zip",
             f"{prefix}_{mes}-{a4}_0.zip",
             f"{prefix}_{mes}-{a2}.zip",
             f"{prefix}_{mes}-{a2}_0.zip",
-            f"{prefix} {mes}{a4}.zip",
-            f"{prefix} {mes}{a4}_0.zip",
             f"{prefix}_{mes} {a4}.zip",
             f"{prefix}_{mes}_{a4}.zip",
+            # === Variantes con ESPACIO ===
+            f"{prefix} {mes}{a4}.zip",
+            f"{prefix} {mes}{a4}_0.zip",
+            f"{prefix} {mes}-{a4}.zip",
+            f"{prefix} {mes}-{a2}.zip",
             f"{prefix}  {mes}-{a2}.zip",
             f"{prefix}  {mes}-{a2}_0.zip",
             f"{prefix}  {mes}{a4}.zip",
             f"{prefix}  {mes}{a4}_0.zip",
-            f"{prefix} {mes}-{a4}.zip",
-            f"{prefix} {mes}-{a2}.zip",
-            f"{prefix}  {mes} {a4}.zip",  # con doble espacio + espacio (ENERO 2026)
+            f"{prefix}  {mes} {a4}.zip",
             f"{prefix}  {mes} {a4}_0.zip",
         ]
         return [URL_BASE + requests.utils.requote_uri(c) for c in candidatos]
@@ -133,11 +144,18 @@ class PreciosMCBA:
         nombre_xls = self._nombre_xls_dia(tipo, fecha)
         try:
             with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
-                # Buscar el archivo (case insensitive)
-                names = {n.upper(): n for n in zf.namelist()}
-                if nombre_xls.upper() not in names:
+                # Buscar el archivo por basename — case-insensitive y aceptando
+                # que esté dentro de subcarpetas (ej: FRUTAS-MAYO-2026/RF040526.XLS)
+                target_up = nombre_xls.upper()
+                match = None
+                for n in zf.namelist():
+                    base = n.split("/")[-1].upper()
+                    if base == target_up:
+                        match = n
+                        break
+                if not match:
                     return None
-                with zf.open(names[nombre_xls.upper()]) as f:
+                with zf.open(match) as f:
                     contenido = f.read()
         except Exception:
             return None
