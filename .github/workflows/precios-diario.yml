@@ -2,8 +2,8 @@ name: Precios MCBA diario L-V 17hs ART
 
 on:
   schedule:
-    # 17:00 hs Argentina (UTC-3) = 20:00 UTC, lunes a viernes
-    - cron: '0 21 * * 1-5'
+    # 18:17 hs Argentina (UTC-3) = 21:17 UTC, lunes a viernes
+    - cron: '17 21 * * 1-5'
   workflow_dispatch:
 
 permissions:
