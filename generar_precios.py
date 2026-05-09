@@ -318,10 +318,13 @@ def main():
                 clima_48h=clima_48h,
                 alertas_7d=alertas_7d)
 
-    # Guardar también una copia con nombre fijo "precios_hoy.pdf" para la URL pública
-    import shutil
-    shutil.copy(salida, "informes/precios_hoy.pdf")
-    shutil.copy(salida, "precios_hoy.pdf")  # También en la raíz para GitHub Pages
+    # Guardar copia con nombre fijo "precios_hoy.pdf" SOLO si es el reporte
+    # completo (sin filtro de zona). Cuando se filtra una zona, no queremos
+    # sobrescribir el reporte general.
+    if not args.zona:
+        import shutil
+        shutil.copy(salida, "informes/precios_hoy.pdf")
+        shutil.copy(salida, "precios_hoy.pdf")  # También en la raíz para GitHub Pages
 
     # Generar el JSON resumen que consume enviar_email_precios.py
     fecha_dt = datos_hoy["fecha_datos"]
@@ -384,9 +387,12 @@ def main():
         "alertas_7d": alertas_7d or [],
     }
 
-    with open("informes/precios_hoy_resumen.json", "w", encoding="utf-8") as f:
-        json.dump(resumen_dict, f, ensure_ascii=False, indent=2, default=str)
-    print(f"  ✓ Resumen JSON guardado en informes/precios_hoy_resumen.json")
+    # Solo guardar el JSON del resumen general (no cuando se filtra por zona,
+    # para que el email use siempre los datos completos)
+    if not args.zona:
+        with open("informes/precios_hoy_resumen.json", "w", encoding="utf-8") as f:
+            json.dump(resumen_dict, f, ensure_ascii=False, indent=2, default=str)
+        print(f"  ✓ Resumen JSON guardado en informes/precios_hoy_resumen.json")
 
     print(f"\n✓ Informe generado: {salida}")
     print("=" * 60)
