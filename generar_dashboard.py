@@ -535,9 +535,30 @@ footer {
         <h2 style="margin:0">📊 Precios mayoristas — Mercado Central</h2>
         <div style="font-size:12px; color:#555; margin-top:2px" id="precios-fecha">—</div>
       </div>
-      <a href="precios_hoy.pdf" target="_blank" style="background:var(--primario);color:#fff;padding:9px 18px;text-decoration:none;border-radius:6px;font-weight:600;font-size:13px">
-        📄 Ver PDF completo
-      </a>
+      <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap">
+        <select id="zona-pdf" onchange="document.getElementById('btn-pdf').href=this.value"
+                style="padding:8px 10px;border-radius:6px;border:1px solid #ccc;font-size:13px;background:#fff;max-width:240px">
+          <option value="precios_hoy.pdf">📄 Reporte completo (10 zonas)</option>
+          <optgroup label="Por zona — Salta">
+            <option value="informes/por_zona/precios_oran.pdf">Solo Orán</option>
+            <option value="informes/por_zona/precios_pichanal.pdf">Solo Pichanal</option>
+            <option value="informes/por_zona/precios_colonia_santa_rosa.pdf">Solo Colonia Santa Rosa</option>
+            <option value="informes/por_zona/precios_general_pizarro.pdf">Solo General Pizarro</option>
+            <option value="informes/por_zona/precios_apolinario_saravia.pdf">Solo Apolinario Saravia</option>
+          </optgroup>
+          <optgroup label="Por zona — Jujuy">
+            <option value="informes/por_zona/precios_yuto.pdf">Solo Yuto</option>
+            <option value="informes/por_zona/precios_fraile_pintado.pdf">Solo Fraile Pintado</option>
+            <option value="informes/por_zona/precios_chalican.pdf">Solo Chalicán</option>
+            <option value="informes/por_zona/precios_aguas_calientes.pdf">Solo Aguas Calientes</option>
+            <option value="informes/por_zona/precios_santa_clara.pdf">Solo Santa Clara</option>
+          </optgroup>
+        </select>
+        <a id="btn-pdf" href="precios_hoy.pdf" target="_blank"
+           style="background:var(--primario);color:#fff;padding:9px 18px;text-decoration:none;border-radius:6px;font-weight:600;font-size:13px">
+          📄 Descargar
+        </a>
+      </div>
     </div>
     <div id="precios-resumen" style="font-size:13px; color:#333; line-height:1.55; margin:12px 0 14px 0; padding:10px 14px; background:#f7f9fb; border-radius:8px; border-left:3px solid var(--azul)"></div>
     <div style="overflow-x:auto">

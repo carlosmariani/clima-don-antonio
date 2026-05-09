@@ -198,6 +198,10 @@ def main():
     parser.add_argument("--logo", default="logo.png")
     parser.add_argument("--sin-clima", action="store_true",
                         help="No incluir la sección de clima de mañana")
+    parser.add_argument("--zona", default="",
+                        help="Filtrar clima/alertas a una zona específica "
+                             "(ej: 'Orán', 'Apolinario Saravia'). "
+                             "Por defecto incluye todas las zonas.")
     args = parser.parse_args()
 
     base = os.path.dirname(os.path.abspath(__file__))
@@ -262,12 +266,21 @@ def main():
     variaciones = cli.calcular_variaciones(datos_hoy, datos_ayer)
     print(f"  ✓ {len(variaciones)} variaciones calculadas")
 
+    # Slug para el nombre del archivo si se filtra por zona
+    def _slug(s):
+        # Sin tildes, sin espacios, ascii-friendly
+        import unicodedata
+        s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode('ascii')
+        return s.lower().replace(' ', '_').replace('.', '')
+
     if args.salida:
         salida = args.salida
     else:
         os.makedirs("informes", exist_ok=True)
         fecha_str = datos_hoy["fecha_datos"].strftime("%Y%m%d")
         suf = f"_{args.cliente.replace(' ', '_')}" if args.cliente else ""
+        if args.zona:
+            suf += f"_{_slug(args.zona)}"
         salida = os.path.join("informes", f"precios_mcba_{fecha_str}{suf}.pdf")
 
     # Obtener clima 48hs + alertas próximos 7 días
@@ -276,6 +289,21 @@ def main():
     if not args.sin_clima:
         print("\n→ Obteniendo pronóstico 48hs + alertas próximos 7 días...")
         clima_48h, alertas_7d = obtener_clima_y_alertas(cfg)
+
+        # Filtrar a zona específica si se pidió
+        if args.zona:
+            zona_norm = args.zona.lower().strip()
+            clima_48h_filt = [c for c in clima_48h
+                               if c["zona"].lower().strip() == zona_norm]
+            if not clima_48h_filt:
+                print(f"  ⚠️ Zona '{args.zona}' no encontrada. "
+                      f"Zonas válidas: {[c['zona'] for c in clima_48h]}")
+                sys.exit(1)
+            clima_48h = clima_48h_filt
+            alertas_7d = [z for z in (alertas_7d or [])
+                          if z["zona"].lower().strip() == zona_norm]
+            print(f"  → Filtrado a zona: {clima_48h[0]['zona']}")
+
         n_alertas_48h = sum(1 for c in clima_48h if c.get("alerta"))
         n_zonas_7d = len(alertas_7d) if alertas_7d else 0
         n_alertas_7d = sum(len(z["alertas"]) for z in (alertas_7d or []))
