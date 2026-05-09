@@ -30,8 +30,23 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Generar PDF de precios + clima de mañana
+      - name: Generar PDF de precios completo (todas las zonas)
         run: python generar_precios.py
+
+      - name: Generar PDFs por zona (10 archivos para filtro en PWA)
+        run: |
+          # Lee las zonas de config.json y genera 1 PDF por zona
+          ZONAS=$(python -c "import json; cfg=json.load(open('config.json')); print('\n'.join(l['nombre'] for l in cfg['localidades']))")
+          mkdir -p informes/por_zona
+          while IFS= read -r ZONA; do
+            echo "▶ Generando PDF para: $ZONA"
+            python generar_precios.py --zona "$ZONA" || true
+            # Mover al directorio por_zona con nombre fijo (sin fecha)
+            SLUG=$(python -c "import unicodedata; s='$ZONA'; print(unicodedata.normalize('NFKD',s).encode('ascii','ignore').decode('ascii').lower().replace(' ','_').replace('.',''))")
+            ULT=$(ls -t informes/precios_mcba_*_${SLUG}.pdf 2>/dev/null | head -1)
+            [ -n "$ULT" ] && cp "$ULT" "informes/por_zona/precios_${SLUG}.pdf"
+          done <<< "$ZONAS"
+          ls -la informes/por_zona/
 
       - name: Detectar si hay datos nuevos del MCBA
         id: check
@@ -67,9 +82,9 @@ jobs:
         if: steps.check.outputs.send_email == 'true'
         run: echo "${{ steps.check.outputs.fecha_nueva }}" > .last_email_date
 
-      - name: Commit PDF + control al repo
+      - name: Commit PDFs + control al repo
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add precios_hoy.pdf informes/precios_hoy.pdf .last_email_date 2>/dev/null || true
-          git diff --cached --quiet || (git commit -m "Actualizar PDF de precios" && git push)
+          git add precios_hoy.pdf informes/precios_hoy.pdf informes/por_zona/ .last_email_date 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "Actualizar PDFs de precios (general + por zona)" && git push)
