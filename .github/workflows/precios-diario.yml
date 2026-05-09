@@ -35,18 +35,47 @@ jobs:
 
       - name: Generar PDFs por zona (10 archivos para filtro en PWA)
         run: |
-          # Lee las zonas de config.json y genera 1 PDF por zona
-          ZONAS=$(python -c "import json; cfg=json.load(open('config.json')); print('\n'.join(l['nombre'] for l in cfg['localidades']))")
           mkdir -p informes/por_zona
-          while IFS= read -r ZONA; do
-            echo "▶ Generando PDF para: $ZONA"
-            python generar_precios.py --zona "$ZONA" || true
-            # Mover al directorio por_zona con nombre fijo (sin fecha)
-            SLUG=$(python -c "import unicodedata; s='$ZONA'; print(unicodedata.normalize('NFKD',s).encode('ascii','ignore').decode('ascii').lower().replace(' ','_').replace('.',''))")
-            ULT=$(ls -t informes/precios_mcba_*_${SLUG}.pdf 2>/dev/null | head -1)
-            [ -n "$ULT" ] && cp "$ULT" "informes/por_zona/precios_${SLUG}.pdf"
-          done <<< "$ZONAS"
-          ls -la informes/por_zona/
+          python <<'PYEOF'
+          import json, os, shutil, subprocess, sys, unicodedata, glob
+
+          def slug(s):
+              s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode('ascii')
+              return s.lower().replace(' ', '_').replace('.', '')
+
+          cfg = json.load(open('config.json'))
+          zonas = [l['nombre'] for l in cfg['localidades']]
+          print(f"→ Procesando {len(zonas)} zonas: {zonas}")
+          ok, fail = [], []
+
+          for zona in zonas:
+              s = slug(zona)
+              salida = f"informes/por_zona/precios_{s}.pdf"
+              print(f"\n{'='*60}")
+              print(f"▶ Zona: {zona}  (slug: {s})")
+              print('='*60)
+              # Llamar al script con --salida explícita para evitar globs
+              cmd = ['python', 'generar_precios.py', '--zona', zona, '--salida', salida]
+              r = subprocess.run(cmd, capture_output=True, text=True)
+              if r.returncode == 0 and os.path.exists(salida):
+                  size = os.path.getsize(salida)
+                  print(f"✓ {zona}: {size} bytes en {salida}")
+                  ok.append(zona)
+              else:
+                  print(f"✗ {zona}: FALLÓ")
+                  print("STDOUT:", r.stdout[-1500:])
+                  print("STDERR:", r.stderr[-500:])
+                  fail.append(zona)
+
+          print(f"\n{'='*60}")
+          print(f"RESUMEN: {len(ok)} OK, {len(fail)} fallidas")
+          if fail:
+              print(f"Fallaron: {fail}")
+          print(f"PDFs generados:")
+          for f in sorted(glob.glob('informes/por_zona/*.pdf')):
+              print(f"  {f}  ({os.path.getsize(f)} bytes)")
+          # No fallamos el job por una zona — el reporte completo ya existe
+          PYEOF
 
       - name: Detectar si hay datos nuevos del MCBA
         id: check
