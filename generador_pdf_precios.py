@@ -325,6 +325,74 @@ class GeneradorPDFPrecios:
     # ------------------------------------------------------------------ #
     # Tabla de alertas previstas en los próximos 15 días
     # ------------------------------------------------------------------ #
+    def _tabla_pronostico_diario(self, dias: List[Dict]) -> Table:
+        """
+        Tabla con el pronóstico día por día (próximos 7 días) para una zona.
+        Solo se incluye cuando se filtra el reporte por zona específica.
+        Columnas: Día | Tmáx | Tmín | Lluvia | Comentario
+        """
+        meses_es = {1: "ene", 2: "feb", 3: "mar", 4: "abr", 5: "may",
+                    6: "jun", 7: "jul", 8: "ago", 9: "sep",
+                    10: "oct", 11: "nov", 12: "dic"}
+        dias_semana = {0: "Lun", 1: "Mar", 2: "Mié", 3: "Jue",
+                       4: "Vie", 5: "Sáb", 6: "Dom"}
+
+        rows = [[
+            Paragraph("<b>DÍA</b>", self.styles["ThWhite"]),
+            Paragraph("<b>T.MÁX</b>", self.styles["ThWhite"]),
+            Paragraph("<b>T.MÍN</b>", self.styles["ThWhite"]),
+            Paragraph("<b>LLUVIA</b>", self.styles["ThWhite"]),
+            Paragraph("<b>PROB.</b>", self.styles["ThWhite"]),
+            Paragraph("<b>COMENTARIO</b>", self.styles["ThWhite"]),
+        ]]
+        styles_extra = []
+        for i, dia in enumerate(dias, start=1):
+            try:
+                f_dt = datetime.strptime(dia["fecha"], "%Y-%m-%d")
+                f_str = f"{dias_semana[f_dt.weekday()]} {f_dt.day:02d}/{meses_es[f_dt.month]}"
+            except Exception:
+                f_str = dia.get("fecha", "—")
+
+            coment = dia.get("comentario", "")
+            # Resaltar filas con eventos críticos
+            if any(k in coment for k in ["Helada", "Calor extremo", "Lluvia intensa", "Viento fuerte"]):
+                styles_extra.append(("BACKGROUND", (0, i), (-1, i),
+                                     colors.HexColor("#FFEBEE")))
+            elif "Lluvia" in coment or "Probable" in coment:
+                styles_extra.append(("BACKGROUND", (0, i), (-1, i),
+                                     colors.HexColor("#E3F2FD")))
+
+            rows.append([
+                Paragraph(f"<b>{f_str}</b>", self.styles["CellCenter"]),
+                Paragraph(f"{dia.get('tmax', 0):.0f}°", self.styles["CellCenter"]),
+                Paragraph(f"{dia.get('tmin', 0):.0f}°", self.styles["CellCenter"]),
+                Paragraph(f"{dia.get('lluvia', 0):.0f} mm",
+                          self.styles["CellCenter"]),
+                Paragraph(f"{dia.get('prob_lluvia', 0):.0f}%",
+                          self.styles["CellCenter"]),
+                Paragraph(coment, self.styles["Cell"]),
+            ])
+
+        t = Table(rows, colWidths=[
+            2.6 * cm,  # día
+            1.4 * cm,  # tmax
+            1.4 * cm,  # tmin
+            1.6 * cm,  # lluvia
+            1.4 * cm,  # prob
+            6.4 * cm,  # comentario
+        ], repeatRows=1)
+        t.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), COLOR_ACENTO),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("GRID", (0, 0), (-1, -1), 0.25, COLOR_GRIS_CLARO),
+            ("LEFTPADDING", (0, 0), (-1, -1), 4),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+            ("TOPPADDING", (0, 0), (-1, -1), 3),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+        ] + styles_extra))
+        return t
+
     def _tabla_alertas_15d(self, alertas_15d: List[Dict]) -> Table:
         """
         Construye una tabla con todas las alertas previstas en los próximos
@@ -415,7 +483,8 @@ class GeneradorPDFPrecios:
                 variaciones: Dict, output_path: str,
                 cliente: str = "",
                 clima_48h: List[Dict] = None,
-                alertas_7d: List[Dict] = None) -> str:
+                alertas_7d: List[Dict] = None,
+                pronostico_diario: List[Dict] = None) -> str:
         doc = SimpleDocTemplate(
             output_path, pagesize=A4,
             leftMargin=1.1 * cm, rightMargin=1.1 * cm,
@@ -525,6 +594,19 @@ class GeneradorPDFPrecios:
                     f"{'s' if len(alertas_7d) != 1 else ''})</font>",
                     self.styles["EspecieTitulo"]))
                 story.append(self._tabla_alertas_15d(alertas_7d))
+
+        # =========== PRONÓSTICO DÍA POR DÍA (solo si filtrado por zona) ===========
+        if pronostico_diario:
+            for z in pronostico_diario:
+                if not z.get("dias"):
+                    continue
+                story.append(Spacer(1, 0.2 * cm))
+                story.append(Paragraph(
+                    f"📅 Pronóstico día por día — próximos 7 días "
+                    f"<font size='8' color='#888'>({z['zona']}, "
+                    f"{z['provincia']})</font>",
+                    self.styles["EspecieTitulo"]))
+                story.append(self._tabla_pronostico_diario(z["dias"]))
 
         # =========== DISCLAIMER (compacto) ===========
         story.append(Spacer(1, 0.2 * cm))

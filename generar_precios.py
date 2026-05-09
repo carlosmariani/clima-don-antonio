@@ -149,13 +149,59 @@ def obtener_clima_y_alertas(cfg) -> tuple:
                     a_copy["fecha"] = fecha
                     alertas_proximos.append(a_copy)
 
+            # === Pronóstico día por día (próximos 7 días, idx 1..7) ===
+            # Útil cuando el usuario filtra por una zona específica.
+            pronostico_diario = []
+            for i in range(1, limite):
+                tmax = _safe(d["temperature_2m_max"], i)
+                tmin = _safe(d["temperature_2m_min"], i)
+                lluvia = _safe(d["precipitation_sum"], i)
+                prob = _safe(d.get("precipitation_probability_max"), i) or 0
+                v_arr = d.get("windgusts_10m_max") or d["windspeed_10m_max"]
+                viento = _safe(v_arr, i) or 0
+
+                # Comentario corto basado en condiciones
+                if tmin is not None and tmin <= 3:
+                    coment = "❄️ Riesgo de helada"
+                elif tmax is not None and tmax >= 38:
+                    coment = "🌡️ Calor extremo"
+                elif lluvia is not None and lluvia >= 30:
+                    coment = "🌧️ Lluvia intensa"
+                elif viento >= 50:
+                    coment = "💨 Viento fuerte"
+                elif lluvia is not None and lluvia >= 5:
+                    coment = "🌧️ Lluvia moderada"
+                elif lluvia is not None and lluvia > 0:
+                    coment = "🌦️ Algo de lluvia"
+                elif prob >= 50:
+                    coment = "⛅ Probable lluvia"
+                elif tmax is not None and tmax >= 30:
+                    coment = "☀️ Caluroso"
+                else:
+                    coment = "☀️ Despejado"
+
+                pronostico_diario.append({
+                    "fecha": d["time"][i],
+                    "tmax": tmax if tmax is not None else 0,
+                    "tmin": tmin if tmin is not None else 0,
+                    "lluvia": lluvia if lluvia is not None else 0,
+                    "prob_lluvia": prob,
+                    "viento": viento,
+                    "comentario": coment,
+                })
+
             return {
                 "clima_48h": clima_48h,
                 "alertas_7d": {
                     "zona": loc["nombre"],
                     "provincia": loc["provincia"],
                     "alertas": alertas_proximos,
-                }
+                },
+                "pronostico_diario": {
+                    "zona": loc["nombre"],
+                    "provincia": loc["provincia"],
+                    "dias": pronostico_diario,
+                },
             }
         except Exception:
             return None
@@ -169,13 +215,14 @@ def obtener_clima_y_alertas(cfg) -> tuple:
 
     clima_48h = [r["clima_48h"] for r in resultados]
     alertas_7d = [r["alertas_7d"] for r in resultados if r["alertas_7d"]["alertas"]]
-    return clima_48h, alertas_7d
+    pronostico_diario = [r["pronostico_diario"] for r in resultados]
+    return clima_48h, alertas_7d, pronostico_diario
 
 
 # Compatibilidad hacia atrás
 def obtener_clima_manana(cfg):
     """Compat: solo devuelve el clima de las próximas 48hs."""
-    clima, _ = obtener_clima_y_alertas(cfg)
+    clima, _, _ = obtener_clima_y_alertas(cfg)
     return clima
 
 
@@ -283,12 +330,13 @@ def main():
             suf += f"_{_slug(args.zona)}"
         salida = os.path.join("informes", f"precios_mcba_{fecha_str}{suf}.pdf")
 
-    # Obtener clima 48hs + alertas próximos 7 días
+    # Obtener clima 48hs + alertas próximos 7 días + pronóstico diario
     clima_48h = None
     alertas_7d = None
+    pronostico_diario = None
     if not args.sin_clima:
         print("\n→ Obteniendo pronóstico 48hs + alertas próximos 7 días...")
-        clima_48h, alertas_7d = obtener_clima_y_alertas(cfg)
+        clima_48h, alertas_7d, pronostico_diario = obtener_clima_y_alertas(cfg)
 
         # Filtrar a zona específica si se pidió
         if args.zona:
@@ -302,7 +350,13 @@ def main():
             clima_48h = clima_48h_filt
             alertas_7d = [z for z in (alertas_7d or [])
                           if z["zona"].lower().strip() == zona_norm]
+            pronostico_diario = [z for z in (pronostico_diario or [])
+                                 if z["zona"].lower().strip() == zona_norm]
             print(f"  → Filtrado a zona: {clima_48h[0]['zona']}")
+        else:
+            # En reporte completo no incluimos el pronóstico día por día
+            # (sería demasiado largo con 10 zonas × 7 días)
+            pronostico_diario = None
 
         n_alertas_48h = sum(1 for c in clima_48h if c.get("alerta"))
         n_zonas_7d = len(alertas_7d) if alertas_7d else 0
@@ -316,7 +370,8 @@ def main():
     gen.generar(datos_hoy, datos_ayer, variaciones,
                 output_path=salida, cliente=args.cliente,
                 clima_48h=clima_48h,
-                alertas_7d=alertas_7d)
+                alertas_7d=alertas_7d,
+                pronostico_diario=pronostico_diario)
 
     # Guardar copia con nombre fijo "precios_hoy.pdf" SOLO si es el reporte
     # completo (sin filtro de zona). Cuando se filtra una zona, no queremos
