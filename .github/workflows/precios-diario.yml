@@ -1,9 +1,14 @@
-name: Precios MCBA diario L-V 17hs ART
+name: Precios MCBA - detección automática
 
+# Corre cada 30 min entre 17:00 y 23:00 ART (20:00-02:00 UTC) lunes a viernes,
+# y también algunas veces el sábado por si el MCBA publica los datos del viernes
+# durante el fin de semana. Cada corrida revisa si hay datos nuevos del MCBA;
+# si los hay y aún no se mandó email para esa fecha, lo manda.
 on:
   schedule:
-    # 18:17 hs Argentina (UTC-3) = 21:17 UTC, lunes a viernes
-    - cron: '17 21 * * 1-5'
+    - cron: '*/30 20-23 * * 1-5'    # 17:00-20:00 ART lun-vie
+    - cron: '*/30 0-2 * * 2-6'      # 21:00-23:00 ART (martes-sábado UTC)
+    - cron: '0 14,17,20 * * 6'      # Sábado: 11h, 14h y 17h ART por si publican el viernes tarde
   workflow_dispatch:
 
 permissions:
@@ -25,18 +30,46 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Generar PDF de precios + clima de manana
+      - name: Generar PDF de precios + clima de mañana
         run: python generar_precios.py
 
-      - name: Enviar email via Resend
+      - name: Detectar si hay datos nuevos del MCBA
+        id: check
+        run: |
+          # Lee la fecha ISO de los datos en el JSON resumen
+          FECHA_NUEVA=$(python -c "import json; d=json.load(open('informes/precios_hoy_resumen.json')); print(d['fecha_iso'])")
+          echo "Fecha de los datos: $FECHA_NUEVA"
+          echo "fecha_nueva=$FECHA_NUEVA" >> $GITHUB_OUTPUT
+
+          if [ -f .last_email_date ]; then
+            FECHA_ULT=$(cat .last_email_date)
+          else
+            FECHA_ULT=""
+          fi
+          echo "Última fecha enviada: $FECHA_ULT"
+
+          # Mandar email solo si hay datos nuevos (distinta fecha)
+          if [ "$FECHA_NUEVA" != "$FECHA_ULT" ]; then
+            echo "send_email=true" >> $GITHUB_OUTPUT
+            echo "→ Hay datos nuevos: se envía email"
+          else
+            echo "send_email=false" >> $GITHUB_OUTPUT
+            echo "→ Sin novedades: no se envía email"
+          fi
+
+      - name: Enviar email vía Resend
+        if: steps.check.outputs.send_email == 'true' || github.event_name == 'workflow_dispatch'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: python enviar_email_precios.py
 
-      - name: Commit PDF actualizado al repo
+      - name: Registrar fecha enviada
+        if: steps.check.outputs.send_email == 'true'
+        run: echo "${{ steps.check.outputs.fecha_nueva }}" > .last_email_date
+
+      - name: Commit PDF + control al repo
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add precios_hoy.pdf informes/precios_hoy.pdf informes/precios_hoy_resumen.json informes/precios_mcba_*.pdf 2>/dev/null || true
-          git diff --staged --quiet || git commit -m "Actualizar PDF de precios"
-          git push
+          git add precios_hoy.pdf informes/precios_hoy.pdf .last_email_date 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "Actualizar PDF de precios" && git push)
