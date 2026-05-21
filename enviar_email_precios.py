@@ -338,8 +338,9 @@ def main():
             "Content-Type": "application/json",
         },
         json={
-            "from": "Don Antonio SRL <onboarding@resend.dev>",
+            "from": "Don Antonio SRL <informes@novitsji.com.ar>",
             "to": [destinatario],
+            "reply_to": empresa.get("email", destinatario),
             "subject": asunto,
             "html": html,
         },
