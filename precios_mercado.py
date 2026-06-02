@@ -71,10 +71,17 @@ class PreciosMCBA:
           - HORTALIZAS_ABRIL_2026.zip
         """
         prefix = "HORTALIZAS" if tipo == "hortalizas" else "FRUTAS"
+      # Prefijo alternativo singular para frutas (junio 2026 lo publican como "FRUTA")
+      prefix_alt = "FRUTA" if tipo == "frutas" else prefix
         mes = MESES_ES[fecha.month]
         a4 = fecha.year
         a2 = fecha.year % 100
         candidatos = [
+          # === Variantes JUNIO 2026 - espacio + underscore alrededor del mes ===
+          f"{prefix} _{mes}_{a4}.zip",
+          f"{prefix} _{mes}_{a4}_0.zip",
+          f"{prefix_alt} _{mes}_{a4}.zip",
+          f"{prefix_alt} _{mes}_{a4}_0.zip",
             # === Variantes con GUION entre prefijo y mes (mayo 2026 en adelante) ===
             f"{prefix}-{mes}-{a4}.zip",         # FRUTAS-MAYO-2026.zip
             f"{prefix}-{mes}-{a4}_0.zip",       # FRUTAS-MAYO-2026_0.zip ← MAYO 2026
