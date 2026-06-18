@@ -71,24 +71,28 @@ class PreciosMCBA:
           - HORTALIZAS_ABRIL_2026.zip
         """
         prefix = "HORTALIZAS" if tipo == "hortalizas" else "FRUTAS"
-        # Prefijo alternativo singular para frutas (junio 2026 lo publican como "FRUTA")
+        # Prefijo alternativo singular (MCBA a veces publica como "HORTALIZA" o "FRUTA" en singular)
         prefix_alt = "FRUTA" if tipo == "frutas" else "HORTALIZA"
         mes = MESES_ES[fecha.month]
         a4 = fecha.year
         a2 = fecha.year % 100
         candidatos = [
-          # === Variantes JUNIO 2026 con singular + guion (HORTALIZA-JUNIO-2026.zip) ===
-          f"{prefix_alt}-{mes}-{a4}.zip",
-          f"{prefix_alt}-{mes}-{a4}_0.zip",
-          f"{prefix_alt}_{mes}_{a4}.zip",
-          f"{prefix_alt}_{mes}_{a4}_0.zip",
-          f"{prefix_alt}-{mes}_{a4}.zip",
-          f"{prefix_alt}-{mes}_{a4}_0.zip",
-          # === Variantes JUNIO 2026 - espacio + underscore alrededor del mes ===
-          f"{prefix} _{mes}_{a4}.zip",
-          f"{prefix} _{mes}_{a4}_0.zip",
-          f"{prefix_alt} _{mes}_{a4}.zip",
-          f"{prefix_alt} _{mes}_{a4}_0.zip",
+            # === Variantes JUNIO 2026 con singular + guion (HORTALIZA-JUNIO-2026.zip) ===
+            f"{prefix_alt}-{mes}-{a4}.zip",      # HORTALIZA-JUNIO-2026.zip ← 10/jun/26
+            f"{prefix_alt}-{mes}-{a4}_0.zip",
+            f"{prefix_alt}_{mes}_{a4}.zip",      # FRUTA_JUNIO_2026.zip
+            f"{prefix_alt}_{mes}_{a4}_0.zip",    # FRUTA_JUNIO_2026_0.zip ← 10/jun/26
+            f"{prefix_alt}-{mes}_{a4}.zip",
+            f"{prefix_alt}-{mes}_{a4}_0.zip",
+            # === Variantes JUNIO 2026 — espacio + underscore alrededor del mes ===
+            f"{prefix} _{mes}_{a4}.zip",         # HORTALIZAS _JUNIO_2026.zip
+            f"{prefix} _{mes}_{a4}_0.zip",       # HORTALIZAS _JUNIO_2026_0.zip
+            f"{prefix_alt} _{mes}_{a4}.zip",     # FRUTA _JUNIO_2026.zip
+            f"{prefix_alt} _{mes}_{a4}_0.zip",
+            f"{prefix} _{mes}_{a2}.zip",
+            f"{prefix} _{mes}_{a2}_0.zip",
+            f"{prefix}_{mes}_{a4}.zip",
+            f"{prefix}_{mes}_{a4}_0.zip",
             # === Variantes con GUION entre prefijo y mes (mayo 2026 en adelante) ===
             f"{prefix}-{mes}-{a4}.zip",         # FRUTAS-MAYO-2026.zip
             f"{prefix}-{mes}-{a4}_0.zip",       # FRUTAS-MAYO-2026_0.zip ← MAYO 2026
@@ -106,7 +110,6 @@ class PreciosMCBA:
             f"{prefix}_{mes}-{a2}.zip",
             f"{prefix}_{mes}-{a2}_0.zip",
             f"{prefix}_{mes} {a4}.zip",
-            f"{prefix}_{mes}_{a4}.zip",
             # === Variantes con ESPACIO ===
             f"{prefix} {mes}{a4}.zip",
             f"{prefix} {mes}{a4}_0.zip",
@@ -128,11 +131,58 @@ class PreciosMCBA:
         return f"{prefix}{fecha.day:02d}{fecha.month:02d}{fecha.year % 100:02d}.XLS"
 
     # ------------------------------------------------------------------ #
+    # Descubrimiento dinámico del URL del ZIP en la página del MCBA
+    # ------------------------------------------------------------------ #
+    _LISTING_URL = "https://mercadocentral.gob.ar/informaci%C3%B3n/precios-mayoristas"
+
+    def _urls_desde_listing(self, tipo: str, fecha: datetime) -> List[str]:
+        """
+        Busca en la página oficial de MCBA las URLs de los ZIPs publicados
+        que coincidan con el mes/año/tipo solicitado. Más robusto que la
+        lista de candidatos porque MCBA cambia los nombres seguido (ej:
+        HORTALIZA-JUNIO-2026.zip, _0.zip, _1.zip, etc).
+        """
+        try:
+            resp = self.session.get(self._LISTING_URL, timeout=15)
+            if resp.status_code != 200:
+                return []
+            html = resp.text
+            mes = MESES_ES[fecha.month]
+            a4 = str(fecha.year)
+            a2 = str(fecha.year % 100)
+            # Extraer todos los href .zip
+            todos = re.findall(r'href="([^"]*\.zip)"', html, flags=re.IGNORECASE)
+            buenos = []
+            for u in todos:
+                nombre = u.split('/')[-1].upper()
+                # Filtrar por tipo (frutas vs hortalizas) por el comienzo del nombre
+                if tipo == "hortalizas":
+                    if not nombre.startswith("HORTALIZA"):
+                        continue
+                else:  # frutas
+                    if not nombre.startswith("FRUTA"):
+                        continue
+                # Debe coincidir con el mes
+                if mes not in nombre:
+                    continue
+                # Debe coincidir con el año (2026 o 26)
+                if a4 not in nombre and a2 not in nombre:
+                    continue
+                buenos.append(u)
+            return buenos
+        except Exception:
+            return []
+
+    # ------------------------------------------------------------------ #
     # Descarga del ZIP del mes
     # ------------------------------------------------------------------ #
     def _descargar_zip(self, tipo: str, fecha: datetime) -> Optional[bytes]:
         """Descarga el ZIP del mes correspondiente a la fecha. Retorna bytes o None."""
-        for url in self._candidatos_url_zip(tipo, fecha):
+        # 1) Probar primero las URLs descubiertas en la página oficial de MCBA
+        urls = self._urls_desde_listing(tipo, fecha)
+        # 2) Agregar los candidatos hardcodeados como fallback
+        urls = urls + [u for u in self._candidatos_url_zip(tipo, fecha) if u not in urls]
+        for url in urls:
             if url in self._zip_cache:
                 return self._zip_cache[url]
             try:
