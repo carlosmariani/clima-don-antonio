@@ -115,5 +115,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add precios_hoy.pdf informes/precios_hoy.pdf informes/por_zona/ .last_email_date 2>/dev/null || true
+          git add precios_hoy.pdf informes/precios_hoy.pdf informes/precios_hoy_resumen.json informes/por_zona/ .last_email_date 2>/dev/null || true
           git diff --cached --quiet || (git commit -m "Actualizar PDFs de precios (general + por zona)" && git push)
