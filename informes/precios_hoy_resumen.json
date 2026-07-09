@@ -89,7 +89,7 @@
       "tmax_pasado": 19.9,
       "tmin_pasado": 16.1,
       "lluvia_pasado": 2.4,
-      "prob_lluvia_pasado": 27,
+      "prob_lluvia_pasado": 39,
       "alerta": null
     },
     {
@@ -102,7 +102,7 @@
       "tmax_pasado": 20.8,
       "tmin_pasado": 16.6,
       "lluvia_pasado": 0.5,
-      "prob_lluvia_pasado": 27,
+      "prob_lluvia_pasado": 39,
       "alerta": null
     },
     {
@@ -115,7 +115,7 @@
       "tmax_pasado": 19.2,
       "tmin_pasado": 15.0,
       "lluvia_pasado": 1.0,
-      "prob_lluvia_pasado": 27,
+      "prob_lluvia_pasado": 35,
       "alerta": null
     },
     {
@@ -128,7 +128,7 @@
       "tmax_pasado": 15.5,
       "tmin_pasado": 11.9,
       "lluvia_pasado": 0.3,
-      "prob_lluvia_pasado": 10,
+      "prob_lluvia_pasado": 24,
       "alerta": null
     },
     {
@@ -141,7 +141,7 @@
       "tmax_pasado": 18.7,
       "tmin_pasado": 13.3,
       "lluvia_pasado": 3.1,
-      "prob_lluvia_pasado": 54,
+      "prob_lluvia_pasado": 75,
       "alerta": null
     },
     {
@@ -154,7 +154,7 @@
       "tmax_pasado": 20.3,
       "tmin_pasado": 14.7,
       "lluvia_pasado": 0.4,
-      "prob_lluvia_pasado": 45,
+      "prob_lluvia_pasado": 49,
       "alerta": null
     },
     {
@@ -167,7 +167,7 @@
       "tmax_pasado": 21.0,
       "tmin_pasado": 13.3,
       "lluvia_pasado": 0.2,
-      "prob_lluvia_pasado": 12,
+      "prob_lluvia_pasado": 6,
       "alerta": null
     },
     {
@@ -180,7 +180,7 @@
       "tmax_pasado": 20.9,
       "tmin_pasado": 13.9,
       "lluvia_pasado": 0.1,
-      "prob_lluvia_pasado": 12,
+      "prob_lluvia_pasado": 6,
       "alerta": null
     },
     {
@@ -193,7 +193,7 @@
       "tmax_pasado": 16.5,
       "tmin_pasado": 7.7,
       "lluvia_pasado": 0.2,
-      "prob_lluvia_pasado": 31,
+      "prob_lluvia_pasado": 33,
       "alerta": null
     },
     {
@@ -206,7 +206,7 @@
       "tmax_pasado": 17.8,
       "tmin_pasado": 11.3,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 4,
+      "prob_lluvia_pasado": 8,
       "alerta": null
     }
   ],
