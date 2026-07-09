@@ -89,7 +89,7 @@
       "tmax_pasado": 22.2,
       "tmin_pasado": 12.8,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 6,
+      "prob_lluvia_pasado": 4,
       "alerta": null
     },
     {
@@ -102,7 +102,7 @@
       "tmax_pasado": 23.4,
       "tmin_pasado": 12.1,
       "lluvia_pasado": 0.2,
-      "prob_lluvia_pasado": 6,
+      "prob_lluvia_pasado": 4,
       "alerta": null
     },
     {
@@ -115,7 +115,7 @@
       "tmax_pasado": 20.5,
       "tmin_pasado": 11.4,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 12,
+      "prob_lluvia_pasado": 6,
       "alerta": null
     },
     {
@@ -128,7 +128,7 @@
       "tmax_pasado": 18.8,
       "tmin_pasado": 9.1,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 0,
       "alerta": null
     },
     {
@@ -137,11 +137,11 @@
       "tmax": 24.4,
       "tmin": 12.0,
       "lluvia_mm": 0,
-      "prob_lluvia": 3,
+      "prob_lluvia": 0,
       "tmax_pasado": 21.4,
       "tmin_pasado": 11.8,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 4,
+      "prob_lluvia_pasado": 0,
       "alerta": null
     },
     {
@@ -154,7 +154,7 @@
       "tmax_pasado": 21.9,
       "tmin_pasado": 11.6,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 6,
+      "prob_lluvia_pasado": 10,
       "alerta": null
     },
     {
@@ -167,7 +167,7 @@
       "tmax_pasado": 19.6,
       "tmin_pasado": 7.1,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 0,
       "alerta": null
     },
     {
@@ -180,7 +180,7 @@
       "tmax_pasado": 21.2,
       "tmin_pasado": 8.0,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 0,
       "alerta": null
     },
     {
@@ -193,7 +193,7 @@
       "tmax_pasado": 17.6,
       "tmin_pasado": 5.1,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 0,
       "alerta": null
     },
     {
@@ -206,7 +206,7 @@
       "tmax_pasado": 18.1,
       "tmin_pasado": 9.0,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 5,
       "alerta": null
     }
   ],
