@@ -212,9 +212,31 @@
   ],
   "alertas_7d": [
     {
+      "zona": "General Pizarro",
+      "provincia": "Salta",
+      "alertas": [
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "52 km/h",
+          "detalle": "Ráfagas hasta 52 km/h",
+          "fecha": "2026-07-14"
+        }
+      ]
+    },
+    {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
       "alertas": [
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "52 km/h",
+          "detalle": "Ráfagas hasta 52 km/h",
+          "fecha": "2026-07-14"
+        },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
