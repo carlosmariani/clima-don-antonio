@@ -121,11 +121,11 @@
       "tmax": 20.9,
       "tmin": 16.7,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
+      "prob_lluvia": 2,
       "tmax_pasado": 18.7,
       "tmin_pasado": 12.5,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 4,
       "alerta": null
     },
     {
@@ -134,11 +134,11 @@
       "tmax": 21.6,
       "tmin": 17.4,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
+      "prob_lluvia": 2,
       "tmax_pasado": 18.9,
       "tmin_pasado": 13.3,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 4,
       "alerta": null
     },
     {
@@ -147,11 +147,11 @@
       "tmax": 19.0,
       "tmin": 14.1,
       "lluvia_mm": 0,
-      "prob_lluvia": 4,
+      "prob_lluvia": 6,
       "tmax_pasado": 17.2,
       "tmin_pasado": 11.1,
       "lluvia_pasado": 0.8,
-      "prob_lluvia_pasado": 33,
+      "prob_lluvia_pasado": 24,
       "alerta": null
     },
     {
@@ -160,7 +160,7 @@
       "tmax": 15.8,
       "tmin": 10.1,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
+      "prob_lluvia": 2,
       "tmax_pasado": 15.5,
       "tmin_pasado": 8.2,
       "lluvia_pasado": 0.1,
@@ -190,7 +190,7 @@
       "tmax_pasado": 18.0,
       "tmin_pasado": 10.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 22,
+      "prob_lluvia_pasado": 16,
       "alerta": null
     },
     {
@@ -199,11 +199,11 @@
       "tmax": 17.7,
       "tmin": 13.1,
       "lluvia_mm": 0,
-      "prob_lluvia": 22,
+      "prob_lluvia": 6,
       "tmax_pasado": 16.4,
       "tmin_pasado": 10.5,
       "lluvia_pasado": 0.3,
-      "prob_lluvia_pasado": 26,
+      "prob_lluvia_pasado": 33,
       "alerta": null
     },
     {
@@ -212,11 +212,11 @@
       "tmax": 19.9,
       "tmin": 14.2,
       "lluvia_mm": 0,
-      "prob_lluvia": 22,
+      "prob_lluvia": 6,
       "tmax_pasado": 18.5,
       "tmin_pasado": 12.6,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 26,
+      "prob_lluvia_pasado": 33,
       "alerta": null
     },
     {
@@ -225,11 +225,11 @@
       "tmax": 16.3,
       "tmin": 9.5,
       "lluvia_mm": 0,
-      "prob_lluvia": 55,
+      "prob_lluvia": 13,
       "tmax_pasado": 12.5,
       "tmin_pasado": 6.2,
       "lluvia_pasado": 0.1,
-      "prob_lluvia_pasado": 29,
+      "prob_lluvia_pasado": 35,
       "alerta": null
     },
     {
@@ -242,7 +242,7 @@
       "tmax_pasado": 14.6,
       "tmin_pasado": 8.3,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 4,
+      "prob_lluvia_pasado": 0,
       "alerta": null
     }
   ],
