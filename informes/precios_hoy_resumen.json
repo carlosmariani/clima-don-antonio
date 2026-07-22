@@ -1,9 +1,9 @@
 {
-  "fecha_str": "21 de julio de 2026",
-  "fecha_iso": "2026-07-21",
-  "dias_atraso": 1,
+  "fecha_str": "22 de julio de 2026",
+  "fecha_iso": "2026-07-22",
+  "dias_atraso": 0,
   "n_cotizaciones": 36,
-  "texto_resumen": "Hoy se relevaron <b>36 cotizaciones</b> en el MCBA para tus productos. 11 cotizaciones bajaron, 0 subieron y 6 se mantuvieron estables respecto al día hábil anterior.",
+  "texto_resumen": "Hoy se relevaron <b>36 cotizaciones</b> en el MCBA para tus productos. 15 cotizaciones bajaron, 1 subieron y 0 se mantuvieron estables respecto al día hábil anterior.",
   "productos_top": [
     {
       "especie": "TOMATE",
@@ -11,8 +11,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 5.0,
-      "precio": 17500.0,
-      "variacion": -15.789473684210526
+      "precio": 19000.0,
+      "variacion": -10.526315789473683
     },
     {
       "especie": "TOMATE",
@@ -20,8 +20,8 @@
       "procedencia": "JUJUY",
       "envase": "cajón tomate",
       "kg_bulto": 18.0,
-      "precio": 24611.11111111111,
-      "variacion": -58.333333333333336
+      "precio": 19977.777777777777,
+      "variacion": -60.0
     },
     {
       "especie": "TOMATE",
@@ -29,8 +29,8 @@
       "procedencia": "JUJUY",
       "envase": "cajón tomate",
       "kg_bulto": 18.0,
-      "precio": 25000.0,
-      "variacion": -39.130434782608695
+      "precio": 21000.0,
+      "variacion": -45.83333333333333
     },
     {
       "especie": "PIMIENTO",
@@ -38,8 +38,8 @@
       "procedencia": "SALTA",
       "envase": "pelado",
       "kg_bulto": 10.0,
-      "precio": 36200.0,
-      "variacion": -47.72727272727273
+      "precio": 32800.0,
+      "variacion": -52.27272727272727
     },
     {
       "especie": "PEPINO",
@@ -47,8 +47,8 @@
       "procedencia": "SALTA",
       "envase": "cajón tomate",
       "kg_bulto": 18.0,
-      "precio": 35000.0,
-      "variacion": 0.0
+      "precio": 26000.0,
+      "variacion": -14.285714285714285
     },
     {
       "especie": "BERENJENA",
@@ -56,8 +56,8 @@
       "procedencia": "JUJUY",
       "envase": "cajón tomate",
       "kg_bulto": 12.0,
-      "precio": 25666.666666666668,
-      "variacion": 0.0
+      "precio": 23000.0,
+      "variacion": -8.695652173913043
     },
     {
       "especie": "ZAPALLITO",
@@ -65,8 +65,8 @@
       "procedencia": "JUJUY",
       "envase": "pelado",
       "kg_bulto": 15.0,
-      "precio": 10250.0,
-      "variacion": -10.526315789473683
+      "precio": 9500.0,
+      "variacion": -5.88235294117647
     },
     {
       "especie": "ZAPALLITO",
@@ -74,17 +74,8 @@
       "procedencia": "JUJUY",
       "envase": "pelado",
       "kg_bulto": 15.0,
-      "precio": 10500.0,
-      "variacion": 0.0
-    },
-    {
-      "especie": "ZAPALLO",
-      "variedad": "ANC.COKENA",
-      "procedencia": "SALTA",
-      "envase": "pelado",
-      "kg_bulto": 17.0,
-      "precio": 27000.0,
-      "variacion": 0.0
+      "precio": 11500.0,
+      "variacion": 5.555555555555555
     },
     {
       "especie": "CHOCLO",
@@ -92,8 +83,8 @@
       "procedencia": "SALTA",
       "envase": "pelado",
       "kg_bulto": 15.0,
-      "precio": 30500.0,
-      "variacion": -36.84210526315789
+      "precio": 30000.0,
+      "variacion": -37.83783783783784
     },
     {
       "especie": "CHAUCHA",
@@ -101,8 +92,8 @@
       "procedencia": "SALTA",
       "envase": "pelado",
       "kg_bulto": 10.0,
-      "precio": 30000.0,
-      "variacion": 0.0
+      "precio": 27000.0,
+      "variacion": -10.0
     },
     {
       "especie": "CHAUCHA",
@@ -110,20 +101,20 @@
       "procedencia": "SALTA",
       "envase": "pelado",
       "kg_bulto": 12.0,
-      "precio": 29000.0,
-      "variacion": -12.903225806451612
+      "precio": 27000.0,
+      "variacion": -19.35483870967742
     }
   ],
   "clima_48h": [
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 17.4,
-      "tmin": 12.0,
+      "tmax": 18.1,
+      "tmin": 10.4,
       "lluvia_mm": 0,
       "prob_lluvia": 2,
-      "tmax_pasado": 20.2,
-      "tmin_pasado": 9.0,
+      "tmax_pasado": 20.0,
+      "tmin_pasado": 9.2,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -131,12 +122,12 @@
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 18.6,
-      "tmin": 11.7,
+      "tmax": 18.9,
+      "tmin": 9.8,
       "lluvia_mm": 0,
       "prob_lluvia": 2,
-      "tmax_pasado": 22.1,
-      "tmin_pasado": 10.0,
+      "tmax_pasado": 21.4,
+      "tmin_pasado": 10.3,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -144,12 +135,12 @@
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 15.5,
-      "tmin": 10.1,
-      "lluvia_mm": 0.1,
-      "prob_lluvia": 0,
-      "tmax_pasado": 19.6,
-      "tmin_pasado": 9.8,
+      "tmax": 15.9,
+      "tmin": 10.0,
+      "lluvia_mm": 0.2,
+      "prob_lluvia": 2,
+      "tmax_pasado": 19.3,
+      "tmin_pasado": 10.1,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -157,12 +148,12 @@
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 14.6,
-      "tmin": 6.0,
+      "tmax": 14.0,
+      "tmin": 7.3,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 18.1,
-      "tmin_pasado": 6.6,
+      "tmax_pasado": 17.3,
+      "tmin_pasado": 6.2,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -170,12 +161,12 @@
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 19.8,
-      "tmin": 8.1,
+      "tmax": 18.7,
+      "tmin": 8.6,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 22.4,
-      "tmin_pasado": 9.6,
+      "tmax_pasado": 22.0,
+      "tmin_pasado": 9.1,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -183,12 +174,12 @@
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 18.0,
-      "tmin": 8.8,
+      "tmax": 18.2,
+      "tmin": 8.6,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 22.2,
-      "tmin_pasado": 7.7,
+      "prob_lluvia": 2,
+      "tmax_pasado": 21.2,
+      "tmin_pasado": 8.5,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -196,12 +187,12 @@
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 14.6,
-      "tmin": 6.2,
+      "tmax": 14.9,
+      "tmin": 7.4,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 17.8,
-      "tmin_pasado": 7.0,
+      "tmax_pasado": 17.4,
+      "tmin_pasado": 7.2,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -209,12 +200,12 @@
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 16.3,
-      "tmin": 8.9,
+      "tmax": 16.6,
+      "tmin": 9.8,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 19.8,
-      "tmin_pasado": 8.4,
+      "tmax_pasado": 19.6,
+      "tmin_pasado": 8.5,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -223,11 +214,11 @@
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
       "tmax": 13.2,
-      "tmin": 5.0,
+      "tmin": 5.2,
       "lluvia_mm": 0,
-      "prob_lluvia": 2,
-      "tmax_pasado": 16.1,
-      "tmin_pasado": 4.7,
+      "prob_lluvia": 4,
+      "tmax_pasado": 16.4,
+      "tmin_pasado": 4.8,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -235,12 +226,12 @@
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 12.8,
-      "tmin": 7.6,
-      "lluvia_mm": 0.5,
-      "prob_lluvia": 0,
-      "tmax_pasado": 16.6,
-      "tmin_pasado": 5.4,
+      "tmax": 12.9,
+      "tmin": 7.9,
+      "lluvia_mm": 0.6,
+      "prob_lluvia": 2,
+      "tmax_pasado": 16.2,
+      "tmin_pasado": 5.6,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
