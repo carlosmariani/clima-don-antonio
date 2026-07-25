@@ -151,7 +151,7 @@
       "tmax_pasado": 23.8,
       "tmin_pasado": 12.4,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 2,
       "alerta": null
     },
     {
@@ -164,7 +164,7 @@
       "tmax_pasado": 22.6,
       "tmin_pasado": 11.4,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 0,
       "alerta": null
     },
     {
@@ -177,7 +177,7 @@
       "tmax_pasado": 25.7,
       "tmin_pasado": 11.5,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 2,
       "alerta": null
     },
     {
