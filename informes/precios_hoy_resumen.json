@@ -151,7 +151,7 @@
       "tmax_pasado": 26.8,
       "tmin_pasado": 12.6,
       "lluvia_pasado": 4.6,
-      "prob_lluvia_pasado": 42,
+      "prob_lluvia_pasado": 35,
       "alerta": null
     },
     {
@@ -164,7 +164,7 @@
       "tmax_pasado": 19.4,
       "tmin_pasado": 15.0,
       "lluvia_pasado": 5.0,
-      "prob_lluvia_pasado": 45,
+      "prob_lluvia_pasado": 41,
       "alerta": null
     },
     {
@@ -177,7 +177,7 @@
       "tmax_pasado": 22.5,
       "tmin_pasado": 17.0,
       "lluvia_pasado": 0.9,
-      "prob_lluvia_pasado": 57,
+      "prob_lluvia_pasado": 45,
       "alerta": null
     },
     {
@@ -203,7 +203,7 @@
       "tmax_pasado": 25.8,
       "tmin_pasado": 11.3,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 3,
+      "prob_lluvia_pasado": 2,
       "alerta": null
     },
     {
@@ -216,7 +216,7 @@
       "tmax_pasado": 27.3,
       "tmin_pasado": 12.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 3,
+      "prob_lluvia_pasado": 2,
       "alerta": null
     },
     {
@@ -229,7 +229,7 @@
       "tmax_pasado": 21.2,
       "tmin_pasado": 10.3,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 33,
+      "prob_lluvia_pasado": 24,
       "alerta": null
     },
     {
@@ -242,7 +242,7 @@
       "tmax_pasado": 23.0,
       "tmin_pasado": 14.2,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 68,
+      "prob_lluvia_pasado": 54,
       "alerta": null
     }
   ],
