@@ -118,26 +118,26 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 23.6,
-      "tmin": 19.0,
-      "lluvia_mm": 0.3,
+      "tmax": 24.5,
+      "tmin": 19.4,
+      "lluvia_mm": 0,
       "prob_lluvia": 12,
-      "tmax_pasado": 27.7,
-      "tmin_pasado": 19.9,
-      "lluvia_pasado": 0.6,
+      "tmax_pasado": 28.1,
+      "tmin_pasado": 20.0,
+      "lluvia_pasado": 0.8,
       "prob_lluvia_pasado": 33,
       "alerta": null
     },
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 25.2,
-      "tmin": 18.5,
+      "tmax": 25.4,
+      "tmin": 18.8,
       "lluvia_mm": 0,
       "prob_lluvia": 12,
       "tmax_pasado": 28.1,
-      "tmin_pasado": 19.9,
-      "lluvia_pasado": 0.8,
+      "tmin_pasado": 20.1,
+      "lluvia_pasado": 1.2,
       "prob_lluvia_pasado": 33,
       "alerta": null
     },
@@ -145,89 +145,89 @@
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
       "tmax": 24.1,
-      "tmin": 18.1,
-      "lluvia_mm": 0.9,
+      "tmin": 18.2,
+      "lluvia_mm": 2.3,
       "prob_lluvia": 57,
-      "tmax_pasado": 26.6,
+      "tmax_pasado": 26.2,
       "tmin_pasado": 19.0,
-      "lluvia_pasado": 1.2,
+      "lluvia_pasado": 0.8,
       "prob_lluvia_pasado": 29,
       "alerta": null
     },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 22.6,
-      "tmin": 15.5,
+      "tmax": 21.8,
+      "tmin": 15.1,
       "lluvia_mm": 0,
       "prob_lluvia": 18,
-      "tmax_pasado": 25.6,
-      "tmin_pasado": 18.4,
-      "lluvia_pasado": 0.2,
+      "tmax_pasado": 25.3,
+      "tmin_pasado": 18.2,
+      "lluvia_pasado": 1.2,
       "prob_lluvia_pasado": 45,
-      "alerta": "💨 Viento fuerte (56 km/h)"
+      "alerta": null
     },
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 24.3,
-      "tmin": 17.3,
+      "tmax": 25.1,
+      "tmin": 17.9,
       "lluvia_mm": 0,
       "prob_lluvia": 6,
       "tmax_pasado": 30.2,
-      "tmin_pasado": 19.8,
-      "lluvia_pasado": 0.1,
+      "tmin_pasado": 19.4,
+      "lluvia_pasado": 0.2,
       "prob_lluvia_pasado": 10,
-      "alerta": null
+      "alerta": "💨 Viento fuerte (52 km/h)"
     },
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
       "tmax": 25.9,
-      "tmin": 18.6,
-      "lluvia_mm": 0.5,
+      "tmin": 19.0,
+      "lluvia_mm": 0,
       "prob_lluvia": 10,
-      "tmax_pasado": 27.6,
-      "tmin_pasado": 18.3,
-      "lluvia_pasado": 1.4,
+      "tmax_pasado": 27.5,
+      "tmin_pasado": 18.1,
+      "lluvia_pasado": 1.3,
       "prob_lluvia_pasado": 29,
       "alerta": null
     },
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 22.2,
-      "tmin": 17.2,
-      "lluvia_mm": 0.6,
+      "tmax": 22.4,
+      "tmin": 17.3,
+      "lluvia_mm": 0.5,
       "prob_lluvia": 7,
       "tmax_pasado": 24.4,
-      "tmin_pasado": 16.9,
-      "lluvia_pasado": 2.7,
+      "tmin_pasado": 17.4,
+      "lluvia_pasado": 2.4,
       "prob_lluvia_pasado": 59,
       "alerta": null
     },
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 23.7,
-      "tmin": 17.9,
+      "tmax": 23.8,
+      "tmin": 18.7,
       "lluvia_mm": 0,
       "prob_lluvia": 7,
-      "tmax_pasado": 26.7,
-      "tmin_pasado": 17.6,
-      "lluvia_pasado": 1.4,
+      "tmax_pasado": 26.2,
+      "tmin_pasado": 18.1,
+      "lluvia_pasado": 1.3,
       "prob_lluvia_pasado": 59,
       "alerta": null
     },
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 19.3,
-      "tmin": 13.3,
-      "lluvia_mm": 1.0,
+      "tmax": 19.7,
+      "tmin": 13.2,
+      "lluvia_mm": 1.2,
       "prob_lluvia": 67,
-      "tmax_pasado": 24.5,
-      "tmin_pasado": 13.2,
+      "tmax_pasado": 24.0,
+      "tmin_pasado": 13.0,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 80,
       "alerta": null
@@ -235,18 +235,32 @@
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 20.7,
-      "tmin": 15.2,
-      "lluvia_mm": 1.3,
+      "tmax": 20.4,
+      "tmin": 15.4,
+      "lluvia_mm": 0.8,
       "prob_lluvia": 2,
-      "tmax_pasado": 23.1,
-      "tmin_pasado": 16.2,
-      "lluvia_pasado": 0.9,
+      "tmax_pasado": 23.4,
+      "tmin_pasado": 15.8,
+      "lluvia_pasado": 1.1,
       "prob_lluvia_pasado": 73,
       "alerta": null
     }
   ],
   "alertas_7d": [
+    {
+      "zona": "Pichanal",
+      "provincia": "Salta",
+      "alertas": [
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "51 km/h",
+          "detalle": "Ráfagas hasta 51 km/h",
+          "fecha": "2026-08-01"
+        }
+      ]
+    },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
@@ -255,16 +269,8 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "56 km/h",
-          "detalle": "Ráfagas hasta 56 km/h",
-          "fecha": "2026-07-31"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "63 km/h",
-          "detalle": "Ráfagas hasta 63 km/h",
+          "valor": "60 km/h",
+          "detalle": "Ráfagas hasta 60 km/h",
           "fecha": "2026-08-01"
         }
       ]
@@ -277,8 +283,16 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "58 km/h",
-          "detalle": "Ráfagas hasta 58 km/h",
+          "valor": "52 km/h",
+          "detalle": "Ráfagas hasta 52 km/h",
+          "fecha": "2026-07-31"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "59 km/h",
+          "detalle": "Ráfagas hasta 59 km/h",
           "fecha": "2026-08-01"
         }
       ]
@@ -291,22 +305,8 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "51 km/h",
-          "detalle": "Ráfagas hasta 51 km/h",
-          "fecha": "2026-08-01"
-        }
-      ]
-    },
-    {
-      "zona": "Chalicán",
-      "provincia": "Jujuy",
-      "alertas": [
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "51 km/h",
-          "detalle": "Ráfagas hasta 51 km/h",
+          "valor": "53 km/h",
+          "detalle": "Ráfagas hasta 53 km/h",
           "fecha": "2026-08-01"
         }
       ]
@@ -319,8 +319,8 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "54 km/h",
-          "detalle": "Ráfagas hasta 54 km/h",
+          "valor": "51 km/h",
+          "detalle": "Ráfagas hasta 51 km/h",
           "fecha": "2026-08-01"
         }
       ]
