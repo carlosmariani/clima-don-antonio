@@ -121,11 +121,11 @@
       "tmax": 30.5,
       "tmin": 16.5,
       "lluvia_mm": 0,
-      "prob_lluvia": 1,
+      "prob_lluvia": 4,
       "tmax_pasado": 24.1,
       "tmin_pasado": 15.7,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 4,
       "alerta": "💨 Viento fuerte (57 km/h)"
     },
     {
@@ -134,11 +134,11 @@
       "tmax": 30.7,
       "tmin": 17.9,
       "lluvia_mm": 0,
-      "prob_lluvia": 1,
+      "prob_lluvia": 4,
       "tmax_pasado": 24.5,
       "tmin_pasado": 16.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 4,
       "alerta": "💨 Viento fuerte (58 km/h)"
     },
     {
@@ -151,7 +151,7 @@
       "tmax_pasado": 22.5,
       "tmin_pasado": 14.8,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 8,
+      "prob_lluvia_pasado": 10,
       "alerta": null
     },
     {
@@ -160,11 +160,11 @@
       "tmax": 32.0,
       "tmin": 14.0,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
+      "prob_lluvia": 4,
       "tmax_pasado": 19.7,
       "tmin_pasado": 11.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 4,
       "alerta": "💨 Viento fuerte (70 km/h)"
     },
     {
@@ -173,11 +173,11 @@
       "tmax": 33.9,
       "tmin": 21.0,
       "lluvia_mm": 0,
-      "prob_lluvia": 8,
+      "prob_lluvia": 5,
       "tmax_pasado": 22.7,
       "tmin_pasado": 15.5,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 10,
+      "prob_lluvia_pasado": 6,
       "alerta": "💨 Viento fuerte (69 km/h)"
     },
     {
@@ -186,11 +186,11 @@
       "tmax": 30.8,
       "tmin": 16.5,
       "lluvia_mm": 0,
-      "prob_lluvia": 7,
+      "prob_lluvia": 5,
       "tmax_pasado": 24.1,
       "tmin_pasado": 16.4,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 14,
+      "prob_lluvia_pasado": 11,
       "alerta": null
     },
     {
@@ -203,7 +203,7 @@
       "tmax_pasado": 21.8,
       "tmin_pasado": 12.8,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 2,
       "alerta": "💨 Viento fuerte (51 km/h)"
     },
     {
@@ -216,7 +216,7 @@
       "tmax_pasado": 22.7,
       "tmin_pasado": 14.2,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 2,
       "alerta": "💨 Viento fuerte (53 km/h)"
     },
     {
@@ -225,11 +225,11 @@
       "tmax": 29.8,
       "tmin": 11.9,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
+      "prob_lluvia": 1,
       "tmax_pasado": 17.5,
       "tmin_pasado": 7.5,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 10,
+      "prob_lluvia_pasado": 12,
       "alerta": "💨 Viento fuerte (62 km/h)"
     },
     {
@@ -238,11 +238,11 @@
       "tmax": 29.5,
       "tmin": 15.4,
       "lluvia_mm": 0,
-      "prob_lluvia": 5,
+      "prob_lluvia": 3,
       "tmax_pasado": 18.4,
       "tmin_pasado": 12.5,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 6,
+      "prob_lluvia_pasado": 4,
       "alerta": null
     }
   ],
