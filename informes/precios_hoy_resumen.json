@@ -125,7 +125,7 @@
       "tmax_pasado": 21.3,
       "tmin_pasado": 11.6,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 1,
+      "prob_lluvia_pasado": 0,
       "alerta": null
     },
     {
@@ -138,7 +138,7 @@
       "tmax_pasado": 22.0,
       "tmin_pasado": 10.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 1,
+      "prob_lluvia_pasado": 0,
       "alerta": "💨 Viento fuerte (54 km/h)"
     },
     {
@@ -164,7 +164,7 @@
       "tmax_pasado": 15.6,
       "tmin_pasado": 6.7,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 0,
       "alerta": "💨 Viento fuerte (66 km/h)"
     },
     {
