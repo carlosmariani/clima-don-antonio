@@ -1,7 +1,7 @@
 {
   "fecha_str": "7 de agosto de 2026",
   "fecha_iso": "2026-08-07",
-  "dias_atraso": 0,
+  "dias_atraso": 1,
   "n_cotizaciones": 37,
   "texto_resumen": "Hoy se relevaron <b>37 cotizaciones</b> en el MCBA para tus productos. 8 cotizaciones bajaron, 6 subieron y 2 se mantuvieron estables respecto al día hábil anterior.",
   "productos_top": [
@@ -118,129 +118,129 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 26.8,
-      "tmin": 9.9,
+      "tmax": 20.9,
+      "tmin": 11.3,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 21.1,
-      "tmin_pasado": 11.7,
+      "prob_lluvia": 1,
+      "tmax_pasado": 19.1,
+      "tmin_pasado": 13.3,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 2,
       "alerta": null
     },
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 26.9,
-      "tmin": 10.6,
+      "tmax": 21.5,
+      "tmin": 10.3,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 21.8,
-      "tmin_pasado": 11.3,
+      "prob_lluvia": 1,
+      "tmax_pasado": 20.2,
+      "tmin_pasado": 12.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
-      "alerta": "💨 Viento fuerte (52 km/h)"
+      "prob_lluvia_pasado": 2,
+      "alerta": null
     },
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 26.8,
-      "tmin": 10.6,
+      "tmax": 19.3,
+      "tmin": 8.8,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 19.8,
-      "tmin_pasado": 9.7,
+      "prob_lluvia": 2,
+      "tmax_pasado": 18.0,
+      "tmin_pasado": 10.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 6,
       "alerta": null
     },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 29.5,
-      "tmin": 8.5,
+      "tmax": 15.5,
+      "tmin": 5.9,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 15.3,
-      "tmin_pasado": 6.6,
+      "tmax_pasado": 12.8,
+      "tmin_pasado": 7.4,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
-      "alerta": "💨 Viento fuerte (65 km/h)"
+      "prob_lluvia_pasado": 0,
+      "alerta": null
     },
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 22.7,
-      "tmin": 13.9,
+      "tmax": 20.1,
+      "tmin": 9.2,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 20.1,
-      "tmin_pasado": 10.1,
+      "prob_lluvia": 2,
+      "tmax_pasado": 17.6,
+      "tmin_pasado": 11.2,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
-      "alerta": "💨 Viento fuerte (70 km/h)"
+      "prob_lluvia_pasado": 2,
+      "alerta": null
     },
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 28.3,
-      "tmin": 9.2,
+      "tmax": 21.1,
+      "tmin": 8.7,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 21.2,
-      "tmin_pasado": 8.8,
+      "tmax_pasado": 19.6,
+      "tmin_pasado": 10.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 2,
       "alerta": null
     },
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 29.4,
-      "tmin": 7.8,
+      "tmax": 18.9,
+      "tmin": 7.5,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 19.2,
-      "tmin_pasado": 8.0,
+      "tmax_pasado": 16.1,
+      "tmin_pasado": 9.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 2,
       "alerta": null
     },
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 32.1,
-      "tmin": 9.0,
+      "tmax": 20.0,
+      "tmin": 8.8,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 20.1,
-      "tmin_pasado": 8.8,
+      "tmax_pasado": 17.1,
+      "tmin_pasado": 10.6,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 2,
       "alerta": null
     },
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 27.8,
-      "tmin": 7.4,
+      "tmax": 14.5,
+      "tmin": 3.6,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 14.7,
-      "tmin_pasado": 3.8,
+      "prob_lluvia": 1,
+      "tmax_pasado": 10.4,
+      "tmin_pasado": 3.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 6,
       "alerta": null
     },
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 31.1,
-      "tmin": 11.2,
+      "tmax": 16.2,
+      "tmin": 7.0,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 16.7,
-      "tmin_pasado": 7.1,
+      "tmax_pasado": 12.8,
+      "tmin_pasado": 8.2,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -248,44 +248,16 @@
   ],
   "alertas_7d": [
     {
-      "zona": "Pichanal",
-      "provincia": "Salta",
+      "zona": "Aguas Calientes",
+      "provincia": "Jujuy",
       "alertas": [
         {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
+          "tipo": "Riesgo de helada",
+          "icono": "❄️",
           "severidad": "MEDIA",
-          "valor": "52 km/h",
-          "detalle": "Ráfagas hasta 52 km/h",
-          "fecha": "2026-08-08"
-        }
-      ]
-    },
-    {
-      "zona": "General Pizarro",
-      "provincia": "Salta",
-      "alertas": [
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "65 km/h",
-          "detalle": "Ráfagas hasta 65 km/h",
-          "fecha": "2026-08-08"
-        }
-      ]
-    },
-    {
-      "zona": "Apolinario Saravia",
-      "provincia": "Salta",
-      "alertas": [
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "70 km/h",
-          "detalle": "Ráfagas hasta 70 km/h",
-          "fecha": "2026-08-08"
+          "valor": "3°C",
+          "detalle": "Mínima 3°C",
+          "fecha": "2026-08-13"
         }
       ]
     }
