@@ -164,7 +164,7 @@
       "tmax_pasado": 15.3,
       "tmin_pasado": 6.6,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
+      "prob_lluvia_pasado": 2,
       "alerta": "💨 Viento fuerte (65 km/h)"
     },
     {
