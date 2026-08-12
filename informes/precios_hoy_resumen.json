@@ -160,7 +160,7 @@
       "tmax_pasado": 18.7,
       "tmin_pasado": 9.8,
       "lluvia_pasado": 0.2,
-      "prob_lluvia_pasado": 10,
+      "prob_lluvia_pasado": 6,
       "alerta": null
     },
     {
@@ -173,7 +173,7 @@
       "tmax_pasado": 16.3,
       "tmin_pasado": 7.4,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 8,
+      "prob_lluvia_pasado": 4,
       "alerta": null
     },
     {
@@ -186,7 +186,7 @@
       "tmax_pasado": 20.4,
       "tmin_pasado": 10.5,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 4,
+      "prob_lluvia_pasado": 2,
       "alerta": null
     },
     {
@@ -212,7 +212,7 @@
       "tmax_pasado": 18.0,
       "tmin_pasado": 7.6,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 0,
       "alerta": null
     },
     {
@@ -225,7 +225,7 @@
       "tmax_pasado": 19.7,
       "tmin_pasado": 8.8,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 0,
       "alerta": null
     },
     {
@@ -238,7 +238,7 @@
       "tmax_pasado": 15.4,
       "tmin_pasado": 4.3,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 12,
+      "prob_lluvia_pasado": 4,
       "alerta": "❄️ Riesgo de helada (2°C)"
     },
     {
