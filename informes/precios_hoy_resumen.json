@@ -134,7 +134,7 @@
       "tmax_pasado": 15.0,
       "tmin_pasado": 11.9,
       "lluvia_pasado": 3.9,
-      "prob_lluvia_pasado": 69,
+      "prob_lluvia_pasado": 76,
       "alerta": null
     },
     {
@@ -147,7 +147,7 @@
       "tmax_pasado": 15.4,
       "tmin_pasado": 11.5,
       "lluvia_pasado": 0.9,
-      "prob_lluvia_pasado": 69,
+      "prob_lluvia_pasado": 76,
       "alerta": null
     },
     {
@@ -160,7 +160,7 @@
       "tmax_pasado": 13.7,
       "tmin_pasado": 10.3,
       "lluvia_pasado": 5.2,
-      "prob_lluvia_pasado": 76,
+      "prob_lluvia_pasado": 70,
       "alerta": null
     },
     {
@@ -173,7 +173,7 @@
       "tmax_pasado": 13.0,
       "tmin_pasado": 7.3,
       "lluvia_pasado": 2.2,
-      "prob_lluvia_pasado": 58,
+      "prob_lluvia_pasado": 51,
       "alerta": "💨 Viento fuerte (50 km/h)"
     },
     {
@@ -186,7 +186,7 @@
       "tmax_pasado": 17.4,
       "tmin_pasado": 10.4,
       "lluvia_pasado": 1.7,
-      "prob_lluvia_pasado": 59,
+      "prob_lluvia_pasado": 33,
       "alerta": null
     },
     {
@@ -199,7 +199,7 @@
       "tmax_pasado": 14.9,
       "tmin_pasado": 11.5,
       "lluvia_pasado": 5.1,
-      "prob_lluvia_pasado": 84,
+      "prob_lluvia_pasado": 92,
       "alerta": null
     },
     {
@@ -212,7 +212,7 @@
       "tmax_pasado": 15.5,
       "tmin_pasado": 10.7,
       "lluvia_pasado": 3.3,
-      "prob_lluvia_pasado": 80,
+      "prob_lluvia_pasado": 75,
       "alerta": null
     },
     {
@@ -225,7 +225,7 @@
       "tmax_pasado": 17.2,
       "tmin_pasado": 11.7,
       "lluvia_pasado": 2.8,
-      "prob_lluvia_pasado": 80,
+      "prob_lluvia_pasado": 75,
       "alerta": null
     },
     {
@@ -238,7 +238,7 @@
       "tmax_pasado": 12.3,
       "tmin_pasado": 5.5,
       "lluvia_pasado": 3.1,
-      "prob_lluvia_pasado": 92,
+      "prob_lluvia_pasado": 94,
       "alerta": null
     },
     {
@@ -251,7 +251,7 @@
       "tmax_pasado": 13.6,
       "tmin_pasado": 8.5,
       "lluvia_pasado": 0.9,
-      "prob_lluvia_pasado": 67,
+      "prob_lluvia_pasado": 55,
       "alerta": null
     }
   ],
