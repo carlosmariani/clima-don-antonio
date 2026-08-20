@@ -251,7 +251,7 @@
       "tmax_pasado": 17.8,
       "tmin_pasado": 10.7,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 4,
+      "prob_lluvia_pasado": 10,
       "alerta": null
     }
   ],
