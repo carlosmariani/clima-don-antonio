@@ -206,11 +206,16 @@ def obtener_clima_y_alertas(cfg) -> tuple:
         except Exception:
             return None
 
+    # Filtramos solo localidades del grupo principal (Don Antonio)
+    # — las que tienen otro "grupo" (ej: nader_abapo) pertenecen a reportes extras
+    localidades_da = [l for l in cfg["localidades"]
+                      if not l.get("grupo") or l.get("grupo") == "don_antonio"]
+
     with ThreadPoolExecutor(max_workers=6) as ex:
-        resultados = list(ex.map(_zona, cfg["localidades"]))
+        resultados = list(ex.map(_zona, localidades_da))
 
     resultados = [r for r in resultados if r]
-    orden = {l["nombre"]: i for i, l in enumerate(cfg["localidades"])}
+    orden = {l["nombre"]: i for i, l in enumerate(localidades_da)}
     resultados.sort(key=lambda r: orden.get(r["clima_48h"]["zona"], 999))
 
     clima_48h = [r["clima_48h"] for r in resultados]

@@ -1,0 +1,184 @@
+name: Precios MCBA - detección automática
+
+# Corre cada 30 min entre 17:00 y 23:00 ART (20:00-02:00 UTC) lunes a viernes,
+# y también algunas veces el sábado por si el MCBA publica los datos del viernes
+# durante el fin de semana. Cada corrida revisa si hay datos nuevos del MCBA;
+# si los hay y aún no se mandó email para esa fecha, lo manda.
+on:
+  schedule:
+    - cron: '*/30 20-23 * * 1-5'    # 17:00-20:00 ART lun-vie
+    - cron: '*/30 0-2 * * 2-6'      # 21:00-23:00 ART (martes-sábado UTC)
+    - cron: '0 14,17,20 * * 6'      # Sábado: 11h, 14h y 17h ART por si publican el viernes tarde
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  enviar-precios:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generar PDF de precios completo (todas las zonas)
+        run: python generar_precios.py
+
+      - name: Generar PDFs por zona (10 archivos para filtro en PWA)
+        run: |
+          mkdir -p informes/por_zona
+          python <<'PYEOF'
+          import json, os, shutil, subprocess, sys, unicodedata, glob
+
+          def slug(s):
+              s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode('ascii')
+              return s.lower().replace(' ', '_').replace('.', '')
+
+          cfg = json.load(open('config.json'))
+          # Solo zonas del grupo Don Antonio (las de Nader son otro reporte)
+          zonas = [l['nombre'] for l in cfg['localidades']
+                   if not l.get('grupo') or l.get('grupo') == 'don_antonio']
+          print(f"→ Procesando {len(zonas)} zonas: {zonas}")
+          ok, fail = [], []
+
+          for zona in zonas:
+              s = slug(zona)
+              salida = f"informes/por_zona/precios_{s}.pdf"
+              print(f"\n{'='*60}")
+              print(f"▶ Zona: {zona}  (slug: {s})")
+              print('='*60)
+              # Llamar al script con --salida explícita para evitar globs
+              cmd = ['python', 'generar_precios.py', '--zona', zona, '--salida', salida]
+              r = subprocess.run(cmd, capture_output=True, text=True)
+              if r.returncode == 0 and os.path.exists(salida):
+                  size = os.path.getsize(salida)
+                  print(f"✓ {zona}: {size} bytes en {salida}")
+                  ok.append(zona)
+              else:
+                  print(f"✗ {zona}: FALLÓ")
+                  print("STDOUT:", r.stdout[-1500:])
+                  print("STDERR:", r.stderr[-500:])
+                  fail.append(zona)
+
+          print(f"\n{'='*60}")
+          print(f"RESUMEN: {len(ok)} OK, {len(fail)} fallidas")
+          if fail:
+              print(f"Fallaron: {fail}")
+          print(f"PDFs generados:")
+          for f in sorted(glob.glob('informes/por_zona/*.pdf')):
+              print(f"  {f}  ({os.path.getsize(f)} bytes)")
+          # No fallamos el job por una zona — el reporte completo ya existe
+          PYEOF
+
+      - name: Detectar si hay datos nuevos del MCBA
+        id: check
+        run: |
+          # Lee la fecha ISO de los datos en el JSON resumen
+          FECHA_NUEVA=$(python -c "import json; d=json.load(open('informes/precios_hoy_resumen.json')); print(d['fecha_iso'])")
+          echo "Fecha de los datos: $FECHA_NUEVA"
+          echo "fecha_nueva=$FECHA_NUEVA" >> $GITHUB_OUTPUT
+
+          if [ -f .last_email_date ]; then
+            FECHA_ULT=$(cat .last_email_date)
+          else
+            FECHA_ULT=""
+          fi
+          echo "Última fecha enviada: $FECHA_ULT"
+
+          # Mandar email solo si hay datos nuevos (distinta fecha)
+          if [ "$FECHA_NUEVA" != "$FECHA_ULT" ]; then
+            echo "send_email=true" >> $GITHUB_OUTPUT
+            echo "→ Hay datos nuevos: se envía email"
+          else
+            echo "send_email=false" >> $GITHUB_OUTPUT
+            echo "→ Sin novedades: no se envía email"
+          fi
+
+      - name: Enviar email vía Resend
+        if: steps.check.outputs.send_email == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python enviar_email_precios.py
+
+      - name: Registrar fecha enviada
+        if: steps.check.outputs.send_email == 'true'
+        run: echo "${{ steps.check.outputs.fecha_nueva }}" > .last_email_date
+
+      # === Reportes climáticos para Ing. Agrónomo Claudio Nader ===
+      # Genera 2 PDFs: Abapó (Bolivia) y Tucumán (Lules + Concepción + El Naranjo).
+      # Solo se envía email al Ing. una vez por día (primer run del día).
+      - name: Generar reportes clima Nader (Abapó + Tucumán)
+        id: nader_pdfs
+        run: |
+          mkdir -p informes
+          python <<'PYEOF'
+          import json, os, subprocess, sys
+          cfg = json.load(open('config.json'))
+          reportes = cfg.get('reportes_extra', [])
+          ok, fail = [], []
+          for r in reportes:
+              locs = ','.join(r['localidades'])
+              cmd = ['python', 'generar_informe.py',
+                     '--cliente', r['cliente'],
+                     '--localidades', locs,
+                     '--salida', r['salida']]
+              print(f"\n▶ {r['nombre']}  ({locs})")
+              res = subprocess.run(cmd, capture_output=True, text=True)
+              if res.returncode == 0 and os.path.exists(r['salida']):
+                  size = os.path.getsize(r['salida'])
+                  print(f"  ✓ {size} bytes en {r['salida']}")
+                  ok.append(r['id'])
+              else:
+                  print(f"  ✗ FALLÓ")
+                  print("  STDOUT:", res.stdout[-1000:])
+                  print("  STDERR:", res.stderr[-500:])
+                  fail.append(r['id'])
+          print(f"\nRESUMEN Nader: {len(ok)} OK, {len(fail)} fallidos")
+          if fail:
+              sys.exit(1)
+          PYEOF
+
+      - name: Detectar si ya se envió mail Nader hoy
+        id: check_nader
+        run: |
+          HOY=$(TZ=America/Argentina/Buenos_Aires date '+%Y-%m-%d')
+          echo "hoy_ar=$HOY" >> $GITHUB_OUTPUT
+          if [ -f .last_email_nader_date ]; then
+            ULT=$(cat .last_email_nader_date)
+          else
+            ULT=""
+          fi
+          echo "Última fecha Nader: $ULT   Hoy ART: $HOY"
+          if [ "$HOY" != "$ULT" ]; then
+            echo "send_nader=true" >> $GITHUB_OUTPUT
+            echo "→ Se envía mail al Ing. Nader hoy"
+          else
+            echo "send_nader=false" >> $GITHUB_OUTPUT
+            echo "→ Ya se envió hoy, se omite"
+          fi
+
+      - name: Enviar email al Ing. Nader (Abapó + Tucumán)
+        if: steps.check_nader.outputs.send_nader == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python enviar_email_nader.py
+
+      - name: Registrar fecha mail Nader
+        if: steps.check_nader.outputs.send_nader == 'true'
+        run: echo "${{ steps.check_nader.outputs.hoy_ar }}" > .last_email_nader_date
+
+      - name: Commit PDFs + control al repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add precios_hoy.pdf informes/precios_hoy.pdf informes/precios_hoy_resumen.json informes/por_zona/ informes/reporte_abapo.pdf informes/reporte_tucuman.pdf .last_email_date .last_email_nader_date 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "Actualizar PDFs de precios + reportes clima Nader" && git push)

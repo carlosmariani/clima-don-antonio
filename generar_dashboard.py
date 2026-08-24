@@ -76,9 +76,14 @@ def recolectar_datos():
         "localidades": [],
     }
 
+    # Dashboard solo muestra las localidades del grupo Don Antonio
+    # (las de otros grupos son para reportes extras a terceros)
+    localidades_dashboard = [l for l in cfg["localidades"]
+                             if not l.get("grupo") or l.get("grupo") == "don_antonio"]
+
     with ThreadPoolExecutor(max_workers=6) as ex:
         futs = {ex.submit(procesar_localidad, loc, api, analizador): loc
-                for loc in cfg["localidades"]}
+                for loc in localidades_dashboard}
         resultados = []
         for f in as_completed(futs):
             r = f.result()
@@ -90,7 +95,7 @@ def recolectar_datos():
 
     # Ordenar: ROJO primero, AMARILLO después, VERDE al final.
     # Dentro de cada grupo, mantener el orden del config.
-    orden_cfg = {l["nombre"]: i for i, l in enumerate(cfg["localidades"])}
+    orden_cfg = {l["nombre"]: i for i, l in enumerate(localidades_dashboard)}
     nivel_peso = {"ROJO": 0, "AMARILLO": 1, "VERDE": 2}
     resultados.sort(key=lambda r: (
         nivel_peso.get(r["semaforo"]["nivel"], 9),
@@ -552,6 +557,10 @@ footer {
             <option value="informes/por_zona/precios_chalican.pdf">Solo Chalicán</option>
             <option value="informes/por_zona/precios_aguas_calientes.pdf">Solo Aguas Calientes</option>
             <option value="informes/por_zona/precios_santa_clara.pdf">Solo Santa Clara</option>
+          </optgroup>
+          <optgroup label="🌦️ Reportes clima externos — Ing. Claudio Nader (sin precios)">
+            <option value="informes/reporte_abapo.pdf">Abapó (Bolivia)</option>
+            <option value="informes/reporte_tucuman.pdf">Tucumán — Lules, Concepción, El Naranjo</option>
           </optgroup>
         </select>
         <a id="btn-pdf" href="precios_hoy.pdf" target="_blank"

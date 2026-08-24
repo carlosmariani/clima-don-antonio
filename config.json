@@ -80,6 +80,58 @@
       "lat": -24.3000,
       "lon": -64.5500,
       "altitud": 580
+    },
+    {
+      "nombre": "Abapó",
+      "provincia": "Santa Cruz, Bolivia",
+      "lat": -18.8333,
+      "lon": -63.4167,
+      "altitud": 470,
+      "grupo": "nader_abapo"
+    },
+    {
+      "nombre": "Lules",
+      "provincia": "Tucumán",
+      "lat": -26.9192,
+      "lon": -65.3406,
+      "altitud": 450,
+      "grupo": "nader_tucuman"
+    },
+    {
+      "nombre": "Concepción",
+      "provincia": "Tucumán",
+      "lat": -27.3500,
+      "lon": -65.5833,
+      "altitud": 340,
+      "grupo": "nader_tucuman"
+    },
+    {
+      "nombre": "El Naranjo",
+      "provincia": "Tucumán (Burruyacú)",
+      "lat": -26.4667,
+      "lon": -64.7667,
+      "altitud": 480,
+      "grupo": "nader_tucuman"
+    }
+  ],
+  "reportes_extra": [
+    {
+      "id": "nader_abapo",
+      "nombre": "Abapó (Bolivia)",
+      "cliente": "Ing. Agrónomo Claudio Nader",
+      "localidades": ["Abapó"],
+      "salida": "informes/reporte_abapo.pdf",
+      "email_destinatario": "claudionader@yahoo.com.ar",
+      "email_cc": "carlos.mariani@semdonantonio.com.ar"
+    },
+    {
+      "id": "nader_tucuman",
+      "nombre": "Tucumán — Lules, Concepción, El Naranjo",
+      "cliente": "Ing. Agrónomo Claudio Nader",
+      "localidades": ["Lules", "Concepción", "El Naranjo"],
+      "salida": "informes/reporte_tucuman.pdf",
+      "email_destinatario": "claudionader@yahoo.com.ar",
+      "email_cc": "carlos.mariani@semdonantonio.com.ar"
     }
   ],
   "umbrales_alertas": {
