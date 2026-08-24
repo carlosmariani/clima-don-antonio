@@ -44,7 +44,9 @@ jobs:
               return s.lower().replace(' ', '_').replace('.', '')
 
           cfg = json.load(open('config.json'))
-          zonas = [l['nombre'] for l in cfg['localidades']]
+          # Solo zonas del grupo Don Antonio (las de Nader son otro reporte)
+          zonas = [l['nombre'] for l in cfg['localidades']
+                   if not l.get('grupo') or l.get('grupo') == 'don_antonio']
           print(f"→ Procesando {len(zonas)} zonas: {zonas}")
           ok, fail = [], []
 
@@ -111,9 +113,72 @@ jobs:
         if: steps.check.outputs.send_email == 'true'
         run: echo "${{ steps.check.outputs.fecha_nueva }}" > .last_email_date
 
+      # === Reportes climáticos para Ing. Agrónomo Claudio Nader ===
+      # Genera 2 PDFs: Abapó (Bolivia) y Tucumán (Lules + Concepción + El Naranjo).
+      # Solo se envía email al Ing. una vez por día (primer run del día).
+      - name: Generar reportes clima Nader (Abapó + Tucumán)
+        id: nader_pdfs
+        run: |
+          mkdir -p informes
+          python <<'PYEOF'
+          import json, os, subprocess, sys
+          cfg = json.load(open('config.json'))
+          reportes = cfg.get('reportes_extra', [])
+          ok, fail = [], []
+          for r in reportes:
+              locs = ','.join(r['localidades'])
+              cmd = ['python', 'generar_informe.py',
+                     '--cliente', r['cliente'],
+                     '--localidades', locs,
+                     '--salida', r['salida']]
+              print(f"\n▶ {r['nombre']}  ({locs})")
+              res = subprocess.run(cmd, capture_output=True, text=True)
+              if res.returncode == 0 and os.path.exists(r['salida']):
+                  size = os.path.getsize(r['salida'])
+                  print(f"  ✓ {size} bytes en {r['salida']}")
+                  ok.append(r['id'])
+              else:
+                  print(f"  ✗ FALLÓ")
+                  print("  STDOUT:", res.stdout[-1000:])
+                  print("  STDERR:", res.stderr[-500:])
+                  fail.append(r['id'])
+          print(f"\nRESUMEN Nader: {len(ok)} OK, {len(fail)} fallidos")
+          if fail:
+              sys.exit(1)
+          PYEOF
+
+      - name: Detectar si ya se envió mail Nader hoy
+        id: check_nader
+        run: |
+          HOY=$(TZ=America/Argentina/Buenos_Aires date '+%Y-%m-%d')
+          echo "hoy_ar=$HOY" >> $GITHUB_OUTPUT
+          if [ -f .last_email_nader_date ]; then
+            ULT=$(cat .last_email_nader_date)
+          else
+            ULT=""
+          fi
+          echo "Última fecha Nader: $ULT   Hoy ART: $HOY"
+          if [ "$HOY" != "$ULT" ]; then
+            echo "send_nader=true" >> $GITHUB_OUTPUT
+            echo "→ Se envía mail al Ing. Nader hoy"
+          else
+            echo "send_nader=false" >> $GITHUB_OUTPUT
+            echo "→ Ya se envió hoy, se omite"
+          fi
+
+      - name: Enviar email al Ing. Nader (Abapó + Tucumán)
+        if: steps.check_nader.outputs.send_nader == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python enviar_email_nader.py
+
+      - name: Registrar fecha mail Nader
+        if: steps.check_nader.outputs.send_nader == 'true'
+        run: echo "${{ steps.check_nader.outputs.hoy_ar }}" > .last_email_nader_date
+
       - name: Commit PDFs + control al repo
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add precios_hoy.pdf informes/precios_hoy.pdf informes/precios_hoy_resumen.json informes/por_zona/ .last_email_date 2>/dev/null || true
-          git diff --cached --quiet || (git commit -m "Actualizar PDFs de precios (general + por zona)" && git push)
+          git add precios_hoy.pdf informes/precios_hoy.pdf informes/precios_hoy_resumen.json informes/por_zona/ informes/reporte_abapo.pdf informes/reporte_tucuman.pdf .last_email_date .last_email_nader_date 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "Actualizar PDFs de precios + reportes clima Nader" && git push)
