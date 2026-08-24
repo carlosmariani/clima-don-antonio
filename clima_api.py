@@ -17,7 +17,7 @@ class ClimaAPI:
     URL_SEASONAL = "https://seasonal-api.open-meteo.com/v1/seasonal"
     URL_HISTORICAL = "https://archive-api.open-meteo.com/v1/archive"
 
-    def __init__(self, timeout: int = 30):
+    def __init__(self, timeout: int = 60):
         self.timeout = timeout
         self.session = requests.Session()
         self.session.headers.update({
@@ -25,7 +25,7 @@ class ClimaAPI:
         })
 
     def _get_json(self, url, params, max_retries=4):
-        """GET con reintentos automáticos para evitar 429 (rate limit)."""
+        """GET con reintentos automáticos: 429 (rate limit), Timeout y ConnectionError."""
         import time
         last_exc = None
         for intento in range(max_retries):
@@ -37,10 +37,12 @@ class ClimaAPI:
                         continue
                 resp.raise_for_status()
                 return resp.json()
-            except requests.HTTPError as e:
+            except (requests.HTTPError,
+                    requests.exceptions.Timeout,
+                    requests.exceptions.ConnectionError) as e:
                 last_exc = e
                 if intento < max_retries - 1:
-                    time.sleep((intento + 1) * 2)
+                    time.sleep((intento + 1) * 3)  # 3s, 6s, 9s
                     continue
                 raise
         raise last_exc

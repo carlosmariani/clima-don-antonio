@@ -121,7 +121,7 @@ jobs:
         run: |
           mkdir -p informes
           python <<'PYEOF'
-          import json, os, subprocess, sys
+          import json, os, subprocess, sys, time
           cfg = json.load(open('config.json'))
           reportes = cfg.get('reportes_extra', [])
           ok, fail = [], []
@@ -131,20 +131,38 @@ jobs:
                      '--cliente', r['cliente'],
                      '--localidades', locs,
                      '--salida', r['salida']]
-              print(f"\n▶ {r['nombre']}  ({locs})")
-              res = subprocess.run(cmd, capture_output=True, text=True)
-              if res.returncode == 0 and os.path.exists(r['salida']):
-                  size = os.path.getsize(r['salida'])
-                  print(f"  ✓ {size} bytes en {r['salida']}")
-                  ok.append(r['id'])
-              else:
-                  print(f"  ✗ FALLÓ")
-                  print("  STDOUT:", res.stdout[-1000:])
-                  print("  STDERR:", res.stderr[-500:])
+              # Reintentar hasta 3 veces con espera creciente si falla
+              # (la API de clima Open-Meteo a veces se cuelga)
+              exito = False
+              for intento in range(1, 4):
+                  print(f"\n▶ {r['nombre']}  ({locs})  [intento {intento}/3]")
+                  res = subprocess.run(cmd, capture_output=True, text=True)
+                  if res.returncode == 0 and os.path.exists(r['salida']):
+                      size = os.path.getsize(r['salida'])
+                      print(f"  ✓ {size} bytes en {r['salida']}")
+                      ok.append(r['id'])
+                      exito = True
+                      break
+                  else:
+                      print(f"  ✗ Intento {intento} fallido")
+                      print("  STDOUT:", res.stdout[-800:])
+                      print("  STDERR:", res.stderr[-400:])
+                      if intento < 3:
+                          espera = 15 * intento
+                          print(f"  ⏳ Esperando {espera}s antes de reintentar...")
+                          time.sleep(espera)
+              if not exito:
                   fail.append(r['id'])
           print(f"\nRESUMEN Nader: {len(ok)} OK, {len(fail)} fallidos")
-          if fail:
-              sys.exit(1)
+          # Escribo flag para el próximo step: manda mail solo si TODOS OK
+          # (así los cron siguientes reintentan hasta tener el reporte completo)
+          gh_out = os.environ.get('GITHUB_OUTPUT')
+          if gh_out:
+              with open(gh_out, 'a') as f:
+                  f.write(f"todos_ok={'true' if not fail else 'false'}\n")
+                  f.write(f"algun_ok={'true' if ok else 'false'}\n")
+          # No abortamos el job aunque falle algún reporte:
+          # los PDFs que salieron OK se commitean igual (para la PWA)
           PYEOF
 
       - name: Detectar si ya se envió mail Nader hoy
@@ -158,16 +176,25 @@ jobs:
             ULT=""
           fi
           echo "Última fecha Nader: $ULT   Hoy ART: $HOY"
-          if [ "$HOY" != "$ULT" ]; then
+          # Solo mandamos si:
+          #   1) Aún no mandamos hoy (dedup)
+          #   2) TODOS los reportes se generaron OK (evita mails incompletos)
+          TODOS_OK="${{ steps.nader_pdfs.outputs.todos_ok }}"
+          echo "Todos los reportes OK: $TODOS_OK"
+          if [ "$HOY" != "$ULT" ] && [ "$TODOS_OK" = "true" ]; then
             echo "send_nader=true" >> $GITHUB_OUTPUT
-            echo "→ Se envía mail al Ing. Nader hoy"
+            echo "→ Se envía mail al Ing. Nader hoy (todos los reportes OK)"
           else
             echo "send_nader=false" >> $GITHUB_OUTPUT
-            echo "→ Ya se envió hoy, se omite"
+            if [ "$TODOS_OK" != "true" ]; then
+              echo "→ No se envía: algún reporte falló, esperamos próximo cron"
+            else
+              echo "→ Ya se envió hoy, se omite"
+            fi
           fi
 
       - name: Enviar email al Ing. Nader (Abapó + Tucumán)
-        if: steps.check_nader.outputs.send_nader == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.check_nader.outputs.send_nader == 'true'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: python enviar_email_nader.py
