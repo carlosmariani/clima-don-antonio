@@ -1,7 +1,7 @@
 {
   "fecha_str": "24 de agosto de 2026",
   "fecha_iso": "2026-08-24",
-  "dias_atraso": 0,
+  "dias_atraso": 1,
   "n_cotizaciones": 35,
   "texto_resumen": "Hoy se relevaron <b>35 cotizaciones</b> en el MCBA para tus productos. 9 cotizaciones bajaron, 5 subieron y 2 se mantuvieron estables respecto al día hábil anterior.",
   "productos_top": [
@@ -127,12 +127,12 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 26.6,
-      "tmin": 13.3,
+      "tmax": 29.4,
+      "tmin": 13.0,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 29.4,
-      "tmin_pasado": 13.0,
+      "tmax_pasado": 32.8,
+      "tmin_pasado": 14.5,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -140,12 +140,12 @@
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 26.4,
-      "tmin": 13.7,
+      "tmax": 29.3,
+      "tmin": 13.5,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 29.3,
-      "tmin_pasado": 13.5,
+      "tmax_pasado": 32.9,
+      "tmin_pasado": 16.3,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -153,12 +153,12 @@
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 24.0,
-      "tmin": 10.8,
+      "tmax": 27.9,
+      "tmin": 12.2,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 27.9,
-      "tmin_pasado": 12.2,
+      "tmax_pasado": 31.3,
+      "tmin_pasado": 13.9,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -166,12 +166,12 @@
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 22.2,
-      "tmin": 11.3,
+      "tmax": 26.7,
+      "tmin": 11.1,
       "lluvia_mm": 0,
-      "prob_lluvia": 8,
-      "tmax_pasado": 26.7,
-      "tmin_pasado": 11.1,
+      "prob_lluvia": 0,
+      "tmax_pasado": 31.6,
+      "tmin_pasado": 13.7,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -179,12 +179,12 @@
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 25.8,
-      "tmin": 12.0,
+      "tmax": 30.2,
+      "tmin": 15.1,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 30.2,
-      "tmin_pasado": 15.1,
+      "tmax_pasado": 33.5,
+      "tmin_pasado": 19.1,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -192,12 +192,12 @@
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 25.2,
-      "tmin": 12.0,
+      "tmax": 28.4,
+      "tmin": 13.6,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 28.4,
-      "tmin_pasado": 13.6,
+      "tmax_pasado": 32.3,
+      "tmin_pasado": 16.5,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -205,12 +205,12 @@
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 24.8,
-      "tmin": 10.8,
+      "tmax": 26.5,
+      "tmin": 12.1,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 26.5,
-      "tmin_pasado": 12.1,
+      "tmax_pasado": 31.1,
+      "tmin_pasado": 13.1,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -218,12 +218,12 @@
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 25.4,
-      "tmin": 12.1,
+      "tmax": 28.0,
+      "tmin": 12.9,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 28.0,
-      "tmin_pasado": 12.9,
+      "tmax_pasado": 33.5,
+      "tmin_pasado": 14.4,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -231,12 +231,12 @@
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 19.5,
-      "tmin": 7.1,
+      "tmax": 25.2,
+      "tmin": 8.3,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 25.2,
-      "tmin_pasado": 8.3,
+      "tmax_pasado": 32.9,
+      "tmin_pasado": 11.7,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -244,12 +244,12 @@
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 21.2,
-      "tmin": 10.5,
+      "tmax": 23.8,
+      "tmin": 12.6,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 23.8,
-      "tmin_pasado": 12.6,
+      "tmax_pasado": 32.6,
+      "tmin_pasado": 17.1,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -281,6 +281,20 @@
           "valor": "52 km/h",
           "detalle": "Ráfagas hasta 52 km/h",
           "fecha": "2026-08-31"
+        }
+      ]
+    },
+    {
+      "zona": "Aguas Calientes",
+      "provincia": "Jujuy",
+      "alertas": [
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "51 km/h",
+          "detalle": "Ráfagas hasta 51 km/h",
+          "fecha": "2026-09-01"
         }
       ]
     }
