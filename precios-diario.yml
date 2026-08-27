@@ -113,6 +113,52 @@ jobs:
         if: steps.check.outputs.send_email == 'true'
         run: echo "${{ steps.check.outputs.fecha_nueva }}" > .last_email_date
 
+      # === Reporte extendido quincenal (solo días 1 y 15) ===
+      - name: Chequear si hoy toca reporte extendido (día 1 o 15)
+        id: check_ext
+        run: |
+          HOY_AR=$(TZ=America/Argentina/Buenos_Aires date '+%Y-%m-%d')
+          DIA=$(TZ=America/Argentina/Buenos_Aires date '+%d')
+          echo "hoy_ar=$HOY_AR" >> $GITHUB_OUTPUT
+          if [ "$DIA" = "01" ] || [ "$DIA" = "15" ]; then
+            echo "run_ext=true" >> $GITHUB_OUTPUT
+            echo "→ Hoy es día $DIA — se genera reporte extendido quincenal"
+          else
+            echo "run_ext=false" >> $GITHUB_OUTPUT
+            echo "→ Día $DIA — no toca reporte extendido"
+          fi
+
+      - name: Generar reporte extendido quincenal
+        if: steps.check_ext.outputs.run_ext == 'true'
+        run: python generar_extendido.py
+
+      - name: Chequear si ya se envió el extendido hoy
+        id: check_ext_email
+        if: steps.check_ext.outputs.run_ext == 'true'
+        run: |
+          HOY=${{ steps.check_ext.outputs.hoy_ar }}
+          if [ -f .last_email_extendido_date ]; then
+            ULT=$(cat .last_email_extendido_date)
+          else
+            ULT=""
+          fi
+          echo "Última fecha extendido: $ULT   Hoy: $HOY"
+          if [ "$HOY" != "$ULT" ]; then
+            echo "send_ext=true" >> $GITHUB_OUTPUT
+          else
+            echo "send_ext=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Enviar email reporte extendido
+        if: steps.check_ext_email.outputs.send_ext == 'true'
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python enviar_email_extendido.py
+
+      - name: Registrar fecha extendido enviado
+        if: steps.check_ext_email.outputs.send_ext == 'true'
+        run: echo "${{ steps.check_ext.outputs.hoy_ar }}" > .last_email_extendido_date
+
       # === Reportes climáticos para Ing. Agrónomo Claudio Nader ===
       # Genera 2 PDFs: Abapó (Bolivia) y Tucumán (Lules + Concepción + El Naranjo).
       # Solo se envía email al Ing. una vez por día (primer run del día).
@@ -207,5 +253,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add precios_hoy.pdf informes/precios_hoy.pdf informes/precios_hoy_resumen.json informes/por_zona/ informes/reporte_abapo.pdf informes/reporte_tucuman.pdf .last_email_date .last_email_nader_date 2>/dev/null || true
+          git add precios_hoy.pdf informes/precios_hoy.pdf informes/precios_hoy_resumen.json informes/por_zona/ informes/reporte_abapo.pdf informes/reporte_tucuman.pdf informes/extendido_hoy.pdf .last_email_date .last_email_nader_date .last_email_extendido_date 2>/dev/null || true
           git diff --cached --quiet || (git commit -m "Actualizar PDFs de precios + reportes clima Nader" && git push)

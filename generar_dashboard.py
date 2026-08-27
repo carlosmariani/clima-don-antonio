@@ -562,6 +562,9 @@ footer {
             <option value="informes/reporte_abapo.pdf">Abapó (Bolivia)</option>
             <option value="informes/reporte_tucuman.pdf">Tucumán — Lules, Concepción, El Naranjo</option>
           </optgroup>
+          <optgroup label="📊 Reporte extendido quincenal (clima)">
+            <option value="informes/extendido_hoy.pdf">Reporte extendido (últ. día 1 o 15)</option>
+          </optgroup>
         </select>
         <a id="btn-pdf" href="precios_hoy.pdf" target="_blank"
            style="background:var(--primario);color:#fff;padding:9px 18px;text-decoration:none;border-radius:6px;font-weight:600;font-size:13px">
