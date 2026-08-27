@@ -33,7 +33,7 @@ from reportlab.platypus import (
 )
 from reportlab.pdfgen import canvas
 
-from precios_mercado import envase_legible
+from precios_mercado import envase_legible, variedad_legible
 
 
 COLOR_PRIMARIO = colors.HexColor("#1B5E20")
@@ -89,6 +89,18 @@ class GeneradorPDFPrecios:
         s.add(ParagraphStyle(
             name="ThWhite", fontName="Helvetica-Bold", fontSize=7,
             textColor=colors.white, alignment=TA_CENTER, leading=9
+        ))
+        # Estilos nuevos para las cards de clima por zona
+        s.add(ParagraphStyle(
+            name="ZonaClima", fontName="Helvetica-Bold", fontSize=13,
+            textColor=colors.white, alignment=TA_LEFT,
+            leading=16, spaceBefore=0, spaceAfter=0,
+            leftIndent=8
+        ))
+        s.add(ParagraphStyle(
+            name="ZonaClimaSub", fontName="Helvetica-Oblique", fontSize=8,
+            textColor=colors.white, alignment=TA_LEFT,
+            leading=10, leftIndent=8
         ))
         return s
 
@@ -166,7 +178,7 @@ class GeneradorPDFPrecios:
             proc_str = (it['procedencia'] or "—") + asterisco
 
             rows.append([
-                Paragraph(it["variedad"] or "—", self.styles["Cell"]),
+                Paragraph(variedad_legible(it["variedad"]), self.styles["Cell"]),
                 Paragraph(proc_str, self.styles["Cell"]),
                 Paragraph(envase_legible(it["envase"]), self.styles["Cell"]),
                 Paragraph(f"{it['kg_bulto']:.0f} kg" if it['kg_bulto'] else "—",
@@ -476,6 +488,89 @@ class GeneradorPDFPrecios:
         t.setStyle(TableStyle(base_styles + styles_extra))
         return t
 
+    def _tabla_trimestral(self, trimestral: List[Dict]) -> Table:
+        """
+        Tabla compacta con el pronóstico trimestral (~90 días) por zona.
+        Columnas: Zona · Temp máx prom · Temp mín prom · Lluvia mensual · Tendencia.
+        """
+        rows = [[
+            Paragraph("<b>ZONA</b>", self.styles["ThWhite"]),
+            Paragraph("<b>T. MÁX<br/>PROM</b>", self.styles["ThWhite"]),
+            Paragraph("<b>T. MÍN<br/>PROM</b>", self.styles["ThWhite"]),
+            Paragraph("<b>LLUVIA<br/>MENSUAL</b>", self.styles["ThWhite"]),
+            Paragraph("<b>TENDENCIA</b>", self.styles["ThWhite"]),
+        ]]
+        for r in trimestral:
+            res = r.get("resumen", {}) or {}
+            tend = r.get("tendencia", {}) or {}
+            tmax = res.get("temp_max_promedio")
+            tmin = res.get("temp_min_promedio")
+            lluvia_m = res.get("lluvia_promedio_mensual") or res.get("lluvia_total_mm") or 0
+            desc = tend.get("descripcion") or res.get("nota", "—")
+            emoji = tend.get("emoji", "📊")
+            rows.append([
+                Paragraph(
+                    f"<b>{r['zona']}</b><br/>"
+                    f"<font size='7' color='#888'>{r['provincia']}</font>",
+                    self.styles["Cell"]),
+                Paragraph(f"{tmax:.0f}°C" if tmax is not None else "—",
+                          self.styles["CellCenter"]),
+                Paragraph(f"{tmin:.0f}°C" if tmin is not None else "—",
+                          self.styles["CellCenter"]),
+                Paragraph(f"{lluvia_m:.0f} mm",
+                          self.styles["CellCenter"]),
+                Paragraph(f"{emoji} {desc}", self.styles["Cell"]),
+            ])
+        t = Table(rows, colWidths=[
+            3.2 * cm,  # zona
+            1.6 * cm,  # tmax
+            1.6 * cm,  # tmin
+            2.0 * cm,  # lluvia
+            6.8 * cm,  # tendencia
+        ], repeatRows=1)
+        t.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), COLOR_ACENTO),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("GRID", (0, 0), (-1, -1), 0.25, COLOR_GRIS_CLARO),
+            ("LEFTPADDING", (0, 0), (-1, -1), 4),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+            ("TOPPADDING", (0, 0), (-1, -1), 4),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ("ROWBACKGROUNDS", (0, 1), (-1, -1),
+             [colors.white, colors.HexColor("#FAFBFC")]),
+        ]))
+        return t
+
+    def _nota_proximo_extendido(self, hoy) -> str:
+        """
+        Devuelve el texto del pie: 'Próximo extendido trimestral: día X (en Y días)'.
+        El extendido sale los días 1 y 15 de cada mes.
+        """
+        from datetime import date, timedelta
+        h = hoy.date() if hasattr(hoy, "date") else hoy
+        # Próximo día 1 o 15
+        if h.day < 15:
+            proximo = h.replace(day=15)
+        else:
+            # Ir al día 1 del próximo mes
+            if h.month == 12:
+                proximo = h.replace(year=h.year + 1, month=1, day=1)
+            else:
+                proximo = h.replace(month=h.month + 1, day=1)
+        dias = (proximo - h).days
+        meses_es = {1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo",
+                    6: "junio", 7: "julio", 8: "agosto", 9: "septiembre",
+                    10: "octubre", 11: "noviembre", 12: "diciembre"}
+        fecha_str = f"{proximo.day} de {meses_es[proximo.month]}"
+        if dias == 0:
+            return f"📊 Extendido trimestral publicado hoy."
+        elif dias == 1:
+            return f"📊 Próximo extendido trimestral: mañana ({fecha_str})."
+        else:
+            return (f"📊 Próximo extendido trimestral: {fecha_str} "
+                    f"(en {dias} días).")
+
     # ------------------------------------------------------------------ #
     # Construcción del PDF
     # ------------------------------------------------------------------ #
@@ -484,7 +579,8 @@ class GeneradorPDFPrecios:
                 cliente: str = "",
                 clima_48h: List[Dict] = None,
                 alertas_7d: List[Dict] = None,
-                pronostico_diario: List[Dict] = None) -> str:
+                pronostico_diario: List[Dict] = None,
+                trimestral: List[Dict] = None) -> str:
         doc = SimpleDocTemplate(
             output_path, pagesize=A4,
             leftMargin=1.1 * cm, rightMargin=1.1 * cm,
@@ -542,6 +638,55 @@ class GeneradorPDFPrecios:
                                spaceAfter=10)))
             story.append(Spacer(1, 0.1 * cm))
 
+        # === Banner de alertas críticas (antes de los precios) ===
+        if alertas_7d:
+            criticas = []
+            for z in alertas_7d:
+                for a in z.get("alertas", []):
+                    if a.get("severidad") in ("ALTA", "MEDIA"):
+                        criticas.append({
+                            "zona": z["zona"],
+                            "provincia": z["provincia"],
+                            **a
+                        })
+            if criticas:
+                # Ordenar por severidad y fecha
+                sev_order = {"ALTA": 0, "MEDIA": 1, "BAJA": 2}
+                criticas.sort(key=lambda x: (sev_order.get(x["severidad"], 9),
+                                              x.get("fecha", "")))
+                # Mostrar hasta 5 alertas top
+                top = criticas[:5]
+                meses_cortos = {1: "ene", 2: "feb", 3: "mar", 4: "abr",
+                                 5: "may", 6: "jun", 7: "jul", 8: "ago",
+                                 9: "sep", 10: "oct", 11: "nov", 12: "dic"}
+                lineas = []
+                for a in top:
+                    try:
+                        f = datetime.strptime(a["fecha"], "%Y-%m-%d")
+                        f_str = f"{f.day:02d}/{meses_cortos[f.month]}"
+                    except Exception:
+                        f_str = a["fecha"]
+                    lineas.append(
+                        f"<b>{f_str} · {a['zona']}</b> — {a['icono']} "
+                        f"{a['tipo']} ({a.get('valor', '')})"
+                    )
+                extra = ("" if len(criticas) <= 5
+                         else f" &nbsp; <i>(+{len(criticas)-5} más al final)</i>")
+                bloque_txt = (
+                    "<b>⚠️ Alertas destacadas de la semana</b>"
+                    f"{extra}<br/>"
+                    + "<br/>".join(f"• {l}" for l in lineas)
+                )
+                story.append(Paragraph(bloque_txt,
+                    ParagraphStyle("banner_alerta", fontName="Helvetica",
+                                    fontSize=9,
+                                    textColor=colors.HexColor("#5D4037"),
+                                    leading=13, leftIndent=10, rightIndent=10,
+                                    borderColor=colors.HexColor("#C62828"),
+                                    borderWidth=1.2, borderPadding=8,
+                                    backColor=colors.HexColor("#FFEBEE"),
+                                    spaceAfter=10)))
+
         story.append(Paragraph(self._texto_resumen(datos_hoy, variaciones),
                                self.styles["ParrafoNarrativo"]))
         story.append(Spacer(1, 0.15 * cm))
@@ -575,18 +720,129 @@ class GeneradorPDFPrecios:
                 self.styles["Disclaimer"]
             ))
 
-        # =========== CLIMA PRÓXIMAS 48 HS ===========
-        if clima_48h:
-            story.append(Spacer(1, 0.2 * cm))
-            story.append(Paragraph("🌤️ Clima — próximas 48 hs",
-                                   self.styles["EspecieTitulo"]))
-            story.append(self._tabla_clima_48h(clima_48h))
+        # =========== CLIMA — PRÓXIMOS 7 DÍAS (por zona) ===========
+        # (título en tamaño grande, mismo que "Precios Mayoristas")
+        if pronostico_diario:
+            story.append(PageBreak())
+            story.append(Paragraph("Pronóstico Climático",
+                                   self.styles["TituloPortada"]))
+            story.append(Paragraph(
+                f"Próximos 7 días por zona &nbsp;·&nbsp; {fecha_str}",
+                self.styles["SubtituloPortada"]))
+            story.append(HRFlowable(width="100%", thickness=1.5,
+                                     color=COLOR_PRIMARIO))
+            story.append(Spacer(1, 0.3 * cm))
 
-        # =========== ALERTAS PRÓXIMOS 7 DÍAS ===========
+            def _metricas_zona(z):
+                dias = z.get("dias", [])
+                tmax_max = max((d.get("tmax", 0) for d in dias), default=0)
+                tmin_min = min((d.get("tmin", 0) for d in dias), default=0)
+                lluvia_tot = sum(d.get("lluvia", 0) for d in dias)
+                # Conteos de eventos críticos por tipo
+                n_helada = sum(1 for d in dias if "Helada" in d.get("comentario", ""))
+                n_viento = sum(1 for d in dias if "Viento fuerte" in d.get("comentario", ""))
+                n_calor = sum(1 for d in dias if "Calor extremo" in d.get("comentario", ""))
+                n_lluvia_int = sum(1 for d in dias if "Lluvia intensa" in d.get("comentario", ""))
+                crit = (n_helada + n_viento + n_calor + n_lluvia_int) > 0
+                emoji = "⚠️" if crit else "☀️"
+                return (tmax_max, tmin_min, lluvia_tot, emoji,
+                        n_helada, n_viento, n_calor, n_lluvia_int)
+
+            for z in pronostico_diario:
+                if not z.get("dias"):
+                    continue
+                (tmax_max, tmin_min, lluvia_tot, emoji,
+                 n_helada, n_viento, n_calor, n_lluvia_int) = _metricas_zona(z)
+
+                # ==== Badges destacados de eventos críticos (helada/viento) ====
+                badges = []
+                if n_helada:
+                    badges.append(
+                        f"<font color='#0277BD'><b>❄️ {n_helada} "
+                        f"{'helada' if n_helada == 1 else 'heladas'}</b></font>")
+                if n_viento:
+                    badges.append(
+                        f"<font color='#EF6C00'><b>💨 {n_viento} "
+                        f"día{'s' if n_viento != 1 else ''} viento fuerte</b></font>")
+                if n_calor:
+                    badges.append(
+                        f"<font color='#C62828'><b>🌡️ {n_calor} "
+                        f"día{'s' if n_calor != 1 else ''} calor extremo</b></font>")
+                if n_lluvia_int:
+                    badges.append(
+                        f"<font color='#1565C0'><b>🌧️ {n_lluvia_int} "
+                        f"día{'s' if n_lluvia_int != 1 else ''} lluvia intensa</b></font>")
+                badges_str = "  ·  ".join(badges) if badges else ""
+
+                # ==== Encabezado: nombre + provincia + badges ====
+                encabezado_html = (
+                    f"<font size='14' color='#1B5E20'><b>{emoji} {z['zona']}</b></font>"
+                    f"  <font size='9' color='#666'>{z['provincia']}</font>"
+                )
+                if badges_str:
+                    encabezado_html += f"<br/><font size='9'>{badges_str}</font>"
+                encabezado = [[
+                    Paragraph(
+                        encabezado_html,
+                        ParagraphStyle("card_head", fontName="Helvetica",
+                                        fontSize=11, alignment=TA_LEFT,
+                                        leading=15))
+                ]]
+                head_t = Table(encabezado, colWidths=[18.6 * cm])
+                head_t.setStyle(TableStyle([
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+                    ("TOPPADDING", (0, 0), (-1, -1), 2),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("LINEBELOW", (0, 0), (-1, -1), 1, colors.HexColor("#1B5E20")),
+                ]))
+
+                # ==== Mini-dashboard: 3 métricas grandes ====
+                mini_estilo_val = ParagraphStyle(
+                    "mini_val", fontName="Helvetica-Bold", fontSize=17,
+                    alignment=TA_CENTER, leading=20,
+                    textColor=colors.HexColor("#1B5E20"))
+                mini_estilo_lab = ParagraphStyle(
+                    "mini_lab", fontName="Helvetica", fontSize=8,
+                    alignment=TA_CENTER, leading=11,
+                    textColor=colors.HexColor("#666"))
+
+                metricas = [[
+                    Paragraph(f"{tmax_max:.0f}°", mini_estilo_val),
+                    Paragraph(f"{tmin_min:.0f}°", mini_estilo_val),
+                    Paragraph(f"{lluvia_tot:.0f} mm", mini_estilo_val),
+                ], [
+                    Paragraph("MÁX semana", mini_estilo_lab),
+                    Paragraph("MÍN semana", mini_estilo_lab),
+                    Paragraph("LLUVIA total", mini_estilo_lab),
+                ]]
+                mini_t = Table(metricas, colWidths=[6.2 * cm, 6.2 * cm, 6.2 * cm])
+                mini_t.setStyle(TableStyle([
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("TOPPADDING", (0, 0), (-1, 0), 6),
+                    ("BOTTOMPADDING", (0, 0), (-1, 0), 0),
+                    ("TOPPADDING", (0, 1), (-1, 1), 0),
+                    ("BOTTOMPADDING", (0, 1), (-1, 1), 6),
+                    ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#F7F9FA")),
+                    ("BOX", (0, 0), (-1, -1), 0.3, colors.HexColor("#E0E0E0")),
+                    ("LINEBEFORE", (1, 0), (1, -1), 0.4, colors.HexColor("#E0E0E0")),
+                    ("LINEBEFORE", (2, 0), (2, -1), 0.4, colors.HexColor("#E0E0E0")),
+                ]))
+
+                bloque = [
+                    head_t,
+                    Spacer(1, 0.15 * cm),
+                    mini_t,
+                    Spacer(1, 0.15 * cm),
+                    self._tabla_pronostico_diario(z["dias"]),
+                    Spacer(1, 0.4 * cm),
+                ]
+                story.append(KeepTogether(bloque))
+
+        # =========== ALERTAS PRÓXIMOS 7 DÍAS (AL FINAL) ===========
         if alertas_7d:
             n_total_alertas = sum(len(z["alertas"]) for z in alertas_7d)
             if n_total_alertas > 0:
-                story.append(Spacer(1, 0.2 * cm))
+                story.append(Spacer(1, 0.3 * cm))
                 story.append(Paragraph(
                     f"⚠️ Alertas en los próximos 7 días "
                     f"<font size='8' color='#888'>"
@@ -594,19 +850,6 @@ class GeneradorPDFPrecios:
                     f"{'s' if len(alertas_7d) != 1 else ''})</font>",
                     self.styles["EspecieTitulo"]))
                 story.append(self._tabla_alertas_15d(alertas_7d))
-
-        # =========== PRONÓSTICO DÍA POR DÍA (solo si filtrado por zona) ===========
-        if pronostico_diario:
-            for z in pronostico_diario:
-                if not z.get("dias"):
-                    continue
-                story.append(Spacer(1, 0.2 * cm))
-                story.append(Paragraph(
-                    f"📅 Pronóstico día por día — próximos 7 días "
-                    f"<font size='8' color='#888'>({z['zona']}, "
-                    f"{z['provincia']})</font>",
-                    self.styles["EspecieTitulo"]))
-                story.append(self._tabla_pronostico_diario(z["dias"]))
 
         # =========== DISCLAIMER (compacto) ===========
         story.append(Spacer(1, 0.2 * cm))

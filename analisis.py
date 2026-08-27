@@ -98,15 +98,19 @@ class AnalizadorClima:
     def resumen_trimestral(self, datos: Dict[str, Any]) -> Dict[str, Any]:
         if datos.get("_fallback"):
             d = datos["daily"]
-            tmax = d["temperature_2m_max"]
-            tmin = d["temperature_2m_min"]
-            precip = d["precipitation_sum"]
+            tmax = [v for v in d["temperature_2m_max"] if v is not None]
+            tmin = [v for v in d["temperature_2m_min"] if v is not None]
+            precip = [v for v in d["precipitation_sum"] if v is not None]
+            n_dias = len(precip)
+            # Convertir a mm/mes: promedio diario × 30
+            lluvia_mensual = (sum(precip) / n_dias) * 30 if n_dias else 0
             return {
                 "tipo": "histórico",
                 "nota": "Pronóstico estacional no disponible. Se muestra normal histórica de referencia.",
-                "temp_max_promedio": round(mean(tmax), 1),
-                "temp_min_promedio": round(mean(tmin), 1),
-                "lluvia_promedio_mensual": round(sum(precip) / 3, 1),
+                "temp_max_promedio": round(mean(tmax), 1) if tmax else None,
+                "temp_min_promedio": round(mean(tmin), 1) if tmin else None,
+                "lluvia_promedio_mensual": round(lluvia_mensual, 1),
+                "dias_historicos": n_dias,
             }
 
         sh = datos.get("six_hourly", {})

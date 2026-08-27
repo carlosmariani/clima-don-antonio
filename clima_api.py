@@ -86,6 +86,70 @@ class ClimaAPI:
         }
         return self._get_json(self.URL_FORECAST, params)
 
+    def pronostico_15_dias_ensemble(self, lat: float, lon: float) -> Dict[str, Any]:
+        """
+        Igual que pronostico_15_dias() pero pide EXPLÍCITAMENTE varios modelos
+        globales (ECMWF, GFS-NOAA, ICON-DWD, JMA) y devuelve el PROMEDIO por día.
+        Más robusto que un solo modelo — reduce sesgo individual y da consenso.
+        """
+        modelos = ["ecmwf_ifs025", "gfs_seamless", "icon_seamless",
+                    "jma_seamless"]
+        vars_diarias = [
+            "temperature_2m_max", "temperature_2m_min",
+            "temperature_2m_mean", "precipitation_sum",
+            "precipitation_probability_max",
+            "windspeed_10m_max", "windgusts_10m_max",
+        ]
+        params = {
+            "latitude": lat,
+            "longitude": lon,
+            "daily": ",".join(vars_diarias),
+            "timezone": "America/Argentina/Buenos_Aires",
+            "forecast_days": 16,
+            "models": ",".join(modelos),
+        }
+        data = self._get_json(self.URL_FORECAST, params)
+
+        # La API devuelve, para cada variable, una columna por modelo:
+        #   temperature_2m_max_ecmwf_ifs025 = [...]
+        #   temperature_2m_max_gfs_seamless = [...]
+        # etc. Necesitamos promediarlas.
+        daily_raw = data.get("daily", {}) or {}
+        if not daily_raw:
+            # Fallback a best_match si el multi-modelo no trajo nada
+            return self.pronostico_15_dias(lat, lon)
+
+        daily_prom = {"time": daily_raw.get("time", [])}
+        modelos_usados = set()
+        for var in vars_diarias:
+            cols_por_modelo = []
+            for m in modelos:
+                key = f"{var}_{m}"
+                if key in daily_raw and daily_raw[key]:
+                    cols_por_modelo.append(daily_raw[key])
+                    modelos_usados.add(m)
+            if not cols_por_modelo:
+                daily_prom[var] = daily_raw.get(var, [])
+                continue
+            # Promediar (o max/min para las variables que corresponda)
+            n = len(cols_por_modelo[0])
+            prom = []
+            for i in range(n):
+                valores = [c[i] for c in cols_por_modelo
+                           if i < len(c) and c[i] is not None]
+                if not valores:
+                    prom.append(None)
+                else:
+                    prom.append(sum(valores) / len(valores))
+            daily_prom[var] = prom
+
+        return {
+            "daily": daily_prom,
+            "_ensemble": True,
+            "_modelos": sorted(modelos_usados),
+            "_n_modelos": len(modelos_usados),
+        }
+
     # -------------------------------------------------------------------- #
     # Pronóstico estacional (trimestral)
     # -------------------------------------------------------------------- #

@@ -224,6 +224,39 @@ def obtener_clima_y_alertas(cfg) -> tuple:
     return clima_48h, alertas_7d, pronostico_diario
 
 
+def obtener_trimestral(cfg) -> list:
+    """
+    Obtiene los datos trimestrales (pronóstico estacional ~90 días) para cada
+    localidad del grupo Don Antonio. Solo se usa los días 1 y 15 del mes
+    (para dar una idea de tendencia sin abrumar en cada informe diario).
+    """
+    from analisis import AnalizadorClima
+    from interpretacion import tendencia_trimestral_simple
+    api = ClimaAPI()
+    analizador = AnalizadorClima(cfg["umbrales_alertas"])
+    localidades = [l for l in cfg["localidades"]
+                   if not l.get("grupo") or l.get("grupo") == "don_antonio"]
+
+    def _zona(loc):
+        try:
+            tr = api.pronostico_trimestral(loc["lat"], loc["lon"])
+            resumen_t = analizador.resumen_trimestral(tr)
+            tendencia = tendencia_trimestral_simple(resumen_t)
+            return {
+                "zona": loc["nombre"],
+                "provincia": loc["provincia"],
+                "resumen": resumen_t,
+                "tendencia": tendencia,
+            }
+        except Exception as e:
+            print(f"  ⚠️ {loc['nombre']}: {e}")
+            return None
+
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        resultados = list(ex.map(_zona, localidades))
+    return [r for r in resultados if r]
+
+
 # Compatibilidad hacia atrás
 def obtener_clima_manana(cfg):
     """Compat: solo devuelve el clima de las próximas 48hs."""
@@ -358,10 +391,8 @@ def main():
             pronostico_diario = [z for z in (pronostico_diario or [])
                                  if z["zona"].lower().strip() == zona_norm]
             print(f"  → Filtrado a zona: {clima_48h[0]['zona']}")
-        else:
-            # En reporte completo no incluimos el pronóstico día por día
-            # (sería demasiado largo con 10 zonas × 7 días)
-            pronostico_diario = None
+        # (Antes ocultábamos pronostico_diario en reporte general.
+        # Ahora lo dejamos siempre — es la sección principal de clima 7 días).
 
         n_alertas_48h = sum(1 for c in clima_48h if c.get("alerta"))
         n_zonas_7d = len(alertas_7d) if alertas_7d else 0

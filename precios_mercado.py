@@ -451,18 +451,68 @@ class PreciosMCBA:
 
 
 def envase_legible(env: str) -> str:
-    """Convierte el código de envase del MCBA a nombre legible."""
+    """Convierte el código de envase del MCBA a nombre legible.
+    Los distintos tipos de cajón (pelado, tomate, común) se unifican a 'cajón'.
+    """
     mapa = {
-        "TO": "cajón tomate",
+        "TO": "cajón",   # antes: 'cajón tomate'
         "JA": "jaula",
         "BO": "bolsa",
-        "PE": "pelado",
+        "PE": "cajón",   # antes: 'cajón pelado'
         "CA": "cajón",
         "RT": "red",
         "AT": "atado",
         "GR": "granel",
     }
     return mapa.get(env.strip().upper(), env or "—")
+
+
+# Mapa de variedades MCBA → nombre legible
+# El MCBA usa códigos/abreviaturas — acá los mostramos con nombre normal.
+_VARIEDADES_MAP = {
+    # Tomate
+    "REDONDO": "Redondo",
+    "PERITA": "Perita",
+    "CHERRY": "Cherry",
+    # Pimiento
+    "MORRON": "Morrón (color según partida)",
+    "JALAPEÑO": "Jalapeño",
+    "JALAPE¥O": "Jalapeño",
+    "JALAPENO": "Jalapeño",
+    "VINAGRE": "Ají dulce",
+    # Berenjena
+    "VTA.MED.LA": "Común larga",
+    "VTA.MED.LARGA": "Común larga",
+    "JASPEADA": "Jaspeada",
+    # Zapallito
+    "LARGO": "Largo",
+    # Zapallo
+    "ANQUITO": "Anquito",
+    "ANC.COKENA": "Anco Cokena",
+    "ANCO.COKENA": "Anco Cokena",
+    "TETSUKAB.": "Tetsukabuto",
+    "TETSUKAB": "Tetsukabuto",
+    # Choclo
+    "AMARILLO": "Amarillo",
+    # Chaucha
+    "ROLLIZA": "Rolliza",
+    "ESMERALDA": "Esmeralda",
+    "BALINA": "Balina",
+    "ESPAÑOLA": "Española",
+    "ESPA¥OLA": "Española",
+    "ESPANOLA": "Española",
+}
+
+
+def variedad_legible(var: str) -> str:
+    """Convierte código de variedad MCBA a nombre legible."""
+    if not var:
+        return "—"
+    clave = var.strip().upper()
+    if clave in _VARIEDADES_MAP:
+        return _VARIEDADES_MAP[clave]
+    # Fallback: capitalizar suavemente (primera mayúscula, resto minúscula)
+    return var.strip().capitalize()
 
 
 if __name__ == "__main__":

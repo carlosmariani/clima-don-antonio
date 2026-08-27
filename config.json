@@ -147,7 +147,7 @@
     "procedencias_fallback": ["BS. AS."],
     "productos_hortalizas": [
       {"especie": "TOMATE", "variedades": ["REDONDO", "PERITA", "CHERRY"]},
-      {"especie": "PIMIENTO", "variedades": ["MORRON"]},
+      {"especie": "PIMIENTO", "variedades": ["MORRON", "VINAGRE"]},
       {"especie": "PEPINO", "variedades": []},
       {"especie": "BERENJENA", "variedades": []},
       {"especie": "ZAPALLITO", "variedades": ["LARGO", "REDONDO"]},
