@@ -160,14 +160,18 @@ def obtener_clima_y_alertas(cfg) -> tuple:
                 v_arr = d.get("windgusts_10m_max") or d["windspeed_10m_max"]
                 viento = _safe(v_arr, i) or 0
 
-                # Comentario corto basado en condiciones
-                if tmin is not None and tmin <= 3:
+                # Comentario corto basado en condiciones (usa los umbrales del config)
+                u_helada = ums["helada_temp_min"]
+                u_calor = ums["calor_extremo_temp_max"]
+                u_lluvia = ums["lluvia_intensa_mm_dia"]
+                u_viento = ums["viento_fuerte_kmh"]
+                if tmin is not None and tmin <= u_helada:
                     coment = "❄️ Riesgo de helada"
-                elif tmax is not None and tmax >= 38:
+                elif tmax is not None and tmax >= u_calor:
                     coment = "🌡️ Calor extremo"
-                elif lluvia is not None and lluvia >= 30:
+                elif lluvia is not None and lluvia >= u_lluvia:
                     coment = "🌧️ Lluvia intensa"
-                elif viento >= 50:
+                elif viento >= u_viento:
                     coment = "💨 Viento fuerte"
                 elif lluvia is not None and lluvia >= 5:
                     coment = "🌧️ Lluvia moderada"

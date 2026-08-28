@@ -219,7 +219,8 @@ class GeneradorPDFPrecios:
     # ------------------------------------------------------------------ #
     # Resumen ejecutivo
     # ------------------------------------------------------------------ #
-    def _texto_resumen(self, datos: Dict, variaciones: Dict) -> str:
+    def _texto_resumen(self, datos: Dict, variaciones: Dict,
+                        pronostico_diario: List[Dict] = None) -> str:
         productos = datos.get("productos", {})
         n_prod = len(productos)
         n_items = sum(len(v) for v in productos.values())
@@ -261,6 +262,50 @@ class GeneradorPDFPrecios:
                 "<br/><br/><i>Atención:</i> el MCBA aún no publicó los datos de hoy. "
                 "Los precios mostrados corresponden al último día hábil con información disponible."
             )
+
+        # === Aviso climático: heladas / vientos / tormentas próximos 7 días ===
+        if pronostico_diario:
+            n_helada = n_viento = n_calor = n_lluvia_int = 0
+            zonas_criticas = set()
+            for z in pronostico_diario:
+                for d in z.get("dias", []):
+                    c = d.get("comentario", "")
+                    afectada = False
+                    if "Helada" in c:
+                        n_helada += 1
+                        afectada = True
+                    if "Viento fuerte" in c:
+                        n_viento += 1
+                        afectada = True
+                    if "Calor extremo" in c:
+                        n_calor += 1
+                        afectada = True
+                    if "Lluvia intensa" in c:
+                        n_lluvia_int += 1
+                        afectada = True
+                    if afectada:
+                        zonas_criticas.add(z.get("zona", ""))
+            partes = []
+            if n_helada:
+                partes.append(f"❄️ <b>{n_helada} "
+                               f"{'helada' if n_helada == 1 else 'heladas'}</b>")
+            if n_viento:
+                partes.append(f"💨 <b>{n_viento} día"
+                               f"{'s' if n_viento != 1 else ''} con viento fuerte</b>")
+            if n_calor:
+                partes.append(f"🌡️ <b>{n_calor} día"
+                               f"{'s' if n_calor != 1 else ''} de calor extremo</b>")
+            if n_lluvia_int:
+                partes.append(f"🌧️ <b>{n_lluvia_int} día"
+                               f"{'s' if n_lluvia_int != 1 else ''} de lluvia intensa</b>")
+            if partes:
+                texto += (
+                    f"<br/><br/><b>Aviso climático — próximos 7 días:</b> "
+                    + ", ".join(partes)
+                    + f" previstos en <b>{len(zonas_criticas)} "
+                    f"zona{'s' if len(zonas_criticas) != 1 else ''}</b>. "
+                    f"Ver detalle por zona más abajo."
+                )
         return texto
 
     # ------------------------------------------------------------------ #
@@ -687,8 +732,9 @@ class GeneradorPDFPrecios:
                                     backColor=colors.HexColor("#FFEBEE"),
                                     spaceAfter=10)))
 
-        story.append(Paragraph(self._texto_resumen(datos_hoy, variaciones),
-                               self.styles["ParrafoNarrativo"]))
+        story.append(Paragraph(
+            self._texto_resumen(datos_hoy, variaciones, pronostico_diario),
+            self.styles["ParrafoNarrativo"]))
         story.append(Spacer(1, 0.15 * cm))
 
         # =========== TABLAS POR PRODUCTO ===========

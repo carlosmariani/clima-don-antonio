@@ -303,52 +303,6 @@ class GeneradorPDFExtendido:
             "por debajo de -0.5°C indican <b>La Niña</b>.",
             self.styles["Small"]))
 
-        # Recomendaciones agronómicas específicas según la fase actual
-        fase = enso.get("fase", "NEUTRO")
-        recs = []
-        if fase.startswith("NINO"):
-            recs = [
-                ("💧", "Riego", "Reforzar sistemas de riego y reservorios — "
-                    "el verano probablemente sea más seco de lo normal."),
-                ("🌱", "Siembra", "Anticipar la siembra de cultivos de verano "
-                    "para aprovechar la humedad del suelo antes del período seco."),
-                ("🌾", "Variedades", "Preferir variedades de ciclo corto o "
-                    "tolerantes a estrés hídrico."),
-                ("📊", "Comercial", "Los precios pueden subir por menor oferta "
-                    "regional — planificar contratos con anticipación."),
-            ]
-        elif fase.startswith("NINA"):
-            recs = [
-                ("🌊", "Drenaje", "Preparar drenajes y limpiar canales — "
-                    "riesgo de anegamiento por lluvias abundantes."),
-                ("🍄", "Sanidad", "Reforzar monitoreo fitosanitario — mayor humedad "
-                    "aumenta enfermedades fúngicas (roya, mildiu, oídio)."),
-                ("🌱", "Siembra", "Fraccionar siembras para diluir riesgos por "
-                    "posibles tormentas o granizo."),
-                ("🚜", "Labranza", "Aprovechar la humedad para preparación de "
-                    "suelo, pero cuidado con la compactación."),
-            ]
-        else:  # NEUTRO
-            recs = [
-                ("📋", "Planificación", "Sin señales fuertes: planificar según "
-                    "promedios históricos y monitorear pronósticos mensuales."),
-                ("💧", "Riego", "Mantener sistemas listos; ajustar según pronóstico "
-                    "quincenal."),
-                ("🌱", "Cultivos", "Buen momento para probar variedades nuevas — "
-                    "condiciones típicas favorecen resultados representativos."),
-            ]
-        bloque.append(Spacer(1, 0.2 * cm))
-        bloque.append(Paragraph(
-            "🎯 <b>Qué hacer en esta fase</b>",
-            self.styles["ZonaHead"]))
-        for icono, tema, txt in recs:
-            bloque.append(Paragraph(
-                f"<b>{icono} {tema}:</b> {txt}",
-                ParagraphStyle("rec_line", fontName="Helvetica",
-                                fontSize=9, alignment=TA_LEFT,
-                                leading=13, spaceAfter=3,
-                                leftIndent=8)))
-
         # Nota sobre Súper Niño (dado que es un tema de mucha discusión)
         bloque.append(Spacer(1, 0.2 * cm))
         bloque.append(Paragraph(

@@ -135,10 +135,10 @@
     }
   ],
   "umbrales_alertas": {
-    "helada_temp_min": 3.0,
-    "calor_extremo_temp_max": 38.0,
-    "lluvia_intensa_mm_dia": 30.0,
-    "viento_fuerte_kmh": 50.0,
+    "helada_temp_min": 5.0,
+    "calor_extremo_temp_max": 36.0,
+    "lluvia_intensa_mm_dia": 20.0,
+    "viento_fuerte_kmh": 40.0,
     "sequia_dias_sin_lluvia": 15
   },
   "precios_mercado_central": {
