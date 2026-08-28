@@ -10,6 +10,11 @@ on:
     - cron: '*/30 0-2 * * 2-6'      # 21:00-23:00 ART (martes-sábado UTC)
     - cron: '0 14,17,20 * * 6'      # Sábado: 11h, 14h y 17h ART por si publican el viernes tarde
   workflow_dispatch:
+    inputs:
+      forzar_extendido:
+        description: 'Forzar generación del reporte extendido (para prueba)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -120,9 +125,14 @@ jobs:
           HOY_AR=$(TZ=America/Argentina/Buenos_Aires date '+%Y-%m-%d')
           DIA=$(TZ=America/Argentina/Buenos_Aires date '+%d')
           echo "hoy_ar=$HOY_AR" >> $GITHUB_OUTPUT
-          if [ "$DIA" = "01" ] || [ "$DIA" = "15" ]; then
+          FORZAR="${{ inputs.forzar_extendido }}"
+          if [ "$DIA" = "01" ] || [ "$DIA" = "15" ] || [ "$FORZAR" = "true" ]; then
             echo "run_ext=true" >> $GITHUB_OUTPUT
-            echo "→ Hoy es día $DIA — se genera reporte extendido quincenal"
+            if [ "$FORZAR" = "true" ] && [ "$DIA" != "01" ] && [ "$DIA" != "15" ]; then
+              echo "→ Forzado manual: se genera reporte extendido"
+            else
+              echo "→ Hoy es día $DIA — se genera reporte extendido quincenal"
+            fi
           else
             echo "run_ext=false" >> $GITHUB_OUTPUT
             echo "→ Día $DIA — no toca reporte extendido"
