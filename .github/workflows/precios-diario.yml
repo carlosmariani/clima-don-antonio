@@ -187,6 +187,12 @@ jobs:
                      '--cliente', r['cliente'],
                      '--localidades', locs,
                      '--salida', r['salida']]
+              if r.get('con_precios'):
+                  cmd.append('--con-precios')
+              extras = r.get('productos_frutas_extra', [])
+              if extras:
+                  ext_str = ','.join(e['especie'] for e in extras)
+                  cmd += ['--productos-frutas-extra', ext_str]
               # Reintentar hasta 3 veces con espera creciente si falla
               # (la API de clima Open-Meteo a veces se cuelga)
               exito = False
