@@ -87,6 +87,11 @@ def main():
                              "(ej: 'Apolinario Saravia,Pichanal')")
     parser.add_argument("--extendido", action="store_true",
                         help="Generar informe extendido con análisis trimestral detallado")
+    parser.add_argument("--con-precios", dest="con_precios", action="store_true",
+                        help="Incluir sección de precios MCBA en el reporte")
+    parser.add_argument("--productos-frutas-extra", dest="productos_frutas_extra",
+                        default="",
+                        help="Frutas adicionales al filtro estándar (ej: 'FRUTILLA,ANANA')")
     args = parser.parse_args()
 
     base = os.path.dirname(os.path.abspath(__file__))
@@ -163,12 +168,51 @@ def main():
             zona_str = ""
         salida = os.path.join("informes", f"informe_clima{ext}{zona_str}_{fecha}{suf}.pdf")
 
+    # === Precios MCBA opcional (para reportes tipo Nader-Tucumán) ===
+    precios_datos = None
+    if args.con_precios:
+        try:
+            from precios_mercado import PreciosMCBA
+            print("\n→ Obteniendo precios MCBA (con productos extra si hay)...")
+            cli_p = PreciosMCBA()
+            p_cfg = cfg.get("precios_mercado_central", {})
+            hortalizas = list(p_cfg.get("productos_hortalizas", []))
+            frutas = list(p_cfg.get("productos_frutas", []))
+            # Sumar productos extra (si vienen por línea de comando)
+            for esp in [e.strip().upper() for e in args.productos_frutas_extra.split(",") if e.strip()]:
+                if not any(f["especie"].upper() == esp for f in frutas):
+                    frutas.append({"especie": esp, "variedades": []})
+                    print(f"  + Producto extra frutas: {esp}")
+            hoy = datetime.now()
+            datos_hoy = cli_p.precios_del_dia(
+                hoy, hortalizas, frutas,
+                procedencias_prioritarias=p_cfg.get("procedencias_prioritarias", []),
+                procedencias_fallback=p_cfg.get("procedencias_fallback", []),
+            )
+            datos_ayer = cli_p.precios_dia_anterior(
+                datos_hoy["fecha_datos"], hortalizas, frutas,
+                procedencias_prioritarias=p_cfg.get("procedencias_prioritarias", []),
+                procedencias_fallback=p_cfg.get("procedencias_fallback", []),
+            )
+            variaciones = cli_p.calcular_variaciones(datos_hoy, datos_ayer)
+            precios_datos = {
+                "hoy": datos_hoy,
+                "ayer": datos_ayer,
+                "variaciones": variaciones,
+            }
+            n_items = sum(len(v) for v in datos_hoy["productos"].values())
+            print(f"  ✓ {n_items} cotizaciones cargadas para el reporte")
+        except Exception as e:
+            print(f"  ⚠️ No se pudo cargar precios MCBA: {e}")
+            precios_datos = None
+
     tipo = "EXTENDIDO" if args.extendido else "estándar"
     print(f"\n📄 Generando PDF {tipo}: {salida}")
     gen = GeneradorPDF(empresa, logo_path=args.logo)
     gen.generar(datos_localidades, trimestre_resumenes,
                 output_path=salida, cliente=args.cliente,
-                extendido=args.extendido)
+                extendido=args.extendido,
+                precios_datos=precios_datos)
 
     print(f"\n✓ Informe generado exitosamente: {salida}")
     print(f"  Localidades procesadas: {len(datos_localidades)}")

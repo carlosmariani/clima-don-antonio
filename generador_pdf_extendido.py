@@ -25,6 +25,7 @@ from reportlab.platypus import (
     PageBreak, HRFlowable, KeepTogether, Image,
 )
 from reportlab.pdfgen import canvas
+from reportlab.lib.pdfencrypt import StandardEncryption
 
 
 COLOR_PRIMARIO = colors.HexColor("#1B5E20")
@@ -101,7 +102,25 @@ class GeneradorPDFExtendido:
         ))
         return s
 
+    def _marca_agua(self, canv: canvas.Canvas):
+        """Marca de agua diagonal semi-transparente 'DON ANTONIO SRL'."""
+        canv.saveState()
+        canv.setFillColor(colors.HexColor("#1B5E20"))
+        try:
+            canv.setFillAlpha(0.09)
+        except Exception:
+            pass
+        canv.setFont("Helvetica-Bold", 62)
+        canv.translate(A4[0] / 2, A4[1] / 2)
+        canv.rotate(35)
+        canv.drawCentredString(0, 0, "DON ANTONIO SRL")
+        canv.setFont("Helvetica", 22)
+        canv.drawCentredString(0, -55, "Informe confidencial")
+        canv.restoreState()
+
     def _header_footer(self, canv: canvas.Canvas, doc):
+        # Marca de agua primero (queda atrás del contenido)
+        self._marca_agua(canv)
         canv.saveState()
         # Header
         canv.setFillColor(COLOR_PRIMARIO)
@@ -385,23 +404,12 @@ class GeneradorPDFExtendido:
         except Exception as e:
             bloque.append(Paragraph(f"<i>(Gráfico no disponible: {e})</i>",
                                     self.styles["Small"]))
-        # Interpretación y comparativa
+        # Interpretación y comparativa (sin recomendaciones/acciones)
         if interp:
             bloque.append(Spacer(1, 0.1 * cm))
             bloque.append(Paragraph(interp, self.styles["Parr"]))
         if comp:
             bloque.append(Paragraph(f"<i>{comp}</i>", self.styles["Small"]))
-        # Recomendaciones
-        if acciones:
-            filas_ac = []
-            for a in acciones[:4]:
-                filas_ac.append(
-                    f"<b>{a.get('icono','')} {a.get('tema','')}:</b> "
-                    f"{a.get('accion','')} — "
-                    f"<font color='#666' size='8'>{a.get('porque','')}</font>"
-                )
-            bloque.append(Paragraph("<br/>".join(filas_ac),
-                                     self.styles["Small"]))
         return bloque
 
     def _bloque_trimestral(self, zonas: List[Dict], tendencia_general: Dict = None) -> list:
@@ -477,12 +485,21 @@ class GeneradorPDFExtendido:
     # Método principal
     # ------------------------------------------------------------------ #
     def generar(self, zonas: List[Dict], enso: Dict, output_path: str) -> str:
+        enc = StandardEncryption(
+            userPassword="",
+            ownerPassword="don_antonio_owner_2026",
+            canPrint=1, canModify=0, canCopy=0, canAnnotate=0,
+            strength=128,
+        )
         doc = SimpleDocTemplate(
             output_path, pagesize=A4,
             leftMargin=1.1 * cm, rightMargin=1.1 * cm,
             topMargin=2.0 * cm, bottomMargin=1.5 * cm,
             title="Reporte Climático Extendido — Don Antonio SRL",
             author=self.empresa["nombre"],
+            subject="Reporte climático extendido quincenal",
+            creator=self.empresa["nombre"],
+            encrypt=enc,
         )
         story: List[Any] = []
 

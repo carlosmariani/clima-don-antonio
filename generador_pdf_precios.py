@@ -32,6 +32,7 @@ from reportlab.platypus import (
     PageBreak, HRFlowable, KeepTogether
 )
 from reportlab.pdfgen import canvas
+from reportlab.lib.pdfencrypt import StandardEncryption
 
 from precios_mercado import envase_legible, variedad_legible
 
@@ -104,10 +105,28 @@ class GeneradorPDFPrecios:
         ))
         return s
 
+    def _marca_agua(self, canv: canvas.Canvas):
+        """Marca de agua diagonal semi-transparente 'DON ANTONIO SRL'."""
+        canv.saveState()
+        canv.setFillColor(colors.HexColor("#1B5E20"))
+        try:
+            canv.setFillAlpha(0.09)
+        except Exception:
+            pass
+        canv.setFont("Helvetica-Bold", 62)
+        canv.translate(A4[0] / 2, A4[1] / 2)
+        canv.rotate(35)
+        canv.drawCentredString(0, 0, "DON ANTONIO SRL")
+        canv.setFont("Helvetica", 22)
+        canv.drawCentredString(0, -55, "Informe confidencial")
+        canv.restoreState()
+
     # ------------------------------------------------------------------ #
     # Encabezado y pie en cada página
     # ------------------------------------------------------------------ #
     def _header_footer(self, canv: canvas.Canvas, doc):
+        # Marca de agua al fondo
+        self._marca_agua(canv)
         canv.saveState()
         if os.path.exists(self.logo_path):
             try:
@@ -626,6 +645,12 @@ class GeneradorPDFPrecios:
                 alertas_7d: List[Dict] = None,
                 pronostico_diario: List[Dict] = None,
                 trimestral: List[Dict] = None) -> str:
+        enc = StandardEncryption(
+            userPassword="",
+            ownerPassword="don_antonio_owner_2026",
+            canPrint=1, canModify=0, canCopy=0, canAnnotate=0,
+            strength=128,
+        )
         doc = SimpleDocTemplate(
             output_path, pagesize=A4,
             leftMargin=1.1 * cm, rightMargin=1.1 * cm,
@@ -633,6 +658,8 @@ class GeneradorPDFPrecios:
             title="Informe de Precios — Don Antonio SRL",
             author=self.empresa["nombre"],
             subject="Precios mayoristas del Mercado Central de Buenos Aires",
+            creator=self.empresa["nombre"],
+            encrypt=enc,
         )
 
         story: List[Any] = []

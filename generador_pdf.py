@@ -37,6 +37,7 @@ from reportlab.platypus import (
     PageBreak, HRFlowable, KeepTogether
 )
 from reportlab.pdfgen import canvas
+from reportlab.lib.pdfencrypt import StandardEncryption
 
 from interpretacion import (
     calcular_semaforo, pictograma_clima, resumen_interpretativo,
@@ -105,10 +106,28 @@ class GeneradorPDF:
         ))
         return s
 
+    def _marca_agua(self, canv: canvas.Canvas):
+        """Marca de agua diagonal semi-transparente 'DON ANTONIO SRL'."""
+        canv.saveState()
+        canv.setFillColor(colors.HexColor("#1B5E20"))
+        try:
+            canv.setFillAlpha(0.09)
+        except Exception:
+            pass
+        canv.setFont("Helvetica-Bold", 62)
+        canv.translate(A4[0] / 2, A4[1] / 2)
+        canv.rotate(35)
+        canv.drawCentredString(0, 0, "DON ANTONIO SRL")
+        canv.setFont("Helvetica", 22)
+        canv.drawCentredString(0, -55, "Informe confidencial")
+        canv.restoreState()
+
     # ------------------------------------------------------------------ #
     # Encabezado y pie en cada página
     # ------------------------------------------------------------------ #
     def _header_footer(self, canv: canvas.Canvas, doc):
+        # Marca de agua al fondo
+        self._marca_agua(canv)
         canv.saveState()
         if os.path.exists(self.logo_path):
             try:
@@ -327,22 +346,47 @@ class GeneradorPDF:
         elementos.append(Spacer(1, 0.1 * cm))
 
         # Gráfico chico orientativo (más bajo y compacto)
+        # + tabla de alertas destacadas por fecha (reemplaza el bloque "¿Qué hacer?")
         try:
             graf = self._grafico_compacto(resumen, loc["nombre"])
             graficos_temp.append(graf)
-            # Tabla con gráfico izquierda + acciones derecha
-            acciones = que_hacer_simple(resumen, alertas)[:3]  # solo 3 acciones máx
-            acciones_html = "<br/>".join(
-                f'<font size="8" color="#666"><b>{a["icono"]} {a["tema"]}</b></font> '
-                f'<font size="8">{a["accion"]}</font>'
-                for a in acciones
-            )
+            # Listado compacto de alertas: fecha · tipo · valor
+            if alertas:
+                meses_es = {1: "ene", 2: "feb", 3: "mar", 4: "abr", 5: "may",
+                            6: "jun", 7: "jul", 8: "ago", 9: "sep",
+                            10: "oct", 11: "nov", 12: "dic"}
+                filas_al = []
+                for a in alertas[:6]:
+                    try:
+                        f_dt = dt.strptime(a.get("fecha", ""), "%Y-%m-%d")
+                        f_str = f"{f_dt.day:02d}/{meses_es[f_dt.month]}"
+                    except Exception:
+                        f_str = a.get("fecha", "—")
+                    sev = a.get("severidad", "MEDIA")
+                    color_sev = ("#C62828" if sev == "ALTA"
+                                  else "#EF6C00" if sev == "MEDIA"
+                                  else "#888")
+                    filas_al.append(
+                        f'<font color="{color_sev}"><b>{f_str}</b></font> · '
+                        f'{a.get("icono", "")} {a.get("tipo", "")} '
+                        f'<font size="7" color="#666">({a.get("valor", "")})</font>'
+                    )
+                alertas_html = "<br/>".join(filas_al)
+                titulo_der = ("⚠️ Alertas de la quincena"
+                              if len(alertas) > 1
+                              else "⚠️ Alerta detectada")
+            else:
+                alertas_html = ('<font color="#888"><i>Sin alertas críticas '
+                                 'previstas en el período.</i></font>')
+                titulo_der = "🟢 Sin alertas"
             izq_der = [[
                 Image(graf, width=10 * cm, height=4 * cm),
                 Paragraph(
-                    f'<font color="{COLOR_PRIMARIO.hexval()}"><b>¿Qué hacer?</b></font><br/>{acciones_html}',
-                    ParagraphStyle("acc", fontName="Helvetica", fontSize=9, leading=12,
-                                   leftIndent=4, alignment=TA_LEFT)
+                    f'<font color="{COLOR_PRIMARIO.hexval()}"><b>{titulo_der}</b></font>'
+                    f'<br/>{alertas_html}',
+                    ParagraphStyle("acc", fontName="Helvetica", fontSize=9,
+                                    leading=13, leftIndent=4,
+                                    alignment=TA_LEFT)
                 )
             ]]
             t2 = Table(izq_der, colWidths=[10.2 * cm, 7.8 * cm])
@@ -611,11 +655,141 @@ class GeneradorPDF:
     # ------------------------------------------------------------------ #
     # Construcción del PDF
     # ------------------------------------------------------------------ #
+    def _seccion_precios(self, precios_datos: Dict) -> List:
+        """
+        Bloque con precios MCBA para reportes tipo Nader-Tucumán.
+        Renderiza una tabla compacta por producto/variedad/procedencia.
+        """
+        from precios_mercado import envase_legible, variedad_legible
+        bloque = []
+        datos = precios_datos.get("hoy", {})
+        variaciones = precios_datos.get("variaciones", {}) or {}
+        productos = datos.get("productos", {}) or {}
+        fecha_dt = datos.get("fecha_datos")
+        meses = {1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo",
+                 6: "junio", 7: "julio", 8: "agosto", 9: "septiembre",
+                 10: "octubre", 11: "noviembre", 12: "diciembre"}
+        fecha_str = (f"{fecha_dt.day} de {meses[fecha_dt.month]} de {fecha_dt.year}"
+                     if fecha_dt else "")
+
+        bloque.append(PageBreak())
+        bloque.append(Paragraph("💲 Precios Mayoristas — Mercado Central",
+                                self.styles["TituloPortada"]))
+        sub = ("Cotización mayorista de referencia — Mercado Central de "
+               f"Buenos Aires &nbsp;·&nbsp; Datos del {fecha_str}")
+        bloque.append(Paragraph(sub, self.styles["SubtituloPortada"]))
+        bloque.append(HRFlowable(width="100%", thickness=1.5, color=COLOR_PRIMARIO))
+        bloque.append(Spacer(1, 0.3 * cm))
+
+        if not productos:
+            bloque.append(Paragraph(
+                "<i>Sin cotizaciones disponibles hoy.</i>",
+                self.styles["ZonaParrafo"]))
+            return bloque
+
+        for esp in sorted(productos.keys()):
+            items = productos[esp]
+            if not items:
+                continue
+            bloque.append(Paragraph(
+                f"🥬 {esp.capitalize()} "
+                f"<font size='8' color='#888'>({len(items)})</font>",
+                self.styles["ZonaTitulo"]))
+
+            # Encabezado de tabla
+            headers = [
+                Paragraph("<b>VARIEDAD</b>", self.styles["MiniLabel"]),
+                Paragraph("<b>PROCEDENCIA</b>", self.styles["MiniLabel"]),
+                Paragraph("<b>ENVASE</b>", self.styles["MiniLabel"]),
+                Paragraph("<b>KG</b>", self.styles["MiniLabel"]),
+                Paragraph("<b>$ MÍN</b>", self.styles["MiniLabel"]),
+                Paragraph("<b>$ MEDIO</b>", self.styles["MiniLabel"]),
+                Paragraph("<b>$ MÁX</b>", self.styles["MiniLabel"]),
+                Paragraph("<b>VS AYER</b>", self.styles["MiniLabel"]),
+            ]
+            rows = [headers]
+            for it in items:
+                clave = (esp, it["variedad"], it["procedencia"])
+                v = variaciones.get(clave)
+                if v is None:
+                    var_str = "—"
+                elif v > 5:
+                    var_str = f'<font color="#C62828">↑ {v:+.1f}%</font>'
+                elif v < -5:
+                    var_str = f'<font color="#2E7D32">↓ {v:+.1f}%</font>'
+                else:
+                    var_str = f'<font color="#888">= {v:+.1f}%</font>'
+                proc = it["procedencia"] + (" *" if it.get("es_fallback") else "")
+                rows.append([
+                    Paragraph(variedad_legible(it["variedad"]),
+                              ParagraphStyle("cp", fontName="Helvetica",
+                                              fontSize=8, leading=10)),
+                    Paragraph(proc, ParagraphStyle("cp2", fontName="Helvetica",
+                                                    fontSize=8, leading=10)),
+                    Paragraph(envase_legible(it["envase"]),
+                              ParagraphStyle("cp3", fontName="Helvetica",
+                                              fontSize=8, leading=10)),
+                    Paragraph(f"{it['kg_bulto']:.0f}",
+                              ParagraphStyle("cp4", fontName="Helvetica",
+                                              fontSize=8, alignment=TA_CENTER,
+                                              leading=10)),
+                    Paragraph(f"${it['precio_min_bulto']:,.0f}".replace(",", "."),
+                              ParagraphStyle("cp5", fontName="Helvetica",
+                                              fontSize=8, alignment=TA_RIGHT,
+                                              leading=10)),
+                    Paragraph(f"<b>${it['precio_med_bulto']:,.0f}</b>".replace(",", "."),
+                              ParagraphStyle("cp6", fontName="Helvetica",
+                                              fontSize=8, alignment=TA_RIGHT,
+                                              leading=10)),
+                    Paragraph(f"${it['precio_max_bulto']:,.0f}".replace(",", "."),
+                              ParagraphStyle("cp7", fontName="Helvetica",
+                                              fontSize=8, alignment=TA_RIGHT,
+                                              leading=10)),
+                    Paragraph(var_str,
+                              ParagraphStyle("cp8", fontName="Helvetica",
+                                              fontSize=8, alignment=TA_CENTER,
+                                              leading=10)),
+                ])
+            t = Table(rows, colWidths=[
+                3.2 * cm, 2.3 * cm, 2.3 * cm, 0.9 * cm,
+                1.6 * cm, 1.9 * cm, 1.6 * cm, 1.9 * cm,
+            ], repeatRows=1)
+            t.setStyle(TableStyle([
+                ("BACKGROUND", (0, 0), (-1, 0), COLOR_PRIMARIO),
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#E0E0E0")),
+                ("LEFTPADDING", (0, 0), (-1, -1), 3),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 3),
+                ("TOPPADDING", (0, 0), (-1, -1), 3),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+                ("ROWBACKGROUNDS", (0, 1), (-1, -1),
+                 [colors.white, colors.HexColor("#FAFBFC")]),
+            ]))
+            bloque.append(t)
+            bloque.append(Spacer(1, 0.15 * cm))
+
+        # Nota fallback
+        hay_fallback = any(it.get("es_fallback")
+                            for items in productos.values() for it in items)
+        if hay_fallback:
+            bloque.append(Paragraph(
+                "<b>*</b> Procedencia Buenos Aires — referencia mostrada "
+                "cuando no hubo cotización de Salta/Jujuy/Tucumán ese día.",
+                self.styles["Disclaimer"]))
+        return bloque
+
     def generar(self, datos_localidades: List[Dict],
                 trimestre_resumenes: List[Dict],
                 output_path: str,
                 cliente: str = "",
-                extendido: bool = False) -> str:
+                extendido: bool = False,
+                precios_datos: Dict = None) -> str:
+        enc = StandardEncryption(
+            userPassword="",
+            ownerPassword="don_antonio_owner_2026",
+            canPrint=1, canModify=0, canCopy=0, canAnnotate=0,
+            strength=128,
+        )
         doc = SimpleDocTemplate(
             output_path, pagesize=A4,
             leftMargin=1.5 * cm, rightMargin=1.5 * cm,
@@ -623,6 +797,8 @@ class GeneradorPDF:
             title="Informe Climático — Don Antonio SRL",
             author=self.empresa["nombre"],
             subject="Pronóstico climático para el sector hortícola",
+            creator=self.empresa["nombre"],
+            encrypt=enc,
         )
 
         for d in datos_localidades:
@@ -759,6 +935,11 @@ class GeneradorPDF:
                     tr["localidad"], tr.get("meses_detalle", []), graficos_temp)
                 if bloque:
                     story.append(KeepTogether(bloque))
+
+        # =========== PRECIOS MCBA (opcional, para reportes con --con-precios) ===========
+        if precios_datos:
+            for bloque in self._seccion_precios(precios_datos):
+                story.append(bloque)
 
         # =========== DISCLAIMER FINAL ===========
         story.append(Spacer(1, 0.5 * cm))

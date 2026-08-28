@@ -156,11 +156,12 @@ class PreciosMCBA:
             for u in todos:
                 nombre = u.split('/')[-1].upper()
                 # Filtrar por tipo (frutas vs hortalizas) por el comienzo del nombre
+                # Aceptamos typos comunes del MCBA: FRUTRAS, FRUTA, FRUTAS, HORTALIZ, etc.
                 if tipo == "hortalizas":
-                    if not nombre.startswith("HORTALIZA"):
+                    if not nombre.startswith("HORTALIZ"):
                         continue
                 else:  # frutas
-                    if not nombre.startswith("FRUTA"):
+                    if not nombre.startswith("FRUT"):
                         continue
                 # Debe coincidir con el mes
                 if mes not in nombre:

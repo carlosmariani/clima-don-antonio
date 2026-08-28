@@ -131,7 +131,11 @@
       "localidades": ["Lules", "Concepción", "El Naranjo"],
       "salida": "informes/reporte_tucuman.pdf",
       "email_destinatario": "claudionader@yahoo.com.ar",
-      "email_cc": "carlos.mariani@semdonantonio.com.ar"
+      "email_cc": "carlos.mariani@semdonantonio.com.ar",
+      "con_precios": true,
+      "productos_frutas_extra": [
+        {"especie": "FRUTILLA", "variedades": []}
+      ]
     }
   ],
   "umbrales_alertas": {
