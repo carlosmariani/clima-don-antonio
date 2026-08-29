@@ -1,7 +1,7 @@
 {
   "fecha_str": "28 de agosto de 2026",
   "fecha_iso": "2026-08-28",
-  "dias_atraso": 0,
+  "dias_atraso": 1,
   "n_cotizaciones": 34,
   "texto_resumen": "Hoy se relevaron <b>34 cotizaciones</b> en el MCBA para tus productos. 7 cotizaciones bajaron, 1 subieron y 7 se mantuvieron estables respecto al día hábil anterior.",
   "productos_top": [
@@ -136,135 +136,149 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 25.2,
-      "tmin": 17.5,
-      "lluvia_mm": 0,
-      "prob_lluvia": 2,
+      "tmax": 21.8,
+      "tmin": 17.9,
+      "lluvia_mm": 0.6,
+      "prob_lluvia": 8,
       "tmax_pasado": 21.8,
-      "tmin_pasado": 17.9,
-      "lluvia_pasado": 0.6,
-      "prob_lluvia_pasado": 8,
+      "tmin_pasado": 18.6,
+      "lluvia_pasado": 0.9,
+      "prob_lluvia_pasado": 14,
       "alerta": null
     },
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 26.5,
-      "tmin": 17.3,
-      "lluvia_mm": 0,
-      "prob_lluvia": 2,
-      "tmax_pasado": 23.4,
-      "tmin_pasado": 18.3,
+      "tmax": 23.4,
+      "tmin": 18.3,
+      "lluvia_mm": 0.2,
+      "prob_lluvia": 8,
+      "tmax_pasado": 23.8,
+      "tmin_pasado": 17.9,
       "lluvia_pasado": 0.2,
-      "prob_lluvia_pasado": 8,
+      "prob_lluvia_pasado": 14,
       "alerta": null
     },
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 23.8,
-      "tmin": 13.9,
-      "lluvia_mm": 1.4,
-      "prob_lluvia": 4,
-      "tmax_pasado": 20.0,
-      "tmin_pasado": 14.7,
-      "lluvia_pasado": 2.5,
-      "prob_lluvia_pasado": 37,
+      "tmax": 20.0,
+      "tmin": 14.7,
+      "lluvia_mm": 2.5,
+      "prob_lluvia": 37,
+      "tmax_pasado": 21.4,
+      "tmin_pasado": 15.4,
+      "lluvia_pasado": 1.2,
+      "prob_lluvia_pasado": 16,
       "alerta": null
     },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 21.1,
-      "tmin": 12.8,
+      "tmax": 18.3,
+      "tmin": 12.6,
       "lluvia_mm": 0,
-      "prob_lluvia": 6,
-      "tmax_pasado": 18.3,
-      "tmin_pasado": 12.6,
+      "prob_lluvia": 8,
+      "tmax_pasado": 19.3,
+      "tmin_pasado": 12.1,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 8,
+      "prob_lluvia_pasado": 14,
       "alerta": null
     },
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 26.4,
-      "tmin": 18.9,
-      "lluvia_mm": 0,
-      "prob_lluvia": 9,
-      "tmax_pasado": 22.9,
-      "tmin_pasado": 17.0,
-      "lluvia_pasado": 1.3,
+      "tmax": 22.9,
+      "tmin": 17.0,
+      "lluvia_mm": 1.3,
+      "prob_lluvia": 29,
+      "tmax_pasado": 24.5,
+      "tmin_pasado": 16.3,
+      "lluvia_pasado": 2.9,
       "prob_lluvia_pasado": 29,
       "alerta": null
     },
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 26.4,
-      "tmin": 15.0,
+      "tmax": 23.8,
+      "tmin": 16.8,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 23.8,
-      "tmin_pasado": 16.8,
+      "prob_lluvia": 27,
+      "tmax_pasado": 23.7,
+      "tmin_pasado": 15.3,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 27,
+      "prob_lluvia_pasado": 18,
       "alerta": null
     },
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 23.3,
-      "tmin": 15.5,
+      "tmax": 19.9,
+      "tmin": 14.5,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 19.9,
-      "tmin_pasado": 14.5,
+      "prob_lluvia": 8,
+      "tmax_pasado": 22.5,
+      "tmin_pasado": 16.0,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 8,
+      "prob_lluvia_pasado": 6,
       "alerta": null
     },
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 25.0,
-      "tmin": 16.3,
+      "tmax": 21.7,
+      "tmin": 15.9,
       "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 21.7,
-      "tmin_pasado": 15.9,
+      "prob_lluvia": 8,
+      "tmax_pasado": 24.6,
+      "tmin_pasado": 16.8,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 8,
+      "prob_lluvia_pasado": 6,
       "alerta": null
     },
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 19.4,
-      "tmin": 9.9,
-      "lluvia_mm": 0.1,
-      "prob_lluvia": 14,
-      "tmax_pasado": 17.1,
-      "tmin_pasado": 9.2,
+      "tmax": 17.1,
+      "tmin": 9.2,
+      "lluvia_mm": 0,
+      "prob_lluvia": 86,
+      "tmax_pasado": 19.7,
+      "tmin_pasado": 9.3,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 86,
-      "alerta": "💨 Viento fuerte (43 km/h)"
+      "prob_lluvia_pasado": 25,
+      "alerta": null
     },
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 21.1,
-      "tmin": 11.9,
-      "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 19.6,
-      "tmin_pasado": 12.4,
-      "lluvia_pasado": 0.2,
-      "prob_lluvia_pasado": 10,
+      "tmax": 19.6,
+      "tmin": 12.4,
+      "lluvia_mm": 0.2,
+      "prob_lluvia": 10,
+      "tmax_pasado": 20.6,
+      "tmin_pasado": 11.2,
+      "lluvia_pasado": 0.1,
+      "prob_lluvia_pasado": 8,
       "alerta": "💨 Viento fuerte (42 km/h)"
     }
   ],
   "alertas_7d": [
+    {
+      "zona": "Pichanal",
+      "provincia": "Salta",
+      "alertas": [
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "44 km/h",
+          "detalle": "Ráfagas hasta 44 km/h",
+          "fecha": "2026-09-05"
+        }
+      ]
+    },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
@@ -284,6 +298,14 @@
           "valor": "52 km/h",
           "detalle": "Ráfagas hasta 52 km/h",
           "fecha": "2026-09-04"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "56 km/h",
+          "detalle": "Ráfagas hasta 56 km/h",
+          "fecha": "2026-09-05"
         }
       ]
     },
@@ -314,6 +336,14 @@
           "valor": "49 km/h",
           "detalle": "Ráfagas hasta 49 km/h",
           "fecha": "2026-09-04"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "50 km/h",
+          "detalle": "Ráfagas hasta 50 km/h",
+          "fecha": "2026-09-05"
         }
       ]
     },
@@ -342,6 +372,14 @@
           "valor": "44 km/h",
           "detalle": "Ráfagas hasta 44 km/h",
           "fecha": "2026-09-04"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "45 km/h",
+          "detalle": "Ráfagas hasta 45 km/h",
+          "fecha": "2026-09-05"
         }
       ]
     },
@@ -356,6 +394,14 @@
           "valor": "45 km/h",
           "detalle": "Ráfagas hasta 45 km/h",
           "fecha": "2026-09-04"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "44 km/h",
+          "detalle": "Ráfagas hasta 44 km/h",
+          "fecha": "2026-09-05"
         }
       ]
     },
@@ -363,14 +409,6 @@
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
       "alertas": [
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "43 km/h",
-          "detalle": "Ráfagas hasta 43 km/h",
-          "fecha": "2026-08-29"
-        },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
@@ -386,6 +424,22 @@
           "valor": "42 km/h",
           "detalle": "Ráfagas hasta 42 km/h",
           "fecha": "2026-09-02"
+        },
+        {
+          "tipo": "Riesgo de helada",
+          "icono": "❄️",
+          "severidad": "MEDIA",
+          "valor": "5°C",
+          "detalle": "Mínima 5°C",
+          "fecha": "2026-09-05"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "49 km/h",
+          "detalle": "Ráfagas hasta 49 km/h",
+          "fecha": "2026-09-05"
         }
       ]
     },
