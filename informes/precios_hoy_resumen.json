@@ -1,9 +1,9 @@
 {
-  "fecha_str": "31 de agosto de 2026",
-  "fecha_iso": "2026-08-31",
-  "dias_atraso": 2,
+  "fecha_str": "2 de septiembre de 2026",
+  "fecha_iso": "2026-09-02",
+  "dias_atraso": 0,
   "n_cotizaciones": 33,
-  "texto_resumen": "Hoy se relevaron <b>33 cotizaciones</b> en el MCBA para tus productos. 9 cotizaciones bajaron, 3 subieron y 2 se mantuvieron estables respecto al día hábil anterior.",
+  "texto_resumen": "Hoy se relevaron <b>33 cotizaciones</b> en el MCBA para tus productos. 8 cotizaciones bajaron, 4 subieron y 2 se mantuvieron estables respecto al día hábil anterior.",
   "productos_top": [
     {
       "especie": "TOMATE",
@@ -11,8 +11,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 5.0,
-      "precio": 27000.0,
-      "variacion": -16.666666666666664
+      "precio": 30000.0,
+      "variacion": -9.67741935483871
     },
     {
       "especie": "TOMATE",
@@ -20,8 +20,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 18.0,
-      "precio": 36400.0,
-      "variacion": -43.47826086956522
+      "precio": 41800.0,
+      "variacion": -32.608695652173914
     },
     {
       "especie": "TOMATE",
@@ -29,8 +29,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 18.0,
-      "precio": 37800.0,
-      "variacion": -54.71698113207547
+      "precio": 41000.0,
+      "variacion": -53.57142857142857
     },
     {
       "especie": "PIMIENTO",
@@ -38,8 +38,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 10.0,
-      "precio": 24000.0,
-      "variacion": -35.483870967741936
+      "precio": 26000.0,
+      "variacion": -25.925925925925924
     },
     {
       "especie": "PIMIENTO",
@@ -47,8 +47,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 10.0,
-      "precio": 17000.0,
-      "variacion": 0.0
+      "precio": 18000.0,
+      "variacion": 5.88235294117647
     },
     {
       "especie": "PEPINO",
@@ -56,8 +56,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 18.0,
-      "precio": 19000.0,
-      "variacion": 31.25
+      "precio": 23000.0,
+      "variacion": 52.94117647058824
     },
     {
       "especie": "BERENJENA",
@@ -66,7 +66,7 @@
       "envase": "cajón",
       "kg_bulto": 12.0,
       "precio": 16500.0,
-      "variacion": -34.78260869565217
+      "variacion": -11.76470588235294
     },
     {
       "especie": "ZAPALLITO",
@@ -74,8 +74,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 18.0,
-      "precio": 28500.0,
-      "variacion": 23.076923076923077
+      "precio": 33000.0,
+      "variacion": 44.0
     },
     {
       "especie": "ZAPALLITO",
@@ -83,8 +83,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 18.0,
-      "precio": 29333.333333333332,
-      "variacion": -36.11111111111111
+      "precio": 31666.666666666668,
+      "variacion": -35.13513513513514
     },
     {
       "especie": "ZAPALLO",
@@ -93,7 +93,7 @@
       "envase": "cajón",
       "kg_bulto": 17.0,
       "precio": 28000.0,
-      "variacion": 1.8181818181818181
+      "variacion": 0.0
     },
     {
       "especie": "ZAPALLO",
@@ -102,7 +102,7 @@
       "envase": "bolsa",
       "kg_bulto": 18.0,
       "precio": 17000.0,
-      "variacion": 21.428571428571427
+      "variacion": 0.0
     },
     {
       "especie": "CHOCLO",
@@ -110,8 +110,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 15.0,
-      "precio": 45000.0,
-      "variacion": -27.586206896551722
+      "precio": 42500.0,
+      "variacion": -17.02127659574468
     },
     {
       "especie": "CHAUCHA",
@@ -120,7 +120,7 @@
       "envase": "cajón",
       "kg_bulto": 10.0,
       "precio": 20000.0,
-      "variacion": -16.666666666666664
+      "variacion": 42.857142857142854
     },
     {
       "especie": "CHAUCHA",
@@ -128,8 +128,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 12.0,
-      "precio": 19000.0,
-      "variacion": -38.46153846153847
+      "precio": 15000.0,
+      "variacion": -27.77777777777778
     }
   ],
   "clima_48h": [
@@ -143,7 +143,7 @@
       "tmax_pasado": 22.9,
       "tmin_pasado": 19.7,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 8,
+      "prob_lluvia_pasado": 18,
       "alerta": null
     },
     {
@@ -156,7 +156,7 @@
       "tmax_pasado": 24.2,
       "tmin_pasado": 19.4,
       "lluvia_pasado": 0.2,
-      "prob_lluvia_pasado": 8,
+      "prob_lluvia_pasado": 18,
       "alerta": "💨 Viento fuerte (40 km/h)"
     },
     {
@@ -169,7 +169,7 @@
       "tmax_pasado": 22.4,
       "tmin_pasado": 17.0,
       "lluvia_pasado": 0.1,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 8,
       "alerta": null
     },
     {
@@ -195,7 +195,7 @@
       "tmax_pasado": 22.6,
       "tmin_pasado": 18.5,
       "lluvia_pasado": 0.4,
-      "prob_lluvia_pasado": 16,
+      "prob_lluvia_pasado": 14,
       "alerta": "💨 Viento fuerte (60 km/h)"
     },
     {
@@ -247,7 +247,7 @@
       "tmax_pasado": 19.5,
       "tmin_pasado": 11.0,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 27,
+      "prob_lluvia_pasado": 28,
       "alerta": "💨 Viento fuerte (45 km/h)"
     },
     {
@@ -260,7 +260,7 @@
       "tmax_pasado": 19.9,
       "tmin_pasado": 13.8,
       "lluvia_pasado": 0.3,
-      "prob_lluvia_pasado": 39,
+      "prob_lluvia_pasado": 27,
       "alerta": null
     }
   ],
