@@ -193,6 +193,12 @@ jobs:
               if extras:
                   ext_str = ','.join(e['especie'] for e in extras)
                   cmd += ['--productos-frutas-extra', ext_str]
+              prio_r = r.get('procedencias_prioritarias', [])
+              if prio_r:
+                  cmd += ['--procedencias-prioritarias', ','.join(prio_r)]
+              fb_r = r.get('procedencias_fallback', [])
+              if fb_r:
+                  cmd += ['--procedencias-fallback', ','.join(fb_r)]
               # Reintentar hasta 3 veces con espera creciente si falla
               # (la API de clima Open-Meteo a veces se cuelga)
               exito = False
