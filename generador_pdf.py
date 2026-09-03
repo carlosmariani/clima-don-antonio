@@ -821,6 +821,26 @@ class GeneradorPDF:
         if cliente:
             sub = f"Para: <b>{cliente}</b> &nbsp;·&nbsp; {fecha_str}"
         story.append(Paragraph(sub, self.styles["SubtituloPortada"]))
+
+        # Enumerar zonas cubiertas (útil cuando son varias localidades distintas)
+        nombres_zonas = [d.get("localidad", {}).get("nombre", "")
+                          for d in datos_localidades
+                          if d.get("localidad")]
+        nombres_zonas = [n for n in nombres_zonas if n]
+        if len(nombres_zonas) >= 2:
+            if len(nombres_zonas) == 2:
+                lista_str = f"{nombres_zonas[0]} y {nombres_zonas[1]}"
+            else:
+                lista_str = ", ".join(nombres_zonas[:-1]) + f" y {nombres_zonas[-1]}"
+            provs = list({d.get("localidad", {}).get("provincia", "")
+                          for d in datos_localidades
+                          if d.get("localidad")})
+            prov_txt = f" ({provs[0]})" if len(provs) == 1 and provs[0] else ""
+            story.append(Paragraph(
+                f"Cubre <b>{len(nombres_zonas)} zonas diferentes</b>{prov_txt}: "
+                f"<b>{lista_str}</b>.",
+                self.styles["SubtituloPortada"]))
+
         story.append(HRFlowable(width="100%", thickness=1.5, color=COLOR_PRIMARIO))
         story.append(Spacer(1, 0.4 * cm))
 

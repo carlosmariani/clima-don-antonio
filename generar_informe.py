@@ -92,6 +92,12 @@ def main():
     parser.add_argument("--productos-frutas-extra", dest="productos_frutas_extra",
                         default="",
                         help="Frutas adicionales al filtro estándar (ej: 'FRUTILLA,ANANA')")
+    parser.add_argument("--procedencias-prioritarias", dest="proc_prio",
+                        default="",
+                        help="Sobreescribe procedencias prioritarias (ej: 'TUCUMAN')")
+    parser.add_argument("--procedencias-fallback", dest="proc_fb",
+                        default="",
+                        help="Sobreescribe procedencias fallback (ej: 'BS. AS.,SALTA')")
     args = parser.parse_args()
 
     base = os.path.dirname(os.path.abspath(__file__))
@@ -183,16 +189,27 @@ def main():
                 if not any(f["especie"].upper() == esp for f in frutas):
                     frutas.append({"especie": esp, "variedades": []})
                     print(f"  + Producto extra frutas: {esp}")
+            # Procedencias: si se pasaron por CLI las usamos, sino las del config global
+            prio = ([p.strip() for p in args.proc_prio.split(",") if p.strip()]
+                    if args.proc_prio
+                    else p_cfg.get("procedencias_prioritarias", []))
+            fb = ([p.strip() for p in args.proc_fb.split(",") if p.strip()]
+                  if args.proc_fb
+                  else p_cfg.get("procedencias_fallback", []))
+            if args.proc_prio:
+                print(f"  → Procedencias prioritarias custom: {prio}")
+            if args.proc_fb:
+                print(f"  → Procedencias fallback custom: {fb}")
             hoy = datetime.now()
             datos_hoy = cli_p.precios_del_dia(
                 hoy, hortalizas, frutas,
-                procedencias_prioritarias=p_cfg.get("procedencias_prioritarias", []),
-                procedencias_fallback=p_cfg.get("procedencias_fallback", []),
+                procedencias_prioritarias=prio,
+                procedencias_fallback=fb,
             )
             datos_ayer = cli_p.precios_dia_anterior(
                 datos_hoy["fecha_datos"], hortalizas, frutas,
-                procedencias_prioritarias=p_cfg.get("procedencias_prioritarias", []),
-                procedencias_fallback=p_cfg.get("procedencias_fallback", []),
+                procedencias_prioritarias=prio,
+                procedencias_fallback=fb,
             )
             variaciones = cli_p.calcular_variaciones(datos_hoy, datos_ayer)
             precios_datos = {

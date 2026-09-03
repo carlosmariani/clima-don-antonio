@@ -133,8 +133,11 @@
       "email_destinatario": "claudionader@yahoo.com.ar",
       "email_cc": "carlos.mariani@semdonantonio.com.ar",
       "con_precios": true,
+      "procedencias_prioritarias": ["TUCUMAN"],
+      "procedencias_fallback": ["BS. AS.", "CTES.", "SALTA", "JUJUY"],
       "productos_frutas_extra": [
-        {"especie": "FRUTILLA", "variedades": []}
+        {"especie": "FRUTILLA", "variedades": []},
+        {"especie": "LIMON", "variedades": []}
       ]
     }
   ],

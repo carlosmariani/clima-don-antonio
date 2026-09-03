@@ -148,6 +148,9 @@ class PreciosMCBA:
                 return []
             html = resp.text
             mes = MESES_ES[fecha.month]
+            # Usamos los primeros 4 caracteres del mes como prefijo tolerante
+            # a typos del MCBA (ej: "SEPTIENBRE" vs "SEPTIEMBRE", "NOVIENBRE").
+            mes_prefix = mes[:4]  # ENER, FEBR, MARZ, ABRI, MAYO, JUNI, JULI, AGOS, SEPT, OCTU, NOVI, DICI
             a4 = str(fecha.year)
             a2 = str(fecha.year % 100)
             # Extraer todos los href .zip
@@ -163,8 +166,8 @@ class PreciosMCBA:
                 else:  # frutas
                     if not nombre.startswith("FRUT"):
                         continue
-                # Debe coincidir con el mes
-                if mes not in nombre:
+                # Debe coincidir con el mes (prefijo tolerante a typos)
+                if mes_prefix not in nombre:
                     continue
                 # Debe coincidir con el año (2026 o 26)
                 if a4 not in nombre and a2 not in nombre:
