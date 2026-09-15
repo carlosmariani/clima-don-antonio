@@ -145,12 +145,12 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 25.0,
-      "tmin": 9.5,
+      "tmax": 25.1,
+      "tmin": 8.7,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
       "tmax_pasado": 27.7,
-      "tmin_pasado": 10.4,
+      "tmin_pasado": 10.3,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -158,12 +158,12 @@
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 25.8,
-      "tmin": 10.0,
+      "tmax": 25.9,
+      "tmin": 9.8,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 27.1,
-      "tmin_pasado": 10.9,
+      "tmax_pasado": 27.0,
+      "tmin_pasado": 10.8,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -171,12 +171,12 @@
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 23.2,
-      "tmin": 8.4,
+      "tmax": 23.3,
+      "tmin": 8.1,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 25.2,
-      "tmin_pasado": 8.7,
+      "tmax_pasado": 24.7,
+      "tmin_pasado": 8.8,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -185,24 +185,24 @@
       "zona": "General Pizarro",
       "provincia": "Salta",
       "tmax": 21.0,
-      "tmin": 5.5,
+      "tmin": 4.9,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 21.4,
+      "tmax_pasado": 21.2,
       "tmin_pasado": 10.1,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
-      "alerta": "💨 Viento fuerte (40 km/h)"
+      "alerta": "❄️ Riesgo de helada (5°C) · 💨 Viento fuerte (40 km/h)"
     },
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 24.7,
-      "tmin": 8.6,
+      "tmax": 24.5,
+      "tmin": 8.1,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 26.2,
-      "tmin_pasado": 11.1,
+      "tmax_pasado": 26.0,
+      "tmin_pasado": 11.0,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -210,12 +210,12 @@
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 24.5,
-      "tmin": 8.2,
+      "tmax": 24.4,
+      "tmin": 7.8,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 25.9,
-      "tmin_pasado": 11.2,
+      "tmax_pasado": 25.6,
+      "tmin_pasado": 10.7,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -223,12 +223,12 @@
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 24.6,
-      "tmin": 6.0,
+      "tmax": 24.7,
+      "tmin": 5.9,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
       "tmax_pasado": 24.7,
-      "tmin_pasado": 7.8,
+      "tmin_pasado": 7.5,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -237,11 +237,11 @@
       "zona": "Chalicán",
       "provincia": "Jujuy",
       "tmax": 24.9,
-      "tmin": 6.1,
+      "tmin": 6.0,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
       "tmax_pasado": 25.2,
-      "tmin_pasado": 9.0,
+      "tmin_pasado": 9.2,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -249,24 +249,24 @@
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 20.5,
-      "tmin": 3.7,
+      "tmax": 20.6,
+      "tmin": 3.6,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
       "tmax_pasado": 16.7,
-      "tmin_pasado": 6.4,
+      "tmin_pasado": 6.0,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
-      "alerta": "❄️ Riesgo de helada (4°C) · 💨 Viento fuerte (42 km/h)"
+      "alerta": "❄️ Riesgo de helada (4°C) · 💨 Viento fuerte (45 km/h)"
     },
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
       "tmax": 20.8,
-      "tmin": 6.0,
+      "tmin": 5.4,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 21.1,
+      "tmax_pasado": 21.0,
       "tmin_pasado": 9.4,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
@@ -292,6 +292,14 @@
       "zona": "General Pizarro",
       "provincia": "Salta",
       "alertas": [
+        {
+          "tipo": "Riesgo de helada",
+          "icono": "❄️",
+          "severidad": "MEDIA",
+          "valor": "5°C",
+          "detalle": "Mínima 5°C",
+          "fecha": "2026-09-15"
+        },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
@@ -368,8 +376,8 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "42 km/h",
-          "detalle": "Ráfagas hasta 42 km/h",
+          "valor": "45 km/h",
+          "detalle": "Ráfagas hasta 45 km/h",
           "fecha": "2026-09-16"
         },
         {
@@ -401,14 +409,6 @@
           "valor": "40 km/h",
           "detalle": "Ráfagas hasta 40 km/h",
           "fecha": "2026-09-16"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "42 km/h",
-          "detalle": "Ráfagas hasta 42 km/h",
-          "fecha": "2026-09-19"
         }
       ]
     }
