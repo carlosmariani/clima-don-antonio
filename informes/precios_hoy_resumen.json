@@ -145,11 +145,11 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 33.5,
+      "tmax": 34.0,
       "tmin": 15.2,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 36.0,
+      "tmax_pasado": 36.3,
       "tmin_pasado": 20.6,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
@@ -158,12 +158,12 @@
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 33.8,
-      "tmin": 15.8,
+      "tmax": 34.4,
+      "tmin": 16.1,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 36.0,
-      "tmin_pasado": 21.7,
+      "tmax_pasado": 36.4,
+      "tmin_pasado": 21.6,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": "🌡️ Calor extremo (36°C)"
@@ -171,12 +171,12 @@
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 31.8,
+      "tmax": 32.4,
       "tmin": 16.2,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 34.5,
-      "tmin_pasado": 18.7,
+      "tmax_pasado": 34.6,
+      "tmin_pasado": 18.4,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -184,12 +184,12 @@
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 31.3,
-      "tmin": 14.7,
+      "tmax": 31.7,
+      "tmin": 14.6,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 31.3,
-      "tmin_pasado": 19.1,
+      "tmax_pasado": 31.9,
+      "tmin_pasado": 19.0,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
@@ -197,12 +197,12 @@
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 34.9,
-      "tmin": 18.6,
+      "tmax": 35.3,
+      "tmin": 19.1,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 36.3,
-      "tmin_pasado": 20.4,
+      "tmax_pasado": 36.1,
+      "tmin_pasado": 20.7,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": "🌡️ Calor extremo (36°C)"
@@ -210,38 +210,38 @@
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 33.4,
-      "tmin": 14.9,
+      "tmax": 33.9,
+      "tmin": 15.4,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 36.0,
-      "tmin_pasado": 20.8,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
-      "alerta": "🌡️ Calor extremo (36°C)"
-    },
-    {
-      "zona": "Fraile Pintado",
-      "provincia": "Jujuy",
-      "tmax": 33.7,
-      "tmin": 14.3,
-      "lluvia_mm": 0,
-      "prob_lluvia": 0,
-      "tmax_pasado": 35.9,
-      "tmin_pasado": 18.6,
+      "tmax_pasado": 35.7,
+      "tmin_pasado": 20.6,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": null
     },
     {
-      "zona": "Chalicán",
+      "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 34.5,
-      "tmin": 14.9,
+      "tmax": 34.3,
+      "tmin": 14.5,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 36.2,
-      "tmin_pasado": 18.8,
+      "tmax_pasado": 36.1,
+      "tmin_pasado": 18.5,
+      "lluvia_pasado": 0,
+      "prob_lluvia_pasado": 0,
+      "alerta": "🌡️ Calor extremo (36°C)"
+    },
+    {
+      "zona": "Chalicán",
+      "provincia": "Jujuy",
+      "tmax": 35.0,
+      "tmin": 15.0,
+      "lluvia_mm": 0,
+      "prob_lluvia": 0,
+      "tmax_pasado": 36.4,
+      "tmin_pasado": 18.7,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": "🌡️ Calor extremo (36°C)"
@@ -249,79 +249,33 @@
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 30.3,
-      "tmin": 11.2,
+      "tmax": 30.7,
+      "tmin": 11.6,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 29.8,
-      "tmin_pasado": 14.6,
+      "tmax_pasado": 30.1,
+      "tmin_pasado": 14.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
+      "prob_lluvia_pasado": 1,
       "alerta": "💨 Viento fuerte (40 km/h)"
     },
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 30.7,
-      "tmin": 16.1,
+      "tmax": 31.4,
+      "tmin": 16.5,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 31.3,
-      "tmin_pasado": 20.0,
+      "tmax_pasado": 31.6,
+      "tmin_pasado": 20.2,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 3,
+      "prob_lluvia_pasado": 2,
       "alerta": null
     }
   ],
   "alertas_7d": [
     {
       "zona": "Orán",
-      "provincia": "Salta",
-      "alertas": [
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
-          "valor": "36°C",
-          "detalle": "Máxima 36°C",
-          "fecha": "2026-09-26"
-        },
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
-          "valor": "38°C",
-          "detalle": "Máxima 38°C",
-          "fecha": "2026-09-27"
-        },
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
-          "valor": "38°C",
-          "detalle": "Máxima 38°C",
-          "fecha": "2026-09-28"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "40 km/h",
-          "detalle": "Ráfagas hasta 40 km/h",
-          "fecha": "2026-09-28"
-        },
-        {
-          "tipo": "Lluvia intensa",
-          "icono": "🌧️",
-          "severidad": "MEDIA",
-          "valor": "42 mm",
-          "detalle": "42 mm en el día",
-          "fecha": "2026-09-29"
-        }
-      ]
-    },
-    {
-      "zona": "Pichanal",
       "provincia": "Salta",
       "alertas": [
         {
@@ -352,16 +306,70 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "42 km/h",
-          "detalle": "Ráfagas hasta 42 km/h",
+          "valor": "56 km/h",
+          "detalle": "Ráfagas hasta 56 km/h",
           "fecha": "2026-09-28"
         },
         {
           "tipo": "Lluvia intensa",
           "icono": "🌧️",
           "severidad": "MEDIA",
-          "valor": "33 mm",
-          "detalle": "33 mm en el día",
+          "valor": "43 mm",
+          "detalle": "43 mm en el día",
+          "fecha": "2026-09-29"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "41 km/h",
+          "detalle": "Ráfagas hasta 41 km/h",
+          "fecha": "2026-09-29"
+        }
+      ]
+    },
+    {
+      "zona": "Pichanal",
+      "provincia": "Salta",
+      "alertas": [
+        {
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
+          "severidad": "MEDIA",
+          "valor": "36°C",
+          "detalle": "Máxima 36°C",
+          "fecha": "2026-09-26"
+        },
+        {
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
+          "severidad": "MEDIA",
+          "valor": "38°C",
+          "detalle": "Máxima 38°C",
+          "fecha": "2026-09-27"
+        },
+        {
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
+          "severidad": "ALTA",
+          "valor": "40°C",
+          "detalle": "Máxima 40°C",
+          "fecha": "2026-09-28"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "54 km/h",
+          "detalle": "Ráfagas hasta 54 km/h",
+          "fecha": "2026-09-28"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "36 mm",
+          "detalle": "36 mm en el día",
           "fecha": "2026-09-29"
         },
         {
@@ -382,8 +390,16 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "36°C",
-          "detalle": "Máxima 36°C",
+          "valor": "37°C",
+          "detalle": "Máxima 37°C",
+          "fecha": "2026-09-28"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "44 km/h",
+          "detalle": "Ráfagas hasta 44 km/h",
           "fecha": "2026-09-28"
         },
         {
@@ -392,6 +408,14 @@
           "severidad": "MEDIA",
           "valor": "26 mm",
           "detalle": "26 mm en el día",
+          "fecha": "2026-09-29"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "41 km/h",
+          "detalle": "Ráfagas hasta 41 km/h",
           "fecha": "2026-09-29"
         }
       ]
@@ -404,24 +428,24 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
+          "valor": "49 km/h",
+          "detalle": "Ráfagas hasta 49 km/h",
           "fecha": "2026-09-28"
         },
         {
           "tipo": "Lluvia intensa",
           "icono": "🌧️",
           "severidad": "MEDIA",
-          "valor": "23 mm",
-          "detalle": "23 mm en el día",
+          "valor": "36 mm",
+          "detalle": "36 mm en el día",
           "fecha": "2026-09-29"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "47 km/h",
-          "detalle": "Ráfagas hasta 47 km/h",
+          "valor": "50 km/h",
+          "detalle": "Ráfagas hasta 50 km/h",
           "fecha": "2026-09-29"
         },
         {
@@ -458,24 +482,32 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "37°C",
-          "detalle": "Máxima 37°C",
+          "valor": "40°C",
+          "detalle": "Máxima 40°C",
           "fecha": "2026-09-28"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "54 km/h",
-          "detalle": "Ráfagas hasta 54 km/h",
+          "valor": "66 km/h",
+          "detalle": "Ráfagas hasta 66 km/h",
           "fecha": "2026-09-28"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "22 mm",
+          "detalle": "22 mm en el día",
+          "fecha": "2026-09-29"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "53 km/h",
-          "detalle": "Ráfagas hasta 53 km/h",
+          "valor": "62 km/h",
+          "detalle": "Ráfagas hasta 62 km/h",
           "fecha": "2026-09-29"
         },
         {
@@ -490,6 +522,52 @@
     },
     {
       "zona": "Yuto",
+      "provincia": "Jujuy",
+      "alertas": [
+        {
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
+          "severidad": "MEDIA",
+          "valor": "37°C",
+          "detalle": "Máxima 37°C",
+          "fecha": "2026-09-27"
+        },
+        {
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
+          "severidad": "MEDIA",
+          "valor": "39°C",
+          "detalle": "Máxima 39°C",
+          "fecha": "2026-09-28"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "52 km/h",
+          "detalle": "Ráfagas hasta 52 km/h",
+          "fecha": "2026-09-28"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "36 mm",
+          "detalle": "36 mm en el día",
+          "fecha": "2026-09-29"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "52 km/h",
+          "detalle": "Ráfagas hasta 52 km/h",
+          "fecha": "2026-09-29"
+        }
+      ]
+    },
+    {
+      "zona": "Fraile Pintado",
       "provincia": "Jujuy",
       "alertas": [
         {
@@ -520,62 +598,16 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "42 km/h",
-          "detalle": "Ráfagas hasta 42 km/h",
+          "valor": "41 km/h",
+          "detalle": "Ráfagas hasta 41 km/h",
           "fecha": "2026-09-28"
         },
         {
           "tipo": "Lluvia intensa",
           "icono": "🌧️",
           "severidad": "MEDIA",
-          "valor": "37 mm",
-          "detalle": "37 mm en el día",
-          "fecha": "2026-09-29"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "49 km/h",
-          "detalle": "Ráfagas hasta 49 km/h",
-          "fecha": "2026-09-29"
-        }
-      ]
-    },
-    {
-      "zona": "Fraile Pintado",
-      "provincia": "Jujuy",
-      "alertas": [
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
-          "valor": "37°C",
-          "detalle": "Máxima 37°C",
-          "fecha": "2026-09-27"
-        },
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
-          "valor": "38°C",
-          "detalle": "Máxima 38°C",
-          "fecha": "2026-09-28"
-        },
-        {
-          "tipo": "Lluvia intensa",
-          "icono": "🌧️",
-          "severidad": "MEDIA",
-          "valor": "25 mm",
-          "detalle": "25 mm en el día",
-          "fecha": "2026-09-29"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "47 km/h",
-          "detalle": "Ráfagas hasta 47 km/h",
+          "valor": "24 mm",
+          "detalle": "24 mm en el día",
           "fecha": "2026-09-29"
         }
       ]
@@ -604,24 +636,16 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "38°C",
-          "detalle": "Máxima 38°C",
+          "valor": "39°C",
+          "detalle": "Máxima 39°C",
           "fecha": "2026-09-28"
         },
         {
           "tipo": "Lluvia intensa",
           "icono": "🌧️",
           "severidad": "MEDIA",
-          "valor": "25 mm",
-          "detalle": "25 mm en el día",
-          "fecha": "2026-09-29"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
+          "valor": "27 mm",
+          "detalle": "27 mm en el día",
           "fecha": "2026-09-29"
         }
       ]
@@ -642,8 +666,8 @@
           "tipo": "Lluvia intensa",
           "icono": "🌧️",
           "severidad": "MEDIA",
-          "valor": "49 mm",
-          "detalle": "49 mm en el día",
+          "valor": "33 mm",
+          "detalle": "33 mm en el día",
           "fecha": "2026-09-29"
         },
         {
@@ -664,16 +688,24 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "42 km/h",
-          "detalle": "Ráfagas hasta 42 km/h",
+          "valor": "41 km/h",
+          "detalle": "Ráfagas hasta 41 km/h",
           "fecha": "2026-09-27"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "44 km/h",
+          "detalle": "Ráfagas hasta 44 km/h",
+          "fecha": "2026-09-28"
         },
         {
           "tipo": "Lluvia intensa",
           "icono": "🌧️",
           "severidad": "MEDIA",
-          "valor": "38 mm",
-          "detalle": "38 mm en el día",
+          "valor": "39 mm",
+          "detalle": "39 mm en el día",
           "fecha": "2026-09-29"
         },
         {
