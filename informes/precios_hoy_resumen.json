@@ -145,130 +145,130 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 38.6,
-      "tmin": 24.2,
+      "tmax": 38.7,
+      "tmin": 23.6,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 40.0,
-      "tmin_pasado": 24.6,
-      "lluvia_pasado": 2.4,
+      "tmax_pasado": 39.5,
+      "tmin_pasado": 24.2,
+      "lluvia_pasado": 2.1,
       "prob_lluvia_pasado": 95,
-      "alerta": "🌡️ Calor extremo (39°C) · 💨 Viento fuerte (63 km/h)"
+      "alerta": "🌡️ Calor extremo (39°C) · 💨 Viento fuerte (55 km/h)"
     },
     {
       "zona": "Pichanal",
       "provincia": "Salta",
       "tmax": 38.4,
-      "tmin": 24.6,
+      "tmin": 24.3,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 39.9,
-      "tmin_pasado": 24.0,
-      "lluvia_pasado": 18.1,
+      "tmax_pasado": 39.6,
+      "tmin_pasado": 23.7,
+      "lluvia_pasado": 3.6,
       "prob_lluvia_pasado": 95,
-      "alerta": "🌡️ Calor extremo (38°C) · 💨 Viento fuerte (58 km/h)"
+      "alerta": "🌡️ Calor extremo (38°C) · 💨 Viento fuerte (53 km/h)"
     },
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 36.4,
-      "tmin": 21.3,
+      "tmax": 36.2,
+      "tmin": 21.1,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 38.0,
+      "tmax_pasado": 37.2,
       "tmin_pasado": 22.6,
-      "lluvia_pasado": 19.7,
+      "lluvia_pasado": 7.7,
       "prob_lluvia_pasado": 100,
-      "alerta": "🌡️ Calor extremo (36°C) · 💨 Viento fuerte (48 km/h)"
+      "alerta": "🌡️ Calor extremo (36°C)"
     },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 34.1,
-      "tmin": 21.6,
+      "tmax": 34.2,
+      "tmin": 21.3,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 32.9,
+      "tmax_pasado": 31.9,
       "tmin_pasado": 20.6,
-      "lluvia_pasado": 5.1,
+      "lluvia_pasado": 7.3,
       "prob_lluvia_pasado": 100,
-      "alerta": "💨 Viento fuerte (48 km/h)"
+      "alerta": "💨 Viento fuerte (53 km/h)"
     },
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 38.8,
-      "tmin": 25.1,
+      "tmax": 38.9,
+      "tmin": 24.7,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 38.5,
-      "tmin_pasado": 23.1,
-      "lluvia_pasado": 8.0,
+      "tmax_pasado": 37.9,
+      "tmin_pasado": 23.3,
+      "lluvia_pasado": 5.0,
       "prob_lluvia_pasado": 98,
-      "alerta": "🌡️ Calor extremo (39°C) · 💨 Viento fuerte (61 km/h)"
+      "alerta": "🌡️ Calor extremo (39°C) · 💨 Viento fuerte (56 km/h)"
     },
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 38.3,
-      "tmin": 24.0,
+      "tmax": 38.1,
+      "tmin": 23.4,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 39.9,
-      "tmin_pasado": 23.3,
-      "lluvia_pasado": 9.7,
+      "tmax_pasado": 38.7,
+      "tmin_pasado": 22.7,
+      "lluvia_pasado": 12.1,
       "prob_lluvia_pasado": 100,
       "alerta": "🌡️ Calor extremo (38°C) · 💨 Viento fuerte (53 km/h)"
     },
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 37.9,
-      "tmin": 22.9,
+      "tmax": 37.8,
+      "tmin": 22.6,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 38.0,
-      "tmin_pasado": 22.9,
-      "lluvia_pasado": 5.3,
+      "tmax_pasado": 38.4,
+      "tmin_pasado": 22.6,
+      "lluvia_pasado": 6.4,
       "prob_lluvia_pasado": 96,
-      "alerta": "🌡️ Calor extremo (38°C) · 💨 Viento fuerte (41 km/h)"
+      "alerta": "🌡️ Calor extremo (38°C)"
     },
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 38.1,
-      "tmin": 23.1,
+      "tmax": 38.3,
+      "tmin": 22.7,
       "lluvia_mm": 0,
       "prob_lluvia": 0,
-      "tmax_pasado": 39.5,
-      "tmin_pasado": 23.7,
-      "lluvia_pasado": 3.4,
+      "tmax_pasado": 39.1,
+      "tmin_pasado": 23.4,
+      "lluvia_pasado": 3.3,
       "prob_lluvia_pasado": 96,
       "alerta": "🌡️ Calor extremo (38°C)"
     },
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 30.7,
-      "tmin": 18.4,
-      "lluvia_mm": 0.2,
+      "tmax": 30.8,
+      "tmin": 18.0,
+      "lluvia_mm": 0.1,
       "prob_lluvia": 13,
-      "tmax_pasado": 30.7,
-      "tmin_pasado": 17.2,
-      "lluvia_pasado": 3.7,
+      "tmax_pasado": 30.6,
+      "tmin_pasado": 17.4,
+      "lluvia_pasado": 4.2,
       "prob_lluvia_pasado": 97,
-      "alerta": "💨 Viento fuerte (41 km/h)"
+      "alerta": null
     },
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 34.0,
-      "tmin": 21.7,
+      "tmax": 34.2,
+      "tmin": 22.2,
       "lluvia_mm": 0,
       "prob_lluvia": 3,
-      "tmax_pasado": 35.0,
-      "tmin_pasado": 19.9,
-      "lluvia_pasado": 9.5,
+      "tmax_pasado": 35.4,
+      "tmin_pasado": 19.8,
+      "lluvia_pasado": 11.3,
       "prob_lluvia_pasado": 100,
       "alerta": "💨 Viento fuerte (40 km/h)"
     }
@@ -289,7 +289,7 @@
         {
           "tipo": "Calor extremo",
           "icono": "🌡️",
-          "severidad": "ALTA",
+          "severidad": "MEDIA",
           "valor": "40°C",
           "detalle": "Máxima 40°C",
           "fecha": "2026-09-28"
@@ -298,8 +298,8 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "63 km/h",
-          "detalle": "Ráfagas hasta 63 km/h",
+          "valor": "55 km/h",
+          "detalle": "Ráfagas hasta 55 km/h",
           "fecha": "2026-09-28"
         },
         {
@@ -336,16 +336,24 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "58 km/h",
-          "detalle": "Ráfagas hasta 58 km/h",
+          "valor": "53 km/h",
+          "detalle": "Ráfagas hasta 53 km/h",
           "fecha": "2026-09-28"
         },
         {
           "tipo": "Lluvia intensa",
           "icono": "🌧️",
           "severidad": "MEDIA",
-          "valor": "24 mm",
-          "detalle": "24 mm en el día",
+          "valor": "26 mm",
+          "detalle": "26 mm en el día",
+          "fecha": "2026-09-29"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "41 km/h",
+          "detalle": "Ráfagas hasta 41 km/h",
           "fecha": "2026-09-29"
         }
       ]
@@ -366,16 +374,8 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "38°C",
-          "detalle": "Máxima 38°C",
-          "fecha": "2026-09-28"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "48 km/h",
-          "detalle": "Ráfagas hasta 48 km/h",
+          "valor": "37°C",
+          "detalle": "Máxima 37°C",
           "fecha": "2026-09-28"
         }
       ]
@@ -388,32 +388,32 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "48 km/h",
-          "detalle": "Ráfagas hasta 48 km/h",
+          "valor": "53 km/h",
+          "detalle": "Ráfagas hasta 53 km/h",
           "fecha": "2026-09-28"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "46 km/h",
-          "detalle": "Ráfagas hasta 46 km/h",
+          "valor": "45 km/h",
+          "detalle": "Ráfagas hasta 45 km/h",
           "fecha": "2026-09-29"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "58 km/h",
-          "detalle": "Ráfagas hasta 58 km/h",
+          "valor": "55 km/h",
+          "detalle": "Ráfagas hasta 55 km/h",
           "fecha": "2026-10-02"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "44 km/h",
-          "detalle": "Ráfagas hasta 44 km/h",
+          "valor": "48 km/h",
+          "detalle": "Ráfagas hasta 48 km/h",
           "fecha": "2026-10-03"
         }
       ]
@@ -442,40 +442,32 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "61 km/h",
-          "detalle": "Ráfagas hasta 61 km/h",
+          "valor": "56 km/h",
+          "detalle": "Ráfagas hasta 56 km/h",
           "fecha": "2026-09-28"
         },
         {
-          "tipo": "Lluvia intensa",
-          "icono": "🌧️",
+          "tipo": "Viento fuerte",
+          "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "25 mm",
-          "detalle": "25 mm en el día",
+          "valor": "45 km/h",
+          "detalle": "Ráfagas hasta 45 km/h",
           "fecha": "2026-09-29"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "49 km/h",
-          "detalle": "Ráfagas hasta 49 km/h",
-          "fecha": "2026-09-29"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "63 km/h",
-          "detalle": "Ráfagas hasta 63 km/h",
+          "valor": "60 km/h",
+          "detalle": "Ráfagas hasta 60 km/h",
           "fecha": "2026-10-02"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "40 km/h",
-          "detalle": "Ráfagas hasta 40 km/h",
+          "valor": "55 km/h",
+          "detalle": "Ráfagas hasta 55 km/h",
           "fecha": "2026-10-03"
         }
       ]
@@ -496,8 +488,8 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "40°C",
-          "detalle": "Máxima 40°C",
+          "valor": "39°C",
+          "detalle": "Máxima 39°C",
           "fecha": "2026-09-28"
         },
         {
@@ -512,16 +504,16 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "53 km/h",
-          "detalle": "Ráfagas hasta 53 km/h",
+          "valor": "42 km/h",
+          "detalle": "Ráfagas hasta 42 km/h",
           "fecha": "2026-09-29"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "46 km/h",
-          "detalle": "Ráfagas hasta 46 km/h",
+          "valor": "45 km/h",
+          "detalle": "Ráfagas hasta 45 km/h",
           "fecha": "2026-10-02"
         }
       ]
@@ -550,25 +542,17 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
+          "valor": "48 km/h",
+          "detalle": "Ráfagas hasta 48 km/h",
+          "fecha": "2026-10-01"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
           "valor": "41 km/h",
           "detalle": "Ráfagas hasta 41 km/h",
-          "fecha": "2026-09-28"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "45 km/h",
-          "detalle": "Ráfagas hasta 45 km/h",
-          "fecha": "2026-09-29"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "44 km/h",
-          "detalle": "Ráfagas hasta 44 km/h",
-          "fecha": "2026-10-01"
+          "fecha": "2026-10-02"
         }
       ]
     },
@@ -588,24 +572,32 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "40°C",
-          "detalle": "Máxima 40°C",
+          "valor": "39°C",
+          "detalle": "Máxima 39°C",
           "fecha": "2026-09-28"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "20 mm",
+          "detalle": "20 mm en el día",
+          "fecha": "2026-09-29"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "44 km/h",
-          "detalle": "Ráfagas hasta 44 km/h",
+          "valor": "46 km/h",
+          "detalle": "Ráfagas hasta 46 km/h",
           "fecha": "2026-10-01"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "40 km/h",
-          "detalle": "Ráfagas hasta 40 km/h",
+          "valor": "41 km/h",
+          "detalle": "Ráfagas hasta 41 km/h",
           "fecha": "2026-10-02"
         }
       ]
@@ -615,35 +607,27 @@
       "provincia": "Jujuy",
       "alertas": [
         {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
-          "fecha": "2026-09-27"
-        },
-        {
           "tipo": "Lluvia intensa",
           "icono": "🌧️",
           "severidad": "MEDIA",
-          "valor": "29 mm",
-          "detalle": "29 mm en el día",
+          "valor": "20 mm",
+          "detalle": "20 mm en el día",
           "fecha": "2026-09-29"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "48 km/h",
-          "detalle": "Ráfagas hasta 48 km/h",
+          "valor": "50 km/h",
+          "detalle": "Ráfagas hasta 50 km/h",
           "fecha": "2026-10-02"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
+          "valor": "52 km/h",
+          "detalle": "Ráfagas hasta 52 km/h",
           "fecha": "2026-10-03"
         }
       ]
@@ -664,24 +648,16 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
+          "valor": "44 km/h",
+          "detalle": "Ráfagas hasta 44 km/h",
           "fecha": "2026-09-28"
-        },
-        {
-          "tipo": "Lluvia intensa",
-          "icono": "🌧️",
-          "severidad": "MEDIA",
-          "valor": "23 mm",
-          "detalle": "23 mm en el día",
-          "fecha": "2026-09-29"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "43 km/h",
-          "detalle": "Ráfagas hasta 43 km/h",
+          "valor": "41 km/h",
+          "detalle": "Ráfagas hasta 41 km/h",
           "fecha": "2026-10-02"
         }
       ]
