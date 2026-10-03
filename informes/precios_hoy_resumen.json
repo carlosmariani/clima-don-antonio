@@ -154,139 +154,197 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 27.6,
-      "tmin": 18.3,
-      "lluvia_mm": 3.5,
+      "tmax": 26.9,
+      "tmin": 19.2,
+      "lluvia_mm": 2.1,
       "prob_lluvia": 33,
-      "tmax_pasado": 23.0,
-      "tmin_pasado": 19.5,
-      "lluvia_pasado": 4.6,
+      "tmax_pasado": 23.5,
+      "tmin_pasado": 20.1,
+      "lluvia_pasado": 5.7,
       "prob_lluvia_pasado": 67,
       "alerta": null
     },
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 27.9,
-      "tmin": 18.4,
-      "lluvia_mm": 0.6,
+      "tmax": 28.3,
+      "tmin": 19.7,
+      "lluvia_mm": 0.2,
       "prob_lluvia": 33,
       "tmax_pasado": 23.9,
-      "tmin_pasado": 19.8,
-      "lluvia_pasado": 6.8,
+      "tmin_pasado": 19.9,
+      "lluvia_pasado": 7.1,
       "prob_lluvia_pasado": 67,
       "alerta": null
     },
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 26.3,
-      "tmin": 16.7,
-      "lluvia_mm": 8.8,
+      "tmax": 24.5,
+      "tmin": 18.3,
+      "lluvia_mm": 8.1,
       "prob_lluvia": 63,
       "tmax_pasado": 21.9,
-      "tmin_pasado": 18.4,
-      "lluvia_pasado": 7.0,
+      "tmin_pasado": 18.0,
+      "lluvia_pasado": 9.0,
       "prob_lluvia_pasado": 69,
       "alerta": null
     },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 23.8,
+      "tmax": 22.8,
       "tmin": 16.2,
-      "lluvia_mm": 0.7,
+      "lluvia_mm": 1.4,
       "prob_lluvia": 37,
-      "tmax_pasado": 18.6,
-      "tmin_pasado": 15.5,
-      "lluvia_pasado": 9.2,
+      "tmax_pasado": 19.2,
+      "tmin_pasado": 15.9,
+      "lluvia_pasado": 6.5,
       "prob_lluvia_pasado": 59,
       "alerta": null
     },
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 28.0,
-      "tmin": 18.2,
-      "lluvia_mm": 0.6,
+      "tmax": 27.9,
+      "tmin": 19.0,
+      "lluvia_mm": 1.0,
       "prob_lluvia": 47,
       "tmax_pasado": 23.5,
-      "tmin_pasado": 18.9,
-      "lluvia_pasado": 5.1,
+      "tmin_pasado": 18.7,
+      "lluvia_pasado": 7.0,
       "prob_lluvia_pasado": 47,
-      "alerta": "💨 Viento fuerte (49 km/h)"
+      "alerta": null
     },
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 28.0,
-      "tmin": 18.3,
-      "lluvia_mm": 0.9,
+      "tmax": 27.0,
+      "tmin": 18.5,
+      "lluvia_mm": 1.2,
       "prob_lluvia": 47,
-      "tmax_pasado": 24.9,
-      "tmin_pasado": 18.1,
-      "lluvia_pasado": 6.5,
+      "tmax_pasado": 24.0,
+      "tmin_pasado": 17.5,
+      "lluvia_pasado": 3.9,
       "prob_lluvia_pasado": 57,
       "alerta": null
     },
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 26.8,
-      "tmin": 15.8,
-      "lluvia_mm": 0.2,
+      "tmax": 25.9,
+      "tmin": 16.7,
+      "lluvia_mm": 0.6,
       "prob_lluvia": 41,
-      "tmax_pasado": 22.3,
-      "tmin_pasado": 18.0,
-      "lluvia_pasado": 1.3,
+      "tmax_pasado": 23.2,
+      "tmin_pasado": 18.1,
+      "lluvia_pasado": 0.6,
       "prob_lluvia_pasado": 59,
       "alerta": null
     },
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 27.2,
-      "tmin": 16.9,
+      "tmax": 26.4,
+      "tmin": 17.7,
       "lluvia_mm": 0.1,
       "prob_lluvia": 41,
-      "tmax_pasado": 23.3,
-      "tmin_pasado": 18.9,
-      "lluvia_pasado": 3.1,
+      "tmax_pasado": 25.0,
+      "tmin_pasado": 19.2,
+      "lluvia_pasado": 0.1,
       "prob_lluvia_pasado": 59,
       "alerta": null
     },
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 19.2,
-      "tmin": 11.8,
-      "lluvia_mm": 2.5,
+      "tmax": 18.0,
+      "tmin": 11.9,
+      "lluvia_mm": 0.5,
       "prob_lluvia": 49,
-      "tmax_pasado": 19.1,
-      "tmin_pasado": 13.1,
-      "lluvia_pasado": 4.9,
+      "tmax_pasado": 19.9,
+      "tmin_pasado": 12.8,
+      "lluvia_pasado": 5.0,
       "prob_lluvia_pasado": 80,
-      "alerta": "💨 Viento fuerte (46 km/h)"
+      "alerta": null
     },
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
       "tmax": 21.8,
-      "tmin": 15.3,
-      "lluvia_mm": 5.2,
+      "tmin": 15.6,
+      "lluvia_mm": 4.5,
       "prob_lluvia": 60,
-      "tmax_pasado": 22.3,
-      "tmin_pasado": 16.0,
-      "lluvia_pasado": 6.1,
+      "tmax_pasado": 22.1,
+      "tmin_pasado": 15.8,
+      "lluvia_pasado": 9.3,
       "prob_lluvia_pasado": 97,
       "alerta": null
     }
   ],
   "alertas_7d": [
     {
+      "zona": "Pichanal",
+      "provincia": "Salta",
+      "alertas": [
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "40 km/h",
+          "detalle": "Ráfagas hasta 40 km/h",
+          "fecha": "2026-10-08"
+        }
+      ]
+    },
+    {
+      "zona": "Colonia Santa Rosa",
+      "provincia": "Salta",
+      "alertas": [
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "41 km/h",
+          "detalle": "Ráfagas hasta 41 km/h",
+          "fecha": "2026-10-08"
+        }
+      ]
+    },
+    {
       "zona": "General Pizarro",
       "provincia": "Salta",
       "alertas": [
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "42 km/h",
+          "detalle": "Ráfagas hasta 42 km/h",
+          "fecha": "2026-10-07"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "44 km/h",
+          "detalle": "Ráfagas hasta 44 km/h",
+          "fecha": "2026-10-08"
+        }
+      ]
+    },
+    {
+      "zona": "Apolinario Saravia",
+      "provincia": "Salta",
+      "alertas": [
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "42 km/h",
+          "detalle": "Ráfagas hasta 42 km/h",
+          "fecha": "2026-10-07"
+        },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
@@ -298,36 +356,6 @@
       ]
     },
     {
-      "zona": "Apolinario Saravia",
-      "provincia": "Salta",
-      "alertas": [
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "49 km/h",
-          "detalle": "Ráfagas hasta 49 km/h",
-          "fecha": "2026-10-04"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "40 km/h",
-          "detalle": "Ráfagas hasta 40 km/h",
-          "fecha": "2026-10-07"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "52 km/h",
-          "detalle": "Ráfagas hasta 52 km/h",
-          "fecha": "2026-10-08"
-        }
-      ]
-    },
-    {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
       "alertas": [
@@ -335,24 +363,8 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "46 km/h",
-          "detalle": "Ráfagas hasta 46 km/h",
-          "fecha": "2026-10-04"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
           "valor": "41 km/h",
           "detalle": "Ráfagas hasta 41 km/h",
-          "fecha": "2026-10-05"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "42 km/h",
-          "detalle": "Ráfagas hasta 42 km/h",
           "fecha": "2026-10-07"
         }
       ]
