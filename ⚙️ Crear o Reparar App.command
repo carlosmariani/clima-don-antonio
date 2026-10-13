@@ -98,12 +98,15 @@ on run
 	end if
 
 	try
-		set accion to button returned of (display dialog "¿Qué querés hacer?" buttons {"Cancelar", "Precios MCBA", "PDF Cliente", "Dashboard"} default button "Dashboard" with title "Clima Don Antonio" with icon note)
-	on error
+		-- Lista (no botones): un cartel de macOS admite como máximo 3 botones
+		set eleccion to choose from list {"Dashboard", "Precios MCBA", "PDF Cliente"} with title "Clima Don Antonio" with prompt "¿Qué querés hacer?" default items {"Dashboard"} OK button name "Abrir" cancel button name "Cancelar"
+	on error errMsg
+		display dialog "No se pudo mostrar el menú." & return & return & errMsg with icon caution buttons {"OK"} default button 1 with title "Clima Don Antonio"
 		return
 	end try
 
-	if accion is "Cancelar" then return
+	if eleccion is false then return
+	set accion to item 1 of eleccion
 
 	set cdCmd to "cd " & quoted form of proyectoPath & " && "
 
