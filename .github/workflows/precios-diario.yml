@@ -6,8 +6,8 @@ name: Precios MCBA - detección automática
 # si los hay y aún no se mandó email para esa fecha, lo manda.
 on:
   schedule:
-    - cron: '*/30 20-23 * * 1-5'    # 17:00-20:00 ART lun-vie
-    - cron: '*/30 0-2 * * 2-6'      # 21:00-23:00 ART (martes-sábado UTC)
+    - cron: '7,37 20-23 * * 1-5'    # 17:07-20:37 ART lun-vie (minutos 7 y 37: GitHub descarta muchas corridas en punto)
+    - cron: '7,37 0-2 * * 2-6'      # 21:07-23:37 ART (martes-sábado UTC)
     - cron: '0 14,17,20 * * 6'      # Sábado: 11h, 14h y 17h ART por si publican el viernes tarde
   workflow_dispatch:
     inputs:

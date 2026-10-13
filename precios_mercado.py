@@ -135,68 +135,168 @@ class PreciosMCBA:
     # ------------------------------------------------------------------ #
     _LISTING_URL = "https://mercadocentral.gob.ar/informaci%C3%B3n/precios-mayoristas"
 
+    @staticmethod
+    def _log(msg: str) -> None:
+        """Deja rastro en el log (se ve en GitHub Actions) de qué pasó con el MCBA."""
+        print(f"   [MCBA] {msg}", flush=True)
+
+    def _get(self, url: str, timeout: int, intentos: int = 3):
+        """GET con reintentos: un corte momentáneo del sitio del MCBA no debe
+        hacer que el informe caiga a precios de días anteriores."""
+        import time
+        ultimo = None
+        for i in range(intentos):
+            try:
+                resp = self.session.get(url, timeout=timeout)
+                if resp.status_code < 500:
+                    return resp
+                ultimo = f"HTTP {resp.status_code}"
+            except Exception as e:
+                ultimo = type(e).__name__
+            if i < intentos - 1:
+                time.sleep(3 * (i + 1))
+        self._log(f"sin respuesta tras {intentos} intentos ({ultimo}): {url}")
+        return None
+
+    def _html_listing(self) -> Optional[str]:
+        """HTML de la página de precios del MCBA (una sola descarga por corrida)."""
+        if getattr(self, "_listing_html", None) is None:
+            resp = self._get(self._LISTING_URL, timeout=20)
+            if resp is not None and resp.status_code == 200:
+                self._listing_html = resp.text
+            else:
+                self._listing_html = ""
+                self._log("NO se pudo leer la página de precios del MCBA; "
+                          "se prueban nombres de archivo conocidos")
+        return self._listing_html or None
+
     def _urls_desde_listing(self, tipo: str, fecha: datetime) -> List[str]:
         """
         Busca en la página oficial de MCBA las URLs de los ZIPs publicados
-        que coincidan con el mes/año/tipo solicitado. Más robusto que la
-        lista de candidatos porque MCBA cambia los nombres seguido (ej:
-        HORTALIZA-JUNIO-2026.zip, _0.zip, _1.zip, etc).
+        que coincidan con el mes/año/tipo solicitado. Es la fuente principal:
+        el MCBA cambia los nombres todos los meses (HORTALIZA-JUNIO-2026.zip,
+        HORTALIZA_SEPTIENBRE_26_0.zip, FRUTRAS_AGOSTO-26_0.zip, etc).
         """
-        try:
-            resp = self.session.get(self._LISTING_URL, timeout=15)
-            if resp.status_code != 200:
-                return []
-            html = resp.text
-            mes = MESES_ES[fecha.month]
-            # Usamos los primeros 4 caracteres del mes como prefijo tolerante
-            # a typos del MCBA (ej: "SEPTIENBRE" vs "SEPTIEMBRE", "NOVIENBRE").
-            mes_prefix = mes[:4]  # ENER, FEBR, MARZ, ABRI, MAYO, JUNI, JULI, AGOS, SEPT, OCTU, NOVI, DICI
-            a4 = str(fecha.year)
-            a2 = str(fecha.year % 100)
-            # Extraer todos los href .zip
-            todos = re.findall(r'href="([^"]*\.zip)"', html, flags=re.IGNORECASE)
-            buenos = []
-            for u in todos:
-                nombre = u.split('/')[-1].upper()
-                # Filtrar por tipo (frutas vs hortalizas) por el comienzo del nombre
-                # Aceptamos typos comunes del MCBA: FRUTRAS, FRUTA, FRUTAS, HORTALIZ, etc.
-                if tipo == "hortalizas":
-                    if not nombre.startswith("HORTALIZ"):
-                        continue
-                else:  # frutas
-                    if not nombre.startswith("FRUT"):
-                        continue
-                # Debe coincidir con el mes (prefijo tolerante a typos)
-                if mes_prefix not in nombre:
-                    continue
-                # Debe coincidir con el año (2026 o 26)
-                if a4 not in nombre and a2 not in nombre:
-                    continue
-                buenos.append(u)
-            return buenos
-        except Exception:
+        html = self._html_listing()
+        if not html:
             return []
+        mes = MESES_ES[fecha.month]
+        # Primeros 4 caracteres del mes: tolera typos ("SEPTIENBRE", "NOVIENBRE")
+        mes_prefix = mes[:4]
+        a4 = str(fecha.year)
+        a2 = str(fecha.year % 100)
+        todos = re.findall(r'href="([^"]*\.zip)"', html, flags=re.IGNORECASE)
+        buenos = []
+        for u in todos:
+            nombre = requests.utils.unquote(u.split('/')[-1]).upper()
+            if tipo == "hortalizas":
+                if not nombre.startswith("HORTALIZ"):
+                    continue
+            else:  # frutas (acepta FRUTA, FRUTAS, FRUTRAS)
+                if not nombre.startswith("FRUT"):
+                    continue
+            # Quitamos prefijo, mes y sufijo "_0/_1" para buscar el año en lo que queda
+            if mes_prefix not in nombre:
+                continue
+            resto = nombre.split(mes_prefix, 1)[1]
+            resto = re.sub(r'_\d\.ZIP$', '.ZIP', resto)
+            if a4 not in resto and a2 not in resto:
+                continue
+            if u.startswith("/"):
+                u = "https://mercadocentral.gob.ar" + u
+            if u not in buenos:
+                buenos.append(u)
+        return buenos
+
+    def _candidatos_extra(self, tipo: str, fecha: datetime) -> List[str]:
+        """
+        Combinaciones de nombre adicionales (solo se usan si la página del MCBA
+        no se pudo leer o todavía no lista el mes). Cubre los formatos vistos en
+        2026: singular/plural, guion/guion bajo/espacio, año 26/2026, sufijo _0/_1.
+        """
+        if tipo == "hortalizas":
+            prefijos = ["HORTALIZA", "HORTALIZAS"]
+        else:
+            prefijos = ["FRUTAS", "FRUTA", "FRUTRAS"]
+        mes = MESES_ES[fecha.month]
+        meses = [mes]
+        if "MBRE" in mes:  # typo habitual del MCBA: SEPTIENBRE, NOVIENBRE, DICIENBRE
+            meses.append(mes.replace("MBRE", "NBRE"))
+        anios = [f"{fecha.year % 100:02d}", str(fecha.year)]
+        nombres = []
+        for p in prefijos:
+            for s1 in ("_", "-", " ", "_ "):
+                for m in meses:
+                    for s2 in ("_", "-", ""):
+                        for a in anios:
+                            for suf in ("", "_0", "_1"):
+                                nombres.append(f"{p}{s1}{m}{s2}{a}{suf}.zip")
+        return [URL_BASE + requests.utils.requote_uri(n) for n in nombres]
+
+    def _probar_candidatos(self, urls: List[str]) -> List[str]:
+        """Devuelve cuáles de las URLs existen (HEAD en paralelo, rápido)."""
+        from concurrent.futures import ThreadPoolExecutor
+
+        def _existe(u):
+            try:
+                r = self.session.head(u, timeout=10, allow_redirects=True)
+                return u if r.status_code == 200 else None
+            except Exception:
+                return None
+
+        with ThreadPoolExecutor(max_workers=8) as ex:
+            return [u for u in ex.map(_existe, urls) if u]
 
     # ------------------------------------------------------------------ #
-    # Descarga del ZIP del mes
+    # Descarga de los ZIP del mes
     # ------------------------------------------------------------------ #
-    def _descargar_zip(self, tipo: str, fecha: datetime) -> Optional[bytes]:
-        """Descarga el ZIP del mes correspondiente a la fecha. Retorna bytes o None."""
-        # 1) Probar primero las URLs descubiertas en la página oficial de MCBA
+    def _zips_del_mes(self, tipo: str, fecha: datetime) -> List[tuple]:
+        """
+        Devuelve [(url, bytes), ...] con todos los ZIP encontrados para el
+        mes de la fecha. Se resuelve una sola vez por (tipo, mes) y corrida.
+        """
+        if not hasattr(self, "_mes_cache"):
+            self._mes_cache = {}
+        clave = (tipo, fecha.year, fecha.month)
+        if clave in self._mes_cache:
+            return self._mes_cache[clave]
+
+        etiqueta = f"{tipo} {MESES_ES[fecha.month]} {fecha.year}"
         urls = self._urls_desde_listing(tipo, fecha)
-        # 2) Agregar los candidatos hardcodeados como fallback
-        urls = urls + [u for u in self._candidatos_url_zip(tipo, fecha) if u not in urls]
+        if urls:
+            self._log(f"{etiqueta}: publicado en la página → "
+                      + ", ".join(u.split('/')[-1] for u in urls))
+        else:
+            if self._html_listing():
+                self._log(f"{etiqueta}: la página del MCBA todavía NO lista "
+                          "ningún ZIP de ese mes; se prueban nombres conocidos")
+            cand = self._candidatos_url_zip(tipo, fecha)
+            cand += [u for u in self._candidatos_extra(tipo, fecha) if u not in cand]
+            urls = self._probar_candidatos(cand)
+            if urls:
+                self._log(f"{etiqueta}: encontrado por nombre → "
+                          + ", ".join(u.split('/')[-1] for u in urls))
+            else:
+                self._log(f"{etiqueta}: no existe ningún ZIP (el MCBA aún no lo subió)")
+
+        encontrados = []
         for url in urls:
-            if url in self._zip_cache:
-                return self._zip_cache[url]
-            try:
-                resp = self.session.get(url, timeout=self.timeout)
-                if resp.status_code == 200 and resp.content[:2] == b"PK":
+            if url not in self._zip_cache:
+                resp = self._get(url, timeout=self.timeout)
+                if (resp is not None and resp.status_code == 200
+                        and resp.content[:2] == b"PK"):
                     self._zip_cache[url] = resp.content
-                    return resp.content
-            except Exception:
-                continue
-        return None
+                else:
+                    self._log(f"no se pudo descargar {url.split('/')[-1]}")
+                    continue
+            encontrados.append((url, self._zip_cache[url]))
+        self._mes_cache[clave] = encontrados
+        return encontrados
+
+    def _descargar_zip(self, tipo: str, fecha: datetime) -> Optional[bytes]:
+        """Compatibilidad: devuelve el primer ZIP del mes (o None)."""
+        zips = self._zips_del_mes(tipo, fecha)
+        return zips[0][1] if zips else None
 
     # ------------------------------------------------------------------ #
     # Extracción y parseo de un archivo del día
@@ -205,27 +305,41 @@ class PreciosMCBA:
         """
         Devuelve una lista de filas (dicts) del archivo del día, o None si no
         se encontró (puede ser feriado, fin de semana, o aún no publicado).
+        Revisa TODOS los ZIP del mes (el MCBA a veces deja uno viejo y sube
+        otro con sufijo _0/_1) y usa el que contenga el día pedido.
         """
-        zip_bytes = self._descargar_zip(tipo, fecha)
-        if not zip_bytes:
-            return None
         nombre_xls = self._nombre_xls_dia(tipo, fecha)
-        try:
-            with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
-                # Buscar el archivo por basename — case-insensitive y aceptando
-                # que esté dentro de subcarpetas (ej: FRUTAS-MAYO-2026/RF040526.XLS)
-                target_up = nombre_xls.upper()
-                match = None
-                for n in zf.namelist():
-                    base = n.split("/")[-1].upper()
-                    if base == target_up:
-                        match = n
-                        break
-                if not match:
-                    return None
-                with zf.open(match) as f:
-                    contenido = f.read()
-        except Exception:
+        target_up = nombre_xls.upper()
+        contenido = None
+        zips = self._zips_del_mes(tipo, fecha)
+        for url, zip_bytes in zips:
+            try:
+                with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
+                    # Buscar por basename — case-insensitive y aceptando
+                    # subcarpetas (ej: FRUTAS-MAYO-2026/RF040526.XLS)
+                    for n in zf.namelist():
+                        if n.split("/")[-1].upper() == target_up:
+                            with zf.open(n) as f:
+                                contenido = f.read()
+                            break
+            except Exception as e:
+                self._log(f"ZIP ilegible {url.split('/')[-1]}: {type(e).__name__}")
+                continue
+            if contenido is not None:
+                break
+        if contenido is None:
+            if zips and fecha.weekday() < 5:
+                ultimos = []
+                for _, zb in zips:
+                    try:
+                        with zipfile.ZipFile(io.BytesIO(zb)) as zf:
+                            ultimos += [n.split("/")[-1].upper() for n in zf.namelist()]
+                    except Exception:
+                        pass
+                # Orden cronológico: RHddmmaa → aammdd
+                ultimos.sort(key=lambda n: n[6:8] + n[4:6] + n[2:4])
+                self._log(f"{nombre_xls} todavía no está en el ZIP "
+                          f"(último día publicado: {ultimos[-1] if ultimos else '—'})")
             return None
 
         try:
