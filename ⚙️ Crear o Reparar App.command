@@ -72,6 +72,8 @@ if [ "$MODO" = "CREAR" ]; then
 
     cat > "$TMP_SCPT" <<'APPLESCRIPT'
 on run
+	-- Traer la app al frente: en macOS nuevos los carteles quedaban escondidos detrás de otras ventanas
+	activate
 	set proyectoPath to "__PROYECTO__"
 	set logPath to (POSIX path of (path to home folder)) & "Library/Logs/ClimaDonAntonio.log"
 
@@ -109,7 +111,7 @@ on run
 	-- Antes se descartan los archivos que genera GitHub solo (dashboard, PDF del día),
 	-- para que no choquen con los que bajan.
 	try
-		do shell script cdCmd & "git checkout -- dashboard.html index.html precios_hoy.pdf informes/precios_hoy.pdf informes/precios_hoy_resumen.json informes/extendido_hoy.pdf informes/reporte_abapo.pdf informes/reporte_tucuman.pdf informes/por_zona .last_email_date .last_email_extendido_date .last_email_nader_date >/dev/null 2>&1; git pull --ff-only -q >> " & quoted form of logPath & " 2>&1"
+		do shell script cdCmd & "git checkout -- dashboard.html index.html precios_hoy.pdf informes/precios_hoy.pdf informes/precios_hoy_resumen.json informes/extendido_hoy.pdf informes/reporte_abapo.pdf informes/reporte_tucuman.pdf informes/por_zona .last_email_date .last_email_extendido_date .last_email_nader_date >/dev/null 2>&1; GIT_TERMINAL_PROMPT=0 git -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=15 pull --ff-only -q >> " & quoted form of logPath & " 2>&1"
 	end try
 
 	-- Tras renombrado de botones para que entren más opciones
@@ -286,6 +288,10 @@ APPLESCRIPT
         exit 1
     fi
 
+    # Identificador de la app: macOS nuevos no abren bien una app sin él
+    /usr/libexec/PlistBuddy -c "Add :CFBundleIdentifier string ar.com.semdonantonio.clima" "$TMP_APP/Contents/Info.plist" 2>/dev/null \
+      || /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier ar.com.semdonantonio.clima" "$TMP_APP/Contents/Info.plist"
+
     # Aplicar el icono ANTES de mover
     if [ "$ICON_OK" = true ]; then
         cp "$TMP_DIR/AppIcon.icns" "$TMP_APP/Contents/Resources/applet.icns"
@@ -336,6 +342,10 @@ mv "$APP_PATH" "$TEMP_HOLDING/Clima Don Antonio.app" 2>/dev/null
 sleep 1
 mv "$TEMP_HOLDING/Clima Don Antonio.app" "$APP_PATH" 2>/dev/null
 rmdir "$TEMP_HOLDING" 2>/dev/null
+
+# Registrar la app en macOS para que el doble click la abra
+LSREG="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister"
+[ -x "$LSREG" ] && "$LSREG" -f "$APP_PATH" 2>/dev/null
 
 cd /
 rm -rf "$TMP_DIR"
