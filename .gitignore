@@ -1,0 +1,13 @@
+# --- Privado: NO subir al repo (es público) ---
+# Guía para Claude (tiene notas internas)
+CLAUDE.md
+# PDF hechos a mano para clientes (llevan nombres de clientes)
+informes/informe_clima_*.pdf
+informes/precios_mcba_*.pdf
+informes/extendido_2*.pdf
+informes/preview_*.pdf
+
+# --- Basura de Python / Mac ---
+__pycache__/
+*.pyc
+.DS_Store

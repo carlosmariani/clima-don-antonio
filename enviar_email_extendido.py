@@ -25,6 +25,21 @@ def _ahora_ar() -> datetime:
     return datetime.now(TZ_AR).replace(tzinfo=None)
 
 
+def mail_de(seccion: dict, clave: str) -> str:
+    """
+    Devuelve un mail de destinatario. En GitHub viene de un Secret (variable de
+    entorno cuyo nombre está en '<clave>_env' del config.json), así las
+    direcciones no quedan publicadas en el repo, que es público.
+    Si la variable no está definida (uso local en la Mac), usa '<clave>' del config.
+    """
+    nombre_env = seccion.get(f"{clave}_env")
+    if nombre_env:
+        valor = os.environ.get(nombre_env, "").strip()
+        if valor:
+            return valor
+    return (seccion.get(clave) or "").strip()
+
+
 def cargar_config(path: str = "config.json") -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
@@ -101,7 +116,7 @@ def main():
 
     cfg = cargar_config()
     empresa = cfg["empresa"]
-    destinatario = (cfg.get("precios_mercado_central", {}).get("email_destinatario")
+    destinatario = (mail_de(cfg.get("precios_mercado_central", {}), "email_destinatario")
                     or empresa.get("email"))
     if not destinatario:
         print("❌ No hay destinatario configurado")

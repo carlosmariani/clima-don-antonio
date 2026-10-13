@@ -112,6 +112,8 @@ jobs:
         if: steps.check.outputs.send_email == 'true' || github.event_name == 'workflow_dispatch'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
+          EMAIL_NADER: ${{ secrets.EMAIL_NADER }}
         run: python enviar_email_precios.py
 
       - name: Registrar fecha enviada
@@ -163,6 +165,8 @@ jobs:
         if: steps.check_ext_email.outputs.send_ext == 'true'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
+          EMAIL_NADER: ${{ secrets.EMAIL_NADER }}
         run: python enviar_email_extendido.py
 
       - name: Registrar fecha extendido enviado
@@ -265,6 +269,8 @@ jobs:
         if: steps.check_nader.outputs.send_nader == 'true'
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
+          EMAIL_NADER: ${{ secrets.EMAIL_NADER }}
         run: python enviar_email_nader.py
 
       - name: Registrar fecha mail Nader

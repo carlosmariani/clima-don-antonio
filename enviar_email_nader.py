@@ -25,6 +25,21 @@ def _ahora_ar() -> datetime:
     return datetime.now(TZ_AR).replace(tzinfo=None)
 
 
+def mail_de(seccion: dict, clave: str) -> str:
+    """
+    Devuelve un mail de destinatario. En GitHub viene de un Secret (variable de
+    entorno cuyo nombre está en '<clave>_env' del config.json), así las
+    direcciones no quedan publicadas en el repo, que es público.
+    Si la variable no está definida (uso local en la Mac), usa '<clave>' del config.
+    """
+    nombre_env = seccion.get(f"{clave}_env")
+    if nombre_env:
+        valor = os.environ.get(nombre_env, "").strip()
+        if valor:
+            return valor
+    return (seccion.get(clave) or "").strip()
+
+
 def cargar_config(path: str = "config.json") -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
@@ -103,9 +118,10 @@ def main():
     # Agrupar por email_destinatario para mandar 1 mail con todos los adjuntos
     por_destinatario = {}
     for r in reportes:
-        dest = r.get("email_destinatario")
+        dest = mail_de(r, "email_destinatario")
         if not dest:
-            print(f"⚠️  Reporte '{r['id']}' sin email_destinatario, se omite.")
+            print(f"⚠️  Reporte '{r['id']}' sin destinatario "
+                  f"(¿falta el Secret {r.get('email_destinatario_env', '')}?), se omite.")
             continue
         if not os.path.exists(r["salida"]):
             print(f"⚠️  Reporte '{r['id']}' — PDF no existe ({r['salida']}), se omite.")
@@ -118,7 +134,7 @@ def main():
 
     for destinatario, lista_reportes in por_destinatario.items():
         cliente = lista_reportes[0].get("cliente", destinatario)
-        cc = lista_reportes[0].get("email_cc", "")
+        cc = mail_de(lista_reportes[0], "email_cc")
 
         # Adjuntos (base64)
         adjuntos = []

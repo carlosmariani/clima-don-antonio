@@ -121,8 +121,8 @@
       "cliente": "Ing. Agrónomo Claudio Nader",
       "localidades": ["Abapó"],
       "salida": "informes/reporte_abapo.pdf",
-      "email_destinatario": "claudionader@yahoo.com.ar",
-      "email_cc": "carlos.mariani@semdonantonio.com.ar"
+      "email_destinatario_env": "EMAIL_NADER",
+      "email_cc_env": "EMAIL_DESTINATARIO"
     },
     {
       "id": "nader_tucuman",
@@ -130,8 +130,8 @@
       "cliente": "Ing. Agrónomo Claudio Nader",
       "localidades": ["Lules", "Concepción", "El Naranjo"],
       "salida": "informes/reporte_tucuman.pdf",
-      "email_destinatario": "claudionader@yahoo.com.ar",
-      "email_cc": "carlos.mariani@semdonantonio.com.ar",
+      "email_destinatario_env": "EMAIL_NADER",
+      "email_cc_env": "EMAIL_DESTINATARIO",
       "con_precios": true,
       "procedencias_prioritarias": ["TUCUMAN"],
       "procedencias_fallback": ["BS. AS.", "CTES.", "SALTA", "JUJUY"],
@@ -165,7 +165,7 @@
     "productos_frutas": [
       {"especie": "MELON", "variedades": []}
     ],
-    "email_destinatario": "carlos.mariani@semdonantonio.com.ar",
+    "email_destinatario_env": "EMAIL_DESTINATARIO",
     "horario_envio_art": "17:00"
   },
   "fuentes_datos": {

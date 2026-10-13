@@ -6,7 +6,7 @@ Uso (desde GitHub Action):
     RESEND_API_KEY=re_xxx python3 enviar_email_precios.py
 
 Lee:
-  - config.json para destinatario
+  - config.json + Secret EMAIL_DESTINATARIO para el destinatario
   - informes/precios_hoy_resumen.json (generado por generar_precios.py)
 
 Email tiene:
@@ -28,6 +28,21 @@ TZ_AR = timezone(timedelta(hours=-3))
 
 def _ahora_ar() -> datetime:
     return datetime.now(TZ_AR).replace(tzinfo=None)
+
+
+def mail_de(seccion: dict, clave: str) -> str:
+    """
+    Devuelve un mail de destinatario. En GitHub viene de un Secret (variable de
+    entorno cuyo nombre está en '<clave>_env' del config.json), así las
+    direcciones no quedan publicadas en el repo, que es público.
+    Si la variable no está definida (uso local en la Mac), usa '<clave>' del config.
+    """
+    nombre_env = seccion.get(f"{clave}_env")
+    if nombre_env:
+        valor = os.environ.get(nombre_env, "").strip()
+        if valor:
+            return valor
+    return (seccion.get(clave) or "").strip()
 
 
 def cargar_config(path: str = "config.json") -> dict:
@@ -299,7 +314,7 @@ def main():
     cfg = cargar_config()
     empresa = cfg["empresa"]
     cfg_p = cfg["precios_mercado_central"]
-    destinatario = cfg_p.get("email_destinatario") or empresa.get("email")
+    destinatario = mail_de(cfg_p, "email_destinatario") or empresa.get("email")
     if not destinatario:
         print("❌ Sin destinatario configurado")
         sys.exit(1)
@@ -338,11 +353,17 @@ def main():
             "Content-Type": "application/json",
         },
         json={
+            # Remitente desde dominio verificado en Resend (evita spam)
             "from": "Don Antonio SRL <info@novitsji.com.ar>",
             "to": [destinatario],
             "reply_to": empresa.get("email", destinatario),
             "subject": asunto,
             "html": html,
+            # Headers anti-spam: identifica como mail transaccional/lista
+            "headers": {
+                "List-Unsubscribe": f"<mailto:{empresa.get('email', destinatario)}?subject=Unsubscribe>",
+                "X-Entity-Ref-ID": "precios-mcba-diario",
+            },
         },
         timeout=30,
     )
