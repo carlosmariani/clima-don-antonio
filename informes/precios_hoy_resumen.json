@@ -1,7 +1,7 @@
 {
   "fecha_str": "4 de noviembre de 2026",
   "fecha_iso": "2026-11-04",
-  "dias_atraso": 0,
+  "dias_atraso": 1,
   "n_cotizaciones": 29,
   "texto_resumen": "Hoy se relevaron <b>29 cotizaciones</b> en el MCBA para tus productos. 11 cotizaciones bajaron, 1 subieron y 2 se mantuvieron estables respecto al día hábil anterior.",
   "productos_top": [
@@ -136,131 +136,131 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 30.8,
-      "tmin": 21.9,
-      "lluvia_mm": 1.2,
-      "prob_lluvia": 33,
-      "tmax_pasado": 33.6,
-      "tmin_pasado": 21.2,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
-      "alerta": null
+      "tmax": 33.6,
+      "tmin": 21.2,
+      "lluvia_mm": 0,
+      "prob_lluvia": 6,
+      "tmax_pasado": 28.2,
+      "tmin_pasado": 20.5,
+      "lluvia_pasado": 4.6,
+      "prob_lluvia_pasado": 37,
+      "alerta": "💨 Viento fuerte (57 km/h)"
     },
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 30.6,
-      "tmin": 24.1,
-      "lluvia_mm": 0.4,
-      "prob_lluvia": 33,
-      "tmax_pasado": 36.1,
-      "tmin_pasado": 22.4,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
-      "alerta": "🌡️ Calor extremo (36°C)"
+      "tmax": 36.1,
+      "tmin": 22.4,
+      "lluvia_mm": 0,
+      "prob_lluvia": 6,
+      "tmax_pasado": 28.7,
+      "tmin_pasado": 22.5,
+      "lluvia_pasado": 0.2,
+      "prob_lluvia_pasado": 37,
+      "alerta": "🌡️ Calor extremo (36°C) · 💨 Viento fuerte (73 km/h)"
     },
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 26.8,
-      "tmin": 20.7,
-      "lluvia_mm": 0.2,
-      "prob_lluvia": 45,
-      "tmax_pasado": 32.6,
-      "tmin_pasado": 20.4,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 1,
-      "alerta": null
+      "tmax": 32.6,
+      "tmin": 20.4,
+      "lluvia_mm": 0,
+      "prob_lluvia": 8,
+      "tmax_pasado": 27.1,
+      "tmin_pasado": 18.0,
+      "lluvia_pasado": 2.1,
+      "prob_lluvia_pasado": 53,
+      "alerta": "💨 Viento fuerte (59 km/h)"
     },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 26.1,
-      "tmin": 18.4,
+      "tmax": 31.5,
+      "tmin": 18.6,
       "lluvia_mm": 0,
-      "prob_lluvia": 12,
-      "tmax_pasado": 31.5,
-      "tmin_pasado": 18.6,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 4,
+      "prob_lluvia": 4,
+      "tmax_pasado": 23.3,
+      "tmin_pasado": 16.5,
+      "lluvia_pasado": 1.4,
+      "prob_lluvia_pasado": 47,
       "alerta": "💨 Viento fuerte (51 km/h)"
     },
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 31.7,
-      "tmin": 21.7,
+      "tmax": 36.2,
+      "tmin": 24.3,
       "lluvia_mm": 0,
-      "prob_lluvia": 2,
-      "tmax_pasado": 36.2,
-      "tmin_pasado": 24.3,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 5,
-      "alerta": "💨 Viento fuerte (41 km/h) · 🌡️ Calor extremo (36°C)"
+      "prob_lluvia": 0,
+      "tmax_pasado": 28.8,
+      "tmin_pasado": 21.1,
+      "lluvia_pasado": 1.4,
+      "prob_lluvia_pasado": 49,
+      "alerta": "🌡️ Calor extremo (36°C) · 💨 Viento fuerte (51 km/h)"
     },
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 28.9,
-      "tmin": 22.4,
+      "tmax": 33.9,
+      "tmin": 20.4,
       "lluvia_mm": 0,
-      "prob_lluvia": 65,
-      "tmax_pasado": 33.9,
+      "prob_lluvia": 6,
+      "tmax_pasado": 27.7,
       "tmin_pasado": 20.4,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 4,
-      "alerta": "💨 Viento fuerte (40 km/h)"
+      "lluvia_pasado": 1.3,
+      "prob_lluvia_pasado": 56,
+      "alerta": "💨 Viento fuerte (42 km/h)"
     },
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 27.2,
-      "tmin": 21.8,
+      "tmax": 33.8,
+      "tmin": 19.2,
       "lluvia_mm": 0,
-      "prob_lluvia": 14,
-      "tmax_pasado": 33.8,
-      "tmin_pasado": 19.2,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 4,
+      "prob_lluvia": 2,
+      "tmax_pasado": 27.6,
+      "tmin_pasado": 21.3,
+      "lluvia_pasado": 0.1,
+      "prob_lluvia_pasado": 33,
       "alerta": "💨 Viento fuerte (40 km/h)"
     },
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 27.6,
-      "tmin": 22.0,
+      "tmax": 34.2,
+      "tmin": 19.5,
       "lluvia_mm": 0,
-      "prob_lluvia": 14,
-      "tmax_pasado": 34.2,
-      "tmin_pasado": 19.5,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 4,
-      "alerta": null
+      "prob_lluvia": 2,
+      "tmax_pasado": 27.6,
+      "tmin_pasado": 21.1,
+      "lluvia_pasado": 0.1,
+      "prob_lluvia_pasado": 33,
+      "alerta": "💨 Viento fuerte (48 km/h)"
     },
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 21.4,
-      "tmin": 14.5,
+      "tmax": 27.4,
+      "tmin": 13.6,
       "lluvia_mm": 0,
-      "prob_lluvia": 13,
-      "tmax_pasado": 27.4,
-      "tmin_pasado": 13.6,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 4,
-      "alerta": "💨 Viento fuerte (41 km/h)"
+      "prob_lluvia": 18,
+      "tmax_pasado": 19.4,
+      "tmin_pasado": 11.8,
+      "lluvia_pasado": 2.3,
+      "prob_lluvia_pasado": 56,
+      "alerta": "💨 Viento fuerte (43 km/h)"
     },
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 23.3,
-      "tmin": 16.9,
-      "lluvia_mm": 0.3,
-      "prob_lluvia": 38,
-      "tmax_pasado": 30.2,
-      "tmin_pasado": 16.2,
+      "tmax": 30.2,
+      "tmin": 16.2,
+      "lluvia_mm": 0,
+      "prob_lluvia": 6,
+      "tmax_pasado": 22.6,
+      "tmin_pasado": 15.7,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 6,
+      "prob_lluvia_pasado": 46,
       "alerta": "💨 Viento fuerte (41 km/h)"
     }
   ],
@@ -276,6 +276,14 @@
           "valor": "57 km/h",
           "detalle": "Ráfagas hasta 57 km/h",
           "fecha": "2026-11-07"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "32 mm",
+          "detalle": "32 mm en el día",
+          "fecha": "2026-11-12"
         }
       ]
     },
@@ -314,6 +322,14 @@
           "valor": "51 km/h",
           "detalle": "Ráfagas hasta 51 km/h",
           "fecha": "2026-11-11"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "40 km/h",
+          "detalle": "Ráfagas hasta 40 km/h",
+          "fecha": "2026-11-12"
         }
       ]
     },
@@ -374,14 +390,6 @@
       "provincia": "Salta",
       "alertas": [
         {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
-          "fecha": "2026-11-05"
-        },
-        {
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
@@ -428,6 +436,14 @@
           "valor": "42 km/h",
           "detalle": "Ráfagas hasta 42 km/h",
           "fecha": "2026-11-11"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "42 km/h",
+          "detalle": "Ráfagas hasta 42 km/h",
+          "fecha": "2026-11-12"
         }
       ]
     },
@@ -435,14 +451,6 @@
       "zona": "Yuto",
       "provincia": "Jujuy",
       "alertas": [
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "40 km/h",
-          "detalle": "Ráfagas hasta 40 km/h",
-          "fecha": "2026-11-05"
-        },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
@@ -474,6 +482,22 @@
           "valor": "36°C",
           "detalle": "Máxima 36°C",
           "fecha": "2026-11-11"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "21 mm",
+          "detalle": "21 mm en el día",
+          "fecha": "2026-11-12"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "43 km/h",
+          "detalle": "Ráfagas hasta 43 km/h",
+          "fecha": "2026-11-12"
         }
       ]
     },
@@ -512,6 +536,14 @@
           "valor": "36°C",
           "detalle": "Máxima 36°C",
           "fecha": "2026-11-11"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "21 mm",
+          "detalle": "21 mm en el día",
+          "fecha": "2026-11-12"
         }
       ]
     },
@@ -542,6 +574,14 @@
           "valor": "36°C",
           "detalle": "Máxima 36°C",
           "fecha": "2026-11-11"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "21 mm",
+          "detalle": "21 mm en el día",
+          "fecha": "2026-11-12"
         }
       ]
     },
@@ -549,14 +589,6 @@
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
       "alertas": [
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
-          "fecha": "2026-11-05"
-        },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
@@ -604,6 +636,22 @@
           "valor": "41 km/h",
           "detalle": "Ráfagas hasta 41 km/h",
           "fecha": "2026-11-11"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "25 mm",
+          "detalle": "25 mm en el día",
+          "fecha": "2026-11-12"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "40 km/h",
+          "detalle": "Ráfagas hasta 40 km/h",
+          "fecha": "2026-11-12"
         }
       ]
     },
