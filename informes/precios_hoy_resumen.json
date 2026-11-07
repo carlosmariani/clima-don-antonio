@@ -1,9 +1,9 @@
 {
-  "fecha_str": "5 de noviembre de 2026",
-  "fecha_iso": "2026-11-05",
-  "dias_atraso": 1,
+  "fecha_str": "6 de noviembre de 2026",
+  "fecha_iso": "2026-11-06",
+  "dias_atraso": 0,
   "n_cotizaciones": 29,
-  "texto_resumen": "Hoy se relevaron <b>29 cotizaciones</b> en el MCBA para tus productos. 11 cotizaciones bajaron, 0 subieron y 3 se mantuvieron estables respecto al día hábil anterior.",
+  "texto_resumen": "Hoy se relevaron <b>29 cotizaciones</b> en el MCBA para tus productos. 10 cotizaciones bajaron, 0 subieron y 4 se mantuvieron estables respecto al día hábil anterior.",
   "productos_top": [
     {
       "especie": "TOMATE",
@@ -11,8 +11,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 5.0,
-      "precio": 27500.0,
-      "variacion": -10.344827586206897
+      "precio": 29000.0,
+      "variacion": -6.896551724137931
     },
     {
       "especie": "TOMATE",
@@ -20,8 +20,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 18.0,
-      "precio": 42166.666666666664,
-      "variacion": -50.877192982456144
+      "precio": 41833.333333333336,
+      "variacion": -51.78571428571429
     },
     {
       "especie": "TOMATE",
@@ -29,8 +29,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 18.0,
-      "precio": 51500.0,
-      "variacion": -12.727272727272727
+      "precio": 53000.0,
+      "variacion": -10.909090909090908
     },
     {
       "especie": "PIMIENTO",
@@ -38,8 +38,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 10.0,
-      "precio": 21250.0,
-      "variacion": -13.043478260869565
+      "precio": 20500.0,
+      "variacion": -17.391304347826086
     },
     {
       "especie": "PEPINO",
@@ -47,8 +47,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 18.0,
-      "precio": 20000.0,
-      "variacion": -9.090909090909092
+      "precio": 21000.0,
+      "variacion": 5.0
     },
     {
       "especie": "BERENJENA",
@@ -56,8 +56,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 12.0,
-      "precio": 23500.0,
-      "variacion": -15.384615384615385
+      "precio": 21500.0,
+      "variacion": -20.0
     },
     {
       "especie": "ZAPALLITO",
@@ -65,8 +65,8 @@
       "procedencia": "BS. AS. *",
       "envase": "cajón",
       "kg_bulto": 12.0,
-      "precio": 17000.0,
-      "variacion": -5.555555555555555
+      "precio": 16000.0,
+      "variacion": -5.88235294117647
     },
     {
       "especie": "ZAPALLITO",
@@ -74,8 +74,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 18.0,
-      "precio": 14666.666666666666,
-      "variacion": -50.0
+      "precio": 13500.0,
+      "variacion": -47.22222222222222
     },
     {
       "especie": "ZAPALLO",
@@ -83,7 +83,7 @@
       "procedencia": "SALTA",
       "envase": "bolsa",
       "kg_bulto": 20.0,
-      "precio": 42500.0,
+      "precio": 42000.0,
       "variacion": -15.217391304347828
     },
     {
@@ -92,8 +92,8 @@
       "procedencia": "SALTA",
       "envase": "bolsa",
       "kg_bulto": 18.0,
-      "precio": 29000.0,
-      "variacion": -21.21212121212121
+      "precio": 28500.0,
+      "variacion": -18.75
     },
     {
       "especie": "CHOCLO",
@@ -101,8 +101,8 @@
       "procedencia": "SALTA",
       "envase": "cajón",
       "kg_bulto": 15.0,
-      "precio": 31000.0,
-      "variacion": -3.125
+      "precio": 32000.0,
+      "variacion": 3.225806451612903
     },
     {
       "especie": "CHAUCHA",
@@ -111,7 +111,7 @@
       "envase": "TT",
       "kg_bulto": 10.0,
       "precio": 36000.0,
-      "variacion": -5.263157894736842
+      "variacion": 0.0
     },
     {
       "especie": "CHAUCHA",
@@ -119,8 +119,8 @@
       "procedencia": "BS. AS. *",
       "envase": "TT",
       "kg_bulto": 10.0,
-      "precio": 38000.0,
-      "variacion": -5.0
+      "precio": 33000.0,
+      "variacion": -13.157894736842104
     },
     {
       "especie": "MELON",
@@ -136,25 +136,25 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 27.4,
-      "tmin": 19.9,
-      "lluvia_mm": 2.7,
-      "prob_lluvia": 31,
-      "tmax_pasado": 28.9,
-      "tmin_pasado": 18.6,
+      "tmax": 28.0,
+      "tmin": 19.2,
+      "lluvia_mm": 3.5,
+      "prob_lluvia": 43,
+      "tmax_pasado": 27.2,
+      "tmin_pasado": 19.1,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
-      "alerta": "💨 Viento fuerte (58 km/h)"
+      "alerta": "💨 Viento fuerte (64 km/h)"
     },
     {
       "zona": "Pichanal",
       "provincia": "Salta",
-      "tmax": 28.3,
+      "tmax": 28.7,
       "tmin": 21.4,
-      "lluvia_mm": 0.5,
-      "prob_lluvia": 31,
-      "tmax_pasado": 30.4,
-      "tmin_pasado": 20.2,
+      "lluvia_mm": 0.7,
+      "prob_lluvia": 43,
+      "tmax_pasado": 28.8,
+      "tmin_pasado": 20.1,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
       "alerta": "💨 Viento fuerte (75 km/h)"
@@ -162,106 +162,106 @@
     {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 25.2,
+      "tmax": 26.6,
       "tmin": 17.6,
-      "lluvia_mm": 2.4,
-      "prob_lluvia": 59,
-      "tmax_pasado": 25.3,
-      "tmin_pasado": 16.8,
+      "lluvia_mm": 2.2,
+      "prob_lluvia": 82,
+      "tmax_pasado": 25.4,
+      "tmin_pasado": 16.9,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 8,
-      "alerta": "💨 Viento fuerte (52 km/h)"
+      "prob_lluvia_pasado": 4,
+      "alerta": "💨 Viento fuerte (46 km/h)"
     },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 23.7,
-      "tmin": 16.7,
-      "lluvia_mm": 0.3,
-      "prob_lluvia": 71,
-      "tmax_pasado": 23.4,
-      "tmin_pasado": 13.9,
+      "tmax": 23.4,
+      "tmin": 16.9,
+      "lluvia_mm": 0.6,
+      "prob_lluvia": 88,
+      "tmax_pasado": 23.3,
+      "tmin_pasado": 13.7,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 0,
-      "alerta": "💨 Viento fuerte (73 km/h)"
+      "prob_lluvia_pasado": 2,
+      "alerta": "💨 Viento fuerte (75 km/h)"
     },
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 28.5,
-      "tmin": 19.1,
-      "lluvia_mm": 3.3,
-      "prob_lluvia": 71,
-      "tmax_pasado": 28.8,
-      "tmin_pasado": 18.8,
+      "tmax": 28.2,
+      "tmin": 20.5,
+      "lluvia_mm": 1.7,
+      "prob_lluvia": 83,
+      "tmax_pasado": 28.3,
+      "tmin_pasado": 18.9,
       "lluvia_pasado": 0,
       "prob_lluvia_pasado": 0,
-      "alerta": "💨 Viento fuerte (77 km/h)"
+      "alerta": "💨 Viento fuerte (71 km/h)"
     },
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 26.9,
-      "tmin": 20.0,
-      "lluvia_mm": 1.3,
-      "prob_lluvia": 51,
-      "tmax_pasado": 29.4,
+      "tmax": 28.0,
+      "tmin": 19.1,
+      "lluvia_mm": 1.6,
+      "prob_lluvia": 80,
+      "tmax_pasado": 28.1,
       "tmin_pasado": 17.7,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 10,
+      "prob_lluvia_pasado": 4,
       "alerta": null
     },
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
-      "tmax": 26.8,
-      "tmin": 20.0,
-      "lluvia_mm": 1.8,
-      "prob_lluvia": 24,
-      "tmax_pasado": 28.7,
-      "tmin_pasado": 17.4,
+      "tmax": 27.1,
+      "tmin": 20.3,
+      "lluvia_mm": 0.6,
+      "prob_lluvia": 20,
+      "tmax_pasado": 27.6,
+      "tmin_pasado": 16.4,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
-      "alerta": "💨 Viento fuerte (57 km/h)"
+      "prob_lluvia_pasado": 0,
+      "alerta": "💨 Viento fuerte (56 km/h)"
     },
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 27.4,
-      "tmin": 20.0,
-      "lluvia_mm": 0.8,
-      "prob_lluvia": 24,
-      "tmax_pasado": 28.6,
-      "tmin_pasado": 16.4,
+      "tmax": 27.3,
+      "tmin": 20.1,
+      "lluvia_mm": 0.2,
+      "prob_lluvia": 20,
+      "tmax_pasado": 27.6,
+      "tmin_pasado": 16.0,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 2,
-      "alerta": "💨 Viento fuerte (52 km/h)"
+      "prob_lluvia_pasado": 0,
+      "alerta": "💨 Viento fuerte (50 km/h)"
     },
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 20.1,
-      "tmin": 10.7,
-      "lluvia_mm": 2.4,
-      "prob_lluvia": 51,
-      "tmax_pasado": 21.5,
-      "tmin_pasado": 9.5,
+      "tmax": 20.6,
+      "tmin": 11.2,
+      "lluvia_mm": 2.5,
+      "prob_lluvia": 57,
+      "tmax_pasado": 21.3,
+      "tmin_pasado": 9.6,
       "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 8,
-      "alerta": "💨 Viento fuerte (60 km/h)"
+      "prob_lluvia_pasado": 6,
+      "alerta": "💨 Viento fuerte (55 km/h)"
     },
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 22.2,
+      "tmax": 22.6,
       "tmin": 15.4,
-      "lluvia_mm": 0.4,
-      "prob_lluvia": 36,
-      "tmax_pasado": 22.6,
-      "tmin_pasado": 13.3,
-      "lluvia_pasado": 0,
-      "prob_lluvia_pasado": 69,
-      "alerta": "💨 Viento fuerte (47 km/h)"
+      "lluvia_mm": 0,
+      "prob_lluvia": 43,
+      "tmax_pasado": 21.5,
+      "tmin_pasado": 13.5,
+      "lluvia_pasado": 0.4,
+      "prob_lluvia_pasado": 97,
+      "alerta": null
     }
   ],
   "alertas_7d": [
@@ -273,9 +273,17 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "58 km/h",
-          "detalle": "Ráfagas hasta 58 km/h",
+          "valor": "64 km/h",
+          "detalle": "Ráfagas hasta 64 km/h",
           "fecha": "2026-11-07"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "40 km/h",
+          "detalle": "Ráfagas hasta 40 km/h",
+          "fecha": "2026-11-12"
         }
       ]
     },
@@ -292,12 +300,12 @@
           "fecha": "2026-11-07"
         },
         {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "42 km/h",
-          "detalle": "Ráfagas hasta 42 km/h",
-          "fecha": "2026-11-09"
+          "valor": "38°C",
+          "detalle": "Máxima 38°C",
+          "fecha": "2026-11-10"
         },
         {
           "tipo": "Calor extremo",
@@ -314,6 +322,14 @@
           "valor": "37°C",
           "detalle": "Máxima 37°C",
           "fecha": "2026-11-12"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "40 km/h",
+          "detalle": "Ráfagas hasta 40 km/h",
+          "fecha": "2026-11-12"
         }
       ]
     },
@@ -325,9 +341,17 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "52 km/h",
-          "detalle": "Ráfagas hasta 52 km/h",
+          "valor": "46 km/h",
+          "detalle": "Ráfagas hasta 46 km/h",
           "fecha": "2026-11-07"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "46 km/h",
+          "detalle": "Ráfagas hasta 46 km/h",
+          "fecha": "2026-11-10"
         }
       ]
     },
@@ -339,24 +363,16 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "ALTA",
-          "valor": "73 km/h",
-          "detalle": "Ráfagas hasta 73 km/h",
+          "valor": "75 km/h",
+          "detalle": "Ráfagas hasta 75 km/h",
           "fecha": "2026-11-07"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "42 km/h",
-          "detalle": "Ráfagas hasta 42 km/h",
-          "fecha": "2026-11-09"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "50 km/h",
-          "detalle": "Ráfagas hasta 50 km/h",
+          "valor": "48 km/h",
+          "detalle": "Ráfagas hasta 48 km/h",
           "fecha": "2026-11-10"
         },
         {
@@ -365,14 +381,90 @@
           "severidad": "MEDIA",
           "valor": "40 km/h",
           "detalle": "Ráfagas hasta 40 km/h",
+          "fecha": "2026-11-12"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "52 km/h",
+          "detalle": "Ráfagas hasta 52 km/h",
+          "fecha": "2026-11-13"
+        }
+      ]
+    },
+    {
+      "zona": "Apolinario Saravia",
+      "provincia": "Salta",
+      "alertas": [
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "ALTA",
+          "valor": "71 km/h",
+          "detalle": "Ráfagas hasta 71 km/h",
+          "fecha": "2026-11-07"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "46 km/h",
+          "detalle": "Ráfagas hasta 46 km/h",
+          "fecha": "2026-11-10"
+        },
+        {
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
+          "severidad": "MEDIA",
+          "valor": "37°C",
+          "detalle": "Máxima 37°C",
+          "fecha": "2026-11-11"
+        },
+        {
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
+          "severidad": "MEDIA",
+          "valor": "37°C",
+          "detalle": "Máxima 37°C",
+          "fecha": "2026-11-12"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "44 km/h",
+          "detalle": "Ráfagas hasta 44 km/h",
+          "fecha": "2026-11-12"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "55 km/h",
+          "detalle": "Ráfagas hasta 55 km/h",
+          "fecha": "2026-11-13"
+        }
+      ]
+    },
+    {
+      "zona": "Yuto",
+      "provincia": "Jujuy",
+      "alertas": [
+        {
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
+          "severidad": "MEDIA",
+          "valor": "36°C",
+          "detalle": "Máxima 36°C",
           "fecha": "2026-11-11"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "45 km/h",
-          "detalle": "Ráfagas hasta 45 km/h",
+          "valor": "44 km/h",
+          "detalle": "Ráfagas hasta 44 km/h",
           "fecha": "2026-11-12"
         },
         {
@@ -386,98 +478,6 @@
       ]
     },
     {
-      "zona": "Apolinario Saravia",
-      "provincia": "Salta",
-      "alertas": [
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "ALTA",
-          "valor": "77 km/h",
-          "detalle": "Ráfagas hasta 77 km/h",
-          "fecha": "2026-11-07"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "50 km/h",
-          "detalle": "Ráfagas hasta 50 km/h",
-          "fecha": "2026-11-10"
-        },
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
-          "valor": "38°C",
-          "detalle": "Máxima 38°C",
-          "fecha": "2026-11-11"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "40 km/h",
-          "detalle": "Ráfagas hasta 40 km/h",
-          "fecha": "2026-11-11"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "43 km/h",
-          "detalle": "Ráfagas hasta 43 km/h",
-          "fecha": "2026-11-12"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "52 km/h",
-          "detalle": "Ráfagas hasta 52 km/h",
-          "fecha": "2026-11-13"
-        }
-      ]
-    },
-    {
-      "zona": "Yuto",
-      "provincia": "Jujuy",
-      "alertas": [
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "47 km/h",
-          "detalle": "Ráfagas hasta 47 km/h",
-          "fecha": "2026-11-09"
-        },
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
-          "valor": "36°C",
-          "detalle": "Máxima 36°C",
-          "fecha": "2026-11-11"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
-          "fecha": "2026-11-12"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "44 km/h",
-          "detalle": "Ráfagas hasta 44 km/h",
-          "fecha": "2026-11-13"
-        }
-      ]
-    },
-    {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
       "alertas": [
@@ -485,16 +485,24 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "57 km/h",
-          "detalle": "Ráfagas hasta 57 km/h",
+          "valor": "56 km/h",
+          "detalle": "Ráfagas hasta 56 km/h",
           "fecha": "2026-11-07"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "47 km/h",
-          "detalle": "Ráfagas hasta 47 km/h",
+          "valor": "45 km/h",
+          "detalle": "Ráfagas hasta 45 km/h",
+          "fecha": "2026-11-09"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "49 km/h",
+          "detalle": "Ráfagas hasta 49 km/h",
           "fecha": "2026-11-13"
         }
       ]
@@ -507,16 +515,16 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "52 km/h",
-          "detalle": "Ráfagas hasta 52 km/h",
+          "valor": "50 km/h",
+          "detalle": "Ráfagas hasta 50 km/h",
           "fecha": "2026-11-07"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "45 km/h",
-          "detalle": "Ráfagas hasta 45 km/h",
+          "valor": "46 km/h",
+          "detalle": "Ráfagas hasta 46 km/h",
           "fecha": "2026-11-13"
         }
       ]
@@ -529,8 +537,8 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "60 km/h",
-          "detalle": "Ráfagas hasta 60 km/h",
+          "valor": "55 km/h",
+          "detalle": "Ráfagas hasta 55 km/h",
           "fecha": "2026-11-07"
         },
         {
@@ -545,8 +553,8 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "49 km/h",
-          "detalle": "Ráfagas hasta 49 km/h",
+          "valor": "48 km/h",
+          "detalle": "Ráfagas hasta 48 km/h",
           "fecha": "2026-11-09"
         },
         {
@@ -575,25 +583,25 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "47 km/h",
-          "detalle": "Ráfagas hasta 47 km/h",
-          "fecha": "2026-11-07"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "43 km/h",
-          "detalle": "Ráfagas hasta 43 km/h",
+          "valor": "42 km/h",
+          "detalle": "Ráfagas hasta 42 km/h",
           "fecha": "2026-11-09"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "45 km/h",
-          "detalle": "Ráfagas hasta 45 km/h",
+          "valor": "44 km/h",
+          "detalle": "Ráfagas hasta 44 km/h",
           "fecha": "2026-11-10"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "40 km/h",
+          "detalle": "Ráfagas hasta 40 km/h",
+          "fecha": "2026-11-13"
         }
       ]
     }
