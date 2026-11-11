@@ -1,7 +1,7 @@
 {
   "fecha_str": "10 de noviembre de 2026",
   "fecha_iso": "2026-11-10",
-  "dias_atraso": 0,
+  "dias_atraso": 1,
   "n_cotizaciones": 28,
   "texto_resumen": "Hoy se relevaron <b>28 cotizaciones</b> en el MCBA para tus productos. 10 cotizaciones bajaron, 0 subieron y 3 se mantuvieron estables respecto al día hábil anterior.",
   "productos_top": [
@@ -127,131 +127,131 @@
     {
       "zona": "Orán",
       "provincia": "Salta",
-      "tmax": 36.5,
-      "tmin": 25.7,
-      "lluvia_mm": 1.3,
-      "prob_lluvia": 64,
+      "tmax": 37.7,
+      "tmin": 23.2,
+      "lluvia_mm": 1.0,
+      "prob_lluvia": 56,
       "tmax_pasado": 37.7,
-      "tmin_pasado": 24.1,
-      "lluvia_pasado": 0.2,
-      "prob_lluvia_pasado": 57,
-      "alerta": "🌡️ Calor extremo (36°C)"
-    },
-    {
-      "zona": "Pichanal",
-      "provincia": "Salta",
-      "tmax": 38.0,
-      "tmin": 28.0,
-      "lluvia_mm": 0.7,
-      "prob_lluvia": 64,
-      "tmax_pasado": 38.5,
-      "tmin_pasado": 25.6,
-      "lluvia_pasado": 0.5,
+      "tmin_pasado": 23.8,
+      "lluvia_pasado": 0.7,
       "prob_lluvia_pasado": 57,
       "alerta": "🌡️ Calor extremo (38°C)"
     },
     {
+      "zona": "Pichanal",
+      "provincia": "Salta",
+      "tmax": 39.0,
+      "tmin": 25.9,
+      "lluvia_mm": 0.1,
+      "prob_lluvia": 56,
+      "tmax_pasado": 39.3,
+      "tmin_pasado": 26.1,
+      "lluvia_pasado": 0.1,
+      "prob_lluvia_pasado": 57,
+      "alerta": "🌡️ Calor extremo (39°C)"
+    },
+    {
       "zona": "Colonia Santa Rosa",
       "provincia": "Salta",
-      "tmax": 34.4,
-      "tmin": 22.4,
-      "lluvia_mm": 0.2,
-      "prob_lluvia": 29,
-      "tmax_pasado": 35.3,
-      "tmin_pasado": 21.3,
+      "tmax": 35.9,
+      "tmin": 22.0,
+      "lluvia_mm": 0.6,
+      "prob_lluvia": 41,
+      "tmax_pasado": 35.9,
+      "tmin_pasado": 22.2,
       "lluvia_pasado": 1.0,
-      "prob_lluvia_pasado": 44,
+      "prob_lluvia_pasado": 41,
       "alerta": null
     },
     {
       "zona": "General Pizarro",
       "provincia": "Salta",
-      "tmax": 32.7,
-      "tmin": 21.8,
-      "lluvia_mm": 2.9,
-      "prob_lluvia": 75,
-      "tmax_pasado": 33.1,
-      "tmin_pasado": 21.7,
-      "lluvia_pasado": 1.4,
-      "prob_lluvia_pasado": 80,
+      "tmax": 32.8,
+      "tmin": 21.9,
+      "lluvia_mm": 1.3,
+      "prob_lluvia": 83,
+      "tmax_pasado": 33.4,
+      "tmin_pasado": 21.5,
+      "lluvia_pasado": 0.3,
+      "prob_lluvia_pasado": 44,
       "alerta": null
     },
     {
       "zona": "Apolinario Saravia",
       "provincia": "Salta",
-      "tmax": 37.7,
-      "tmin": 25.4,
-      "lluvia_mm": 0.9,
-      "prob_lluvia": 60,
-      "tmax_pasado": 37.0,
-      "tmin_pasado": 26.1,
-      "lluvia_pasado": 1.0,
-      "prob_lluvia_pasado": 58,
-      "alerta": "🌡️ Calor extremo (38°C)"
+      "tmax": 37.3,
+      "tmin": 25.9,
+      "lluvia_mm": 0.8,
+      "prob_lluvia": 47,
+      "tmax_pasado": 38.4,
+      "tmin_pasado": 25.0,
+      "lluvia_pasado": 0,
+      "prob_lluvia_pasado": 37,
+      "alerta": "🌡️ Calor extremo (37°C)"
     },
     {
       "zona": "Yuto",
       "provincia": "Jujuy",
-      "tmax": 36.7,
-      "tmin": 25.0,
-      "lluvia_mm": 1.0,
-      "prob_lluvia": 63,
-      "tmax_pasado": 37.0,
-      "tmin_pasado": 24.0,
-      "lluvia_pasado": 0.1,
-      "prob_lluvia_pasado": 42,
-      "alerta": "🌡️ Calor extremo (37°C)"
+      "tmax": 37.5,
+      "tmin": 25.1,
+      "lluvia_mm": 0,
+      "prob_lluvia": 34,
+      "tmax_pasado": 37.4,
+      "tmin_pasado": 24.6,
+      "lluvia_pasado": 0,
+      "prob_lluvia_pasado": 39,
+      "alerta": "🌡️ Calor extremo (38°C)"
     },
     {
       "zona": "Fraile Pintado",
       "provincia": "Jujuy",
       "tmax": 37.1,
-      "tmin": 23.3,
-      "lluvia_mm": 3.1,
-      "prob_lluvia": 41,
-      "tmax_pasado": 36.6,
-      "tmin_pasado": 23.3,
-      "lluvia_pasado": 1.9,
-      "prob_lluvia_pasado": 53,
+      "tmin": 23.6,
+      "lluvia_mm": 2.8,
+      "prob_lluvia": 61,
+      "tmax_pasado": 35.9,
+      "tmin_pasado": 24.6,
+      "lluvia_pasado": 1.8,
+      "prob_lluvia_pasado": 38,
       "alerta": "🌡️ Calor extremo (37°C)"
     },
     {
       "zona": "Chalicán",
       "provincia": "Jujuy",
-      "tmax": 37.2,
-      "tmin": 23.7,
-      "lluvia_mm": 0,
-      "prob_lluvia": 41,
-      "tmax_pasado": 37.2,
-      "tmin_pasado": 22.8,
-      "lluvia_pasado": 0.6,
-      "prob_lluvia_pasado": 53,
+      "tmax": 37.3,
+      "tmin": 23.2,
+      "lluvia_mm": 0.6,
+      "prob_lluvia": 61,
+      "tmax_pasado": 36.5,
+      "tmin_pasado": 24.4,
+      "lluvia_pasado": 1.4,
+      "prob_lluvia_pasado": 38,
       "alerta": "🌡️ Calor extremo (37°C)"
     },
     {
       "zona": "Aguas Calientes",
       "provincia": "Jujuy",
-      "tmax": 29.3,
-      "tmin": 18.6,
-      "lluvia_mm": 0.6,
-      "prob_lluvia": 99,
+      "tmax": 30.9,
+      "tmin": 19.2,
+      "lluvia_mm": 2.0,
+      "prob_lluvia": 56,
       "tmax_pasado": 29.9,
-      "tmin_pasado": 19.1,
-      "lluvia_pasado": 3.0,
-      "prob_lluvia_pasado": 60,
-      "alerta": null
+      "tmin_pasado": 20.1,
+      "lluvia_pasado": 2.0,
+      "prob_lluvia_pasado": 43,
+      "alerta": "💨 Viento fuerte (45 km/h)"
     },
     {
       "zona": "Santa Clara",
       "provincia": "Jujuy",
-      "tmax": 31.9,
-      "tmin": 21.5,
-      "lluvia_mm": 1.4,
-      "prob_lluvia": 100,
-      "tmax_pasado": 32.2,
-      "tmin_pasado": 20.7,
-      "lluvia_pasado": 0.3,
-      "prob_lluvia_pasado": 94,
+      "tmax": 32.5,
+      "tmin": 21.6,
+      "lluvia_mm": 6.9,
+      "prob_lluvia": 98,
+      "tmax_pasado": 32.1,
+      "tmin_pasado": 21.5,
+      "lluvia_pasado": 2.5,
+      "prob_lluvia_pasado": 79,
       "alerta": null
     }
   ],
@@ -264,14 +264,6 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "36°C",
-          "detalle": "Máxima 36°C",
-          "fecha": "2026-11-11"
-        },
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
           "valor": "38°C",
           "detalle": "Máxima 38°C",
           "fecha": "2026-11-12"
@@ -280,33 +272,41 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "39°C",
-          "detalle": "Máxima 39°C",
+          "valor": "38°C",
+          "detalle": "Máxima 38°C",
           "fecha": "2026-11-13"
         },
         {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "48 km/h",
-          "detalle": "Ráfagas hasta 48 km/h",
+          "valor": "39°C",
+          "detalle": "Máxima 39°C",
           "fecha": "2026-11-14"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
+          "valor": "62 km/h",
+          "detalle": "Ráfagas hasta 62 km/h",
           "fecha": "2026-11-15"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "46 km/h",
-          "detalle": "Ráfagas hasta 46 km/h",
+          "valor": "68 km/h",
+          "detalle": "Ráfagas hasta 68 km/h",
           "fecha": "2026-11-16"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "21 mm",
+          "detalle": "21 mm en el día",
+          "fecha": "2026-11-18"
         }
       ]
     },
@@ -318,17 +318,17 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "38°C",
-          "detalle": "Máxima 38°C",
-          "fecha": "2026-11-11"
+          "valor": "39°C",
+          "detalle": "Máxima 39°C",
+          "fecha": "2026-11-12"
         },
         {
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "38°C",
-          "detalle": "Máxima 38°C",
-          "fecha": "2026-11-12"
+          "valor": "39°C",
+          "detalle": "Máxima 39°C",
+          "fecha": "2026-11-13"
         },
         {
           "tipo": "Calor extremo",
@@ -336,22 +336,30 @@
           "severidad": "MEDIA",
           "valor": "40°C",
           "detalle": "Máxima 40°C",
-          "fecha": "2026-11-13"
+          "fecha": "2026-11-14"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
+          "valor": "44 km/h",
+          "detalle": "Ráfagas hasta 44 km/h",
+          "fecha": "2026-11-14"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "59 km/h",
+          "detalle": "Ráfagas hasta 59 km/h",
           "fecha": "2026-11-15"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "47 km/h",
-          "detalle": "Ráfagas hasta 47 km/h",
+          "valor": "62 km/h",
+          "detalle": "Ráfagas hasta 62 km/h",
           "fecha": "2026-11-16"
         }
       ]
@@ -361,20 +369,28 @@
       "provincia": "Salta",
       "alertas": [
         {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
+          "tipo": "Viento fuerte",
+          "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "36°C",
-          "detalle": "Máxima 36°C",
-          "fecha": "2026-11-13"
+          "valor": "51 km/h",
+          "detalle": "Ráfagas hasta 51 km/h",
+          "fecha": "2026-11-15"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "40 km/h",
-          "detalle": "Ráfagas hasta 40 km/h",
+          "valor": "57 km/h",
+          "detalle": "Ráfagas hasta 57 km/h",
           "fecha": "2026-11-16"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "24 mm",
+          "detalle": "24 mm en el día",
+          "fecha": "2026-11-18"
         }
       ]
     },
@@ -386,24 +402,16 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "40 km/h",
-          "detalle": "Ráfagas hasta 40 km/h",
-          "fecha": "2026-11-13"
-        },
-        {
-          "tipo": "Viento fuerte",
-          "icono": "💨",
-          "severidad": "MEDIA",
-          "valor": "42 km/h",
-          "detalle": "Ráfagas hasta 42 km/h",
+          "valor": "49 km/h",
+          "detalle": "Ráfagas hasta 49 km/h",
           "fecha": "2026-11-14"
         },
         {
           "tipo": "Lluvia intensa",
           "icono": "🌧️",
           "severidad": "MEDIA",
-          "valor": "23 mm",
-          "detalle": "23 mm en el día",
+          "valor": "25 mm",
+          "detalle": "25 mm en el día",
           "fecha": "2026-11-15"
         },
         {
@@ -424,14 +432,6 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "38°C",
-          "detalle": "Máxima 38°C",
-          "fecha": "2026-11-11"
-        },
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
           "valor": "37°C",
           "detalle": "Máxima 37°C",
           "fecha": "2026-11-12"
@@ -440,24 +440,24 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "39°C",
-          "detalle": "Máxima 39°C",
+          "valor": "38°C",
+          "detalle": "Máxima 38°C",
           "fecha": "2026-11-13"
         },
         {
-          "tipo": "Lluvia intensa",
-          "icono": "🌧️",
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "25 mm",
-          "detalle": "25 mm en el día",
+          "valor": "39°C",
+          "detalle": "Máxima 39°C",
           "fecha": "2026-11-14"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "47 km/h",
-          "detalle": "Ráfagas hasta 47 km/h",
+          "valor": "48 km/h",
+          "detalle": "Ráfagas hasta 48 km/h",
           "fecha": "2026-11-14"
         },
         {
@@ -472,8 +472,24 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "55 km/h",
-          "detalle": "Ráfagas hasta 55 km/h",
+          "valor": "48 km/h",
+          "detalle": "Ráfagas hasta 48 km/h",
+          "fecha": "2026-11-15"
+        },
+        {
+          "tipo": "Lluvia intensa",
+          "icono": "🌧️",
+          "severidad": "MEDIA",
+          "valor": "30 mm",
+          "detalle": "30 mm en el día",
+          "fecha": "2026-11-16"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "53 km/h",
+          "detalle": "Ráfagas hasta 53 km/h",
           "fecha": "2026-11-16"
         }
       ]
@@ -486,9 +502,9 @@
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "37°C",
-          "detalle": "Máxima 37°C",
-          "fecha": "2026-11-11"
+          "valor": "38°C",
+          "detalle": "Máxima 38°C",
+          "fecha": "2026-11-12"
         },
         {
           "tipo": "Calor extremo",
@@ -496,7 +512,7 @@
           "severidad": "MEDIA",
           "valor": "37°C",
           "detalle": "Máxima 37°C",
-          "fecha": "2026-11-12"
+          "fecha": "2026-11-13"
         },
         {
           "tipo": "Calor extremo",
@@ -504,22 +520,30 @@
           "severidad": "MEDIA",
           "valor": "38°C",
           "detalle": "Máxima 38°C",
-          "fecha": "2026-11-13"
-        },
-        {
-          "tipo": "Lluvia intensa",
-          "icono": "🌧️",
-          "severidad": "MEDIA",
-          "valor": "21 mm",
-          "detalle": "21 mm en el día",
-          "fecha": "2026-11-16"
+          "fecha": "2026-11-14"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "49 km/h",
-          "detalle": "Ráfagas hasta 49 km/h",
+          "valor": "40 km/h",
+          "detalle": "Ráfagas hasta 40 km/h",
+          "fecha": "2026-11-14"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "52 km/h",
+          "detalle": "Ráfagas hasta 52 km/h",
+          "fecha": "2026-11-15"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "62 km/h",
+          "detalle": "Ráfagas hasta 62 km/h",
           "fecha": "2026-11-16"
         }
       ]
@@ -534,23 +558,7 @@
           "severidad": "MEDIA",
           "valor": "37°C",
           "detalle": "Máxima 37°C",
-          "fecha": "2026-11-11"
-        },
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
-          "valor": "37°C",
-          "detalle": "Máxima 37°C",
           "fecha": "2026-11-12"
-        },
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
-          "valor": "37°C",
-          "detalle": "Máxima 37°C",
-          "fecha": "2026-11-13"
         }
       ]
     },
@@ -564,23 +572,23 @@
           "severidad": "MEDIA",
           "valor": "37°C",
           "detalle": "Máxima 37°C",
-          "fecha": "2026-11-11"
-        },
-        {
-          "tipo": "Calor extremo",
-          "icono": "🌡️",
-          "severidad": "MEDIA",
-          "valor": "37°C",
-          "detalle": "Máxima 37°C",
           "fecha": "2026-11-12"
         },
         {
           "tipo": "Calor extremo",
           "icono": "🌡️",
           "severidad": "MEDIA",
-          "valor": "37°C",
-          "detalle": "Máxima 37°C",
+          "valor": "36°C",
+          "detalle": "Máxima 36°C",
           "fecha": "2026-11-13"
+        },
+        {
+          "tipo": "Calor extremo",
+          "icono": "🌡️",
+          "severidad": "MEDIA",
+          "valor": "36°C",
+          "detalle": "Máxima 36°C",
+          "fecha": "2026-11-14"
         }
       ]
     },
@@ -592,24 +600,24 @@
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "41 km/h",
-          "detalle": "Ráfagas hasta 41 km/h",
+          "valor": "45 km/h",
+          "detalle": "Ráfagas hasta 45 km/h",
           "fecha": "2026-11-13"
         },
         {
           "tipo": "Viento fuerte",
           "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "42 km/h",
-          "detalle": "Ráfagas hasta 42 km/h",
-          "fecha": "2026-11-15"
+          "valor": "41 km/h",
+          "detalle": "Ráfagas hasta 41 km/h",
+          "fecha": "2026-11-14"
         },
         {
           "tipo": "Lluvia intensa",
           "icono": "🌧️",
           "severidad": "MEDIA",
-          "valor": "25 mm",
-          "detalle": "25 mm en el día",
+          "valor": "22 mm",
+          "detalle": "22 mm en el día",
           "fecha": "2026-11-16"
         },
         {
@@ -619,6 +627,14 @@
           "valor": "41 km/h",
           "detalle": "Ráfagas hasta 41 km/h",
           "fecha": "2026-11-17"
+        },
+        {
+          "tipo": "Viento fuerte",
+          "icono": "💨",
+          "severidad": "MEDIA",
+          "valor": "45 km/h",
+          "detalle": "Ráfagas hasta 45 km/h",
+          "fecha": "2026-11-18"
         }
       ]
     },
@@ -627,12 +643,12 @@
       "provincia": "Jujuy",
       "alertas": [
         {
-          "tipo": "Lluvia intensa",
-          "icono": "🌧️",
+          "tipo": "Viento fuerte",
+          "icono": "💨",
           "severidad": "MEDIA",
-          "valor": "24 mm",
-          "detalle": "24 mm en el día",
-          "fecha": "2026-11-14"
+          "valor": "41 km/h",
+          "detalle": "Ráfagas hasta 41 km/h",
+          "fecha": "2026-11-16"
         }
       ]
     }
