@@ -10,11 +10,6 @@ on:
     - cron: '7,37 0-2 * * 2-6'      # 21:07-23:37 ART (martes-sábado UTC)
     - cron: '0 14,17,20 * * 6'      # Sábado: 11h, 14h y 17h ART por si publican el viernes tarde
   workflow_dispatch:
-    inputs:
-      forzar_extendido:
-        description: 'Forzar generación del reporte extendido (para prueba)'
-        type: boolean
-        default: false
 
 permissions:
   contents: write
@@ -120,58 +115,8 @@ jobs:
         if: steps.check.outputs.send_email == 'true'
         run: echo "${{ steps.check.outputs.fecha_nueva }}" > .last_email_date
 
-      # === Reporte extendido quincenal (solo días 1 y 15) ===
-      - name: Chequear si hoy toca reporte extendido (día 1 o 15)
-        id: check_ext
-        run: |
-          HOY_AR=$(TZ=America/Argentina/Buenos_Aires date '+%Y-%m-%d')
-          DIA=$(TZ=America/Argentina/Buenos_Aires date '+%d')
-          echo "hoy_ar=$HOY_AR" >> $GITHUB_OUTPUT
-          FORZAR="${{ inputs.forzar_extendido }}"
-          if [ "$DIA" = "01" ] || [ "$DIA" = "15" ] || [ "$FORZAR" = "true" ]; then
-            echo "run_ext=true" >> $GITHUB_OUTPUT
-            if [ "$FORZAR" = "true" ] && [ "$DIA" != "01" ] && [ "$DIA" != "15" ]; then
-              echo "→ Forzado manual: se genera reporte extendido"
-            else
-              echo "→ Hoy es día $DIA — se genera reporte extendido quincenal"
-            fi
-          else
-            echo "run_ext=false" >> $GITHUB_OUTPUT
-            echo "→ Día $DIA — no toca reporte extendido"
-          fi
-
-      - name: Generar reporte extendido quincenal
-        if: steps.check_ext.outputs.run_ext == 'true'
-        run: python generar_extendido.py
-
-      - name: Chequear si ya se envió el extendido hoy
-        id: check_ext_email
-        if: steps.check_ext.outputs.run_ext == 'true'
-        run: |
-          HOY=${{ steps.check_ext.outputs.hoy_ar }}
-          if [ -f .last_email_extendido_date ]; then
-            ULT=$(cat .last_email_extendido_date)
-          else
-            ULT=""
-          fi
-          echo "Última fecha extendido: $ULT   Hoy: $HOY"
-          if [ "$HOY" != "$ULT" ]; then
-            echo "send_ext=true" >> $GITHUB_OUTPUT
-          else
-            echo "send_ext=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Enviar email reporte extendido
-        if: steps.check_ext_email.outputs.send_ext == 'true'
-        env:
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          EMAIL_DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
-          EMAIL_NADER: ${{ secrets.EMAIL_NADER }}
-        run: python enviar_email_extendido.py
-
-      - name: Registrar fecha extendido enviado
-        if: steps.check_ext_email.outputs.send_ext == 'true'
-        run: echo "${{ steps.check_ext.outputs.hoy_ar }}" > .last_email_extendido_date
+      # (El reporte extendido quincenal ahora va en extendido-quincenal.yml,
+      #  que corre también los domingos.)
 
       # === Reportes climáticos para Ing. Agrónomo Claudio Nader ===
       # Genera 2 PDFs: Abapó (Bolivia) y Tucumán (Lules + Concepción + El Naranjo).

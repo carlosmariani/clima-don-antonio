@@ -1,0 +1,90 @@
+name: Reporte extendido quincenal
+
+# Manda el reporte climático extendido los días 1 y 15 de cada mes, CUALQUIER día
+# de la semana (antes iba dentro de "Precios MCBA", que no corre los domingos, y por
+# eso el 1/11/2026 no salió).
+# Varias corridas por día por si GitHub saltea alguna; el archivo
+# .last_email_extendido_date evita que se mande dos veces. Los días 2 y 16 son de
+# rescate: solo mandan si el 1 o el 15 no se pudo.
+on:
+  schedule:
+    - cron: '7 12,15,18 1,15 * *'   # días 1 y 15: 09:07, 12:07 y 15:07 ART
+    - cron: '7 12,18 2,16 * *'      # días 2 y 16: rescate si el 1/15 no salió
+  workflow_dispatch:
+    inputs:
+      forzar:
+        description: 'Mandarlo igual aunque no sea día 1 o 15 (prueba)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: extendido-quincenal
+  cancel-in-progress: false
+
+jobs:
+  extendido:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: ¿Toca mandar el extendido?
+        id: check
+        run: |
+          HOY=$(TZ=America/Argentina/Buenos_Aires date '+%Y-%m-%d')
+          DIA=$(TZ=America/Argentina/Buenos_Aires date '+%d')
+          MES=$(TZ=America/Argentina/Buenos_Aires date '+%Y-%m')
+          if [ "$((10#$DIA))" -ge 15 ]; then OBJ="$MES-15"; else OBJ="$MES-01"; fi
+          ULT=$(cat .last_email_extendido_date 2>/dev/null || echo "")
+          echo "hoy=$HOY" >> $GITHUB_OUTPUT
+          echo "Hoy: $HOY  |  Quincena: $OBJ  |  Último enviado: ${ULT:-nunca}"
+          if [ "${{ inputs.forzar }}" = "true" ]; then
+            echo "→ Forzado manual"
+            echo "run=true" >> $GITHUB_OUTPUT
+          elif [[ "$ULT" < "$OBJ" ]] && [[ "$DIA" =~ ^(01|02|15|16)$ ]]; then
+            echo "→ Toca mandar el extendido de esta quincena"
+            echo "run=true" >> $GITHUB_OUTPUT
+          else
+            echo "→ No toca (ya salió o no es día 1/2/15/16)"
+            echo "run=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup Python
+        if: steps.check.outputs.run == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        if: steps.check.outputs.run == 'true'
+        run: pip install -r requirements.txt
+
+      - name: Generar reporte extendido
+        if: steps.check.outputs.run == 'true'
+        run: python generar_extendido.py
+
+      - name: Enviar email reporte extendido
+        if: steps.check.outputs.run == 'true'
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
+        run: python enviar_email_extendido.py
+
+      - name: Registrar fecha y guardar PDF
+        if: steps.check.outputs.run == 'true'
+        run: |
+          echo "${{ steps.check.outputs.hoy }}" > .last_email_extendido_date
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add informes/extendido_hoy.pdf .last_email_extendido_date
+          git diff --cached --quiet && exit 0
+          git commit -m "Reporte extendido quincenal ${{ steps.check.outputs.hoy }}"
+          for i in 1 2 3; do
+            git pull --rebase -X theirs && git push && exit 0
+            sleep 10
+          done
+          exit 1
